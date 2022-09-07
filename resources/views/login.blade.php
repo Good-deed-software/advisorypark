@@ -86,11 +86,11 @@
     											<div class="col-lg-12 no-pdd">
     											   
     												<div class="sn-field">
-    										            <label>You are a :<span class="text-danger">*</span></label><br>
-    										            <label class="p-1 w-50">User</label> 
-    										            <input type="radio" class="" name="type" value="User" style="height:17px;width:7%" required>
-    										            <label class="p-1 w-50">Advisor</label>
-    										            <input type="radio" class="" name="type" value="Advisor" style="height:17px;width:7%" required>
+    										            <label>Login as :<span class="text-danger">*</span></label>
+    										            <input type="radio" class="" name="type" value="User" style="height:10px;width:7%" required checked>
+    										            <label class="p-1">User</label> 
+    										            <input type="radio" class="" name="type" value="Advisor" style="height:10px;width:7%" required>
+    										            <label class="p-1">Advisor</label>
     										        </div>
     											</div>
     											<div class="col-lg-12 no-pdd">

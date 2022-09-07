@@ -175,12 +175,7 @@
     							</a>
     						    <i class="la la-sort-down"></i>
     						 @else
-    						 
-    							<img src="http://via.placeholder.com/30x30" alt="" height="25px">
-    							<a href="#" title="">
-    							    Log in
-    							</a>
-    							<i class="la la-sort-down"></i>
+    							<a href="{{route('login')}}" title="">Signup / Login</a>
     						 @endauth
 							
 						</div>

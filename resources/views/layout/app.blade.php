@@ -51,8 +51,163 @@
     				<div class="bounce3"></div>
     			</div>
     		</div>
+    <!-- Post a blog modal -->
+    	<div class="post-popup job_post">
+			<div class="post-project">
+				<h3>Post</h3>
+				<div class="post-project-fields">
+					<form action="{{route('posts')}}" method="post">
+					    @csrf
+						<div class="row">
+							<div class="col-lg-12">
+                                <label> Title </label>
+								<input type="text" name="title" placeholder="Title" required>
+							</div>
+						    <div class="col-lg-12">
+                                <label> Category </label>
+								<div class="inp-field">
+									<select name="category[]" class="multiple" id="category_p" multiple required>
+									@foreach($config['categories'] as $c)
+										<option value="{{$c->id}}" data-val="{{$c->name}}">{{$c->name}}</option>
+									@endforeach
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-12">
+                                <label> Skills  </label>
+								<div class="inp-field">
+									<select name="skill[]" class="multiple" id="skill_p" multiple required>
+									@foreach($config['skills'] as $s)
+										<option value="{{$s->id}}" data-val="{{$s->name}}">{{$s->name}}</option>
+									@endforeach
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-12">
+                                <label> Tags  </label>
+								<div class="inp-field">
+									<select name="tag[]" class="multiple" id="tag_p" multiple required>
+									@foreach($config['tags'] as $t)
+										<option value="{{$t->id}}" data-val="{{$t->name}}">{{$t->name}}</option>
+									@endforeach
+									</select>
+								</div>
+							</div>
+							<!--<div class="col-lg-6">
+								<div class="price-br">
+									<input type="text" name="price1" placeholder="Price">
+									<i class="la la-dollar"></i>
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<div class="inp-field">
+									<select>
+										<option>Full Time</option>
+										<option>Half time</option>
+									</select>
+								</div>
+							</div>-->
+							<div class="col-lg-12">
+                                <label> Description  </label>
+								<textarea name="description" placeholder="Description" required></textarea>
+							</div>
+							<div class="col-lg-12">
+								<ul>
+								  @auth
+									<li><button class="active" type="submit" value="post">Post</button></li>
+								  @else
+								    <li><a href="{{route('login')}}" class="active" type="button" value="post">Post</a></li>
+								  @endauth
+									<!--<li><a href="#" title="">Cancel</a></li>-->
+								</ul>
+							</div>
+						</div>
+					</form>
+				</div><!--post-project-fields end-->
+				<a href="#" title=""><i class="la la-times-circle-o"></i></a>
+			</div><!--post-project end-->
+		</div><!--post-project-popup end-->
+    </div>
+     <!-- Post a blog modal --> 
 
-    </div> 
+
+    <!-- Post a requirement -->
+    
+		<div class="post-popup pst-pj">
+			<div class="post-project">
+				<h3>Post a requirement</h3>
+				<div class="post-project-fields">
+					<form action="{{route('requirements')}}" method="post">
+					    @csrf
+						<div class="row">
+							<div class="col-lg-12">
+                                <label>Title </label>
+								<input type="text" name="title" placeholder="Title" required>
+							</div>
+							<div class="col-lg-12">
+                                <label>Category </label>
+								<div class="inp-field">
+									<select name="category[]" class="multiple" id="category_r" multiple required>
+									@foreach($config['categories'] as $c)
+										<option value="{{$c->id}}" data-val="{{$c->name}}">{{$c->name}}</option>
+									@endforeach
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-12">
+                            <label>Required Skill </label>
+								<div class="inp-field">
+									<select name="skill[]" class="multiple" id="skill_r" multiple required>
+									@foreach($config['skills'] as $s)
+										<option value="{{$s->id}}" data-val="{{$s->name}}">{{$s->name}}</option>
+									@endforeach
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-12">
+                            <label>Tags </label>
+								<div class="inp-field">
+									<select name="tag[]" class="form-control multiple" id="tag_r" multiple required>
+									@foreach($config['tags'] as $t)
+										<option value="{{$t->id}}" data-val="{{$t->name}}">{{$t->name}}</option>
+									@endforeach
+									</select>
+								</div>
+							</div>
+							<!--<div class="col-lg-12">
+								<div class="price-sec">
+									<div class="price-br">
+										<input type="text" name="price1" placeholder="Price">
+										<i class="la la-dollar"></i>
+									</div>
+									<span>To</span>
+									<div class="price-br">
+										<input type="text" name="price1" placeholder="Price">
+										<i class="la la-dollar"></i>
+									</div>
+								</div>
+							</div>-->
+							<div class="col-lg-12">
+                            <label>Description </label>
+								<textarea name="description" placeholder="Description" required></textarea>
+							</div>
+							<div class="col-lg-12">
+								<ul>
+								  @auth
+									<li><button class="active" type="submit" value="post">Post</button></li>
+								  @else
+								    <li><a href="{{route('login')}}" class="active" type="button" value="post">Post</a></li>
+								  @endauth
+									<!--<li><a href="#" title="">Cancel</a></li>-->
+								</ul>
+							</div>
+						</div>
+					</form>
+				</div><!--post-project-fields end-->
+				<a href="#" title=""><i class="la la-times-circle-o"></i></a>
+			</div><!--post-project end-->
+		</div><!--post-project-popup end-->
+    <!-- Post a requirement -->
     
     <script type="text/javascript" src="{{asset('front/js/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('front/js/popper.js')}}"></script>

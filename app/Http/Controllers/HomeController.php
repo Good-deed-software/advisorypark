@@ -14,13 +14,9 @@ class HomeController extends Controller
     
 	public function index() 
     {
-        // \DB::enableQueryLog();
-        $categories =   Category::where('status','1')->get();  
-        // dd(\DB::getQueryLog());
-        
-        
-        $skills     =   Skill::where('status','1')->get();
-        $tags       =   Tag::where('status','1')->get();
+        $config['categories'] =   Category::where('status','1')->get();       
+        $config['skills']     =   Skill::where('status','1')->get();
+        $config['tags']       =   Tag::where('status','1')->get();
     
         if(Auth::check()){
             $posts      =   Post::with('users','categories','comments')->where('created_by','!=',Auth::user()->id)->orderby('id','desc')->get();
@@ -29,7 +25,7 @@ class HomeController extends Controller
             $posts      =   Post::with('users','categories','comments')->orderby('id','desc')->get();
             $users      =   User::limit(5)->orderby('id','desc')->get();
         }
-		return view('index',compact('categories','skills','tags','posts','users'/*,'likes'*/));
+		return view('index',compact('config','posts','users'/*,'likes'*/));
        
     }
     
@@ -52,9 +48,12 @@ class HomeController extends Controller
             
             $saved_post = Save::with('posts','users')->where('user_id',Auth::user()->id)->where('status','1')->orderby('id','desc')->get();
             
-            // dd($saved_post);
+            $config['categories'] =   Category::where('status','1')->get();       
+            $config['skills']     =   Skill::where('status','1')->get();
+            $config['tags']       =   Tag::where('status','1')->get();
+
 		    
-		    return view('profile',compact('posts','following','follower','advisory_listings','advisory_request','saved_post'));
+		    return view('profile',compact('config','posts','following','follower','advisory_listings','advisory_request','saved_post'));
         
             
         }else{
@@ -110,11 +109,10 @@ class HomeController extends Controller
     
     public function advisory(Request $request)
     {   
+        $config['categories'] =   Category::where('status','1')->get();       
+        $config['skills']     =   Skill::where('status','1')->get();
+        $config['tags']       =   Tag::where('status','1')->get();
         if($request->search){
-            $categories =   Category::where('status','1')->get(); 
-            
-            $skills     =   Skill::where('status','1')->get();
-            $tags       =   Tag::where('status','1')->get();
             
            $advisory_listings = AdvisoryListing::where('listing_name', 'LIKE', '%'. $request->get('search'). '%')->get();
            
@@ -133,24 +131,15 @@ class HomeController extends Controller
             $comments   =   Comment::orderby('id','desc')->get();
         }
         else{
-            if(Auth::check()){
-               
-                $categories =   Category::where('status','1')->get(); 
+            if(Auth::check()){           
                 
-                $skills     =   Skill::where('status','1')->get();
-                $tags       =   Tag::where('status','1')->get();
                 
                 $advisory_listings = AdvisoryListing::orderby('id','desc')->where('added_by','!=',Auth::user()->id)->get();
                 
               
                 $comments   =   Comment::orderby('id','desc')->get();
             }else{
-                
-                $categories =   Category::where('status','1')->get(); 
-                
-                $skills     =   Skill::where('status','1')->get();
-                $tags       =   Tag::where('status','1')->get();
-                
+                        
                 // $advisory_listings = AdvisoryListing::orderby('id','desc')->where('added_by','!=',Auth::user()->id)->get();
                 $advisory_listings = AdvisoryListing::orderby('id','desc')->get();
                 
@@ -159,7 +148,7 @@ class HomeController extends Controller
             }
         }
        
-		return view('advisory',compact('categories','skills','tags','advisory_listings','comments'/*,'likes'*/));
+		return view('advisory',compact('config','advisory_listings','comments'/*,'likes'*/));
 
     }
 
@@ -205,8 +194,10 @@ class HomeController extends Controller
     public function accountSetting()
     {   
          $advisory_request = AdvisoryRequest::with('users')->where('listing_user_id',Auth::user()->id)->where('status','pending')->orderby('id','desc')->get();
-        
-		 return view('account-setting',compact('advisory_request'));
+         $config['categories'] =   Category::where('status','1')->get();       
+         $config['skills']     =   Skill::where('status','1')->get();
+         $config['tags']       =   Tag::where('status','1')->get();
+		 return view('account-setting',compact('advisory_request','config'));
        
     }
     

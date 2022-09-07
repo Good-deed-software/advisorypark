@@ -266,7 +266,7 @@ header {
 	float: left;
 	width: 100%;
 	background-color: #008069;
-	position:fixed;
+	/* position:fixed; */
 	z-index:1;
 }
 .header-data {
@@ -528,7 +528,7 @@ nav > ul > li > a:hover {
 
 .user-account {
 	float: right;
-	width: 111px;
+	width: 140px;
 	border-left: 1px solid #008069;
 	border-right: 1px solid #008069;
 	box-sizing: border-box;
@@ -1839,6 +1839,7 @@ main {
 	font-size: 18px;
 	font-weight: 500;
 	padding: 20px 0;
+	margin-bottom: 0px !important;
 }
 .post-project-fields {
 	float: left;
@@ -5444,4 +5445,29 @@ a:hover {
 
 .hit-voting {
   cursor: pointer;
+}
+input[type='radio']:checked:after {
+  background-color: #ffa500 !important;
+}
+input[type='radio']:after {
+  background-color: #ffa500 !important;
+}
+.select2-selection__rendered {
+    line-height: 31px !important;
+	height: 35px !important;
+}
+.select2-selection__rendered li {
+	height: 35px !important;
+}
+.select2-container .select2-search--inline .select2-search__field {
+	height: 35px !important;
+	margin-top: 0px !important;
+}
+span.select2.select2-container.select2-container--default.select2-container--below{
+	height: 35px !important;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice{
+	margin: 2px 5px 0px 2px !important;
+    padding: 0px 10px !important;
+	height: 27px !important;
 }
