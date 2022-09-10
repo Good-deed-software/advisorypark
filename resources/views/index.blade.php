@@ -116,7 +116,15 @@
 												</ul>
 											</div>
 											<div class="job_descp">
-											    <span class="badge badge-info float-right">{{$data->categories->name}}</span>
+												@php
+													$cats = getPostCategories($data->category);
+													$skills = getPostSkills($data->skill);
+													$tags = getPostTags($data->tag);
+												@endphp
+
+												@foreach($cats as $id => $name)
+											    	<span class="badge badge-info float-right mr-1">{{$name}}</span>
+												@endforeach
 												<a href="{{route('post_details',$data->slug)}}"><h3>{{$data->title}}</h3></a>
 												<!--<ul class="job-dt">
 													<li><a href="#" title="">Full Time</a></li>
@@ -125,29 +133,15 @@
 												<p class="more">{{$data->description}}</p> 
 												<!--<p>{{Str::limit($data->description,200)}} <a href="#" title="">view more</a></p>-->
 												
-												@php 
-												    $kk = \DB::select("select name from skills where id in ($data->skill)");
-												  
-												@endphp 
-												
-												
-												
 												<ul class="skills">
-												    @foreach($kk as $v)
-													<li><a href="#" title="">{{$v->name}}</a></li>
+												    @foreach($skills as $id => $name)
+													<li><a href="javascript:void(0);" title="">{{$name}}</a></li>
 													@endforeach
 												</ul>
 												
-												
-												
-												@php 
-												    $kk = \DB::select("select name from tags where id in ($data->tag)");
-												  
-												@endphp 
-												
 												<ul class="skill-tags">
-												    @foreach($kk as $v)
-													<li><a href="#" title="">{{$v->name}}</a></li>
+												    @foreach($tags as $id => $name)
+													<li><a href="javascript:void(0);" title="">{{$name}}</a></li>
 													@endforeach
 												</ul>
 											</div>
