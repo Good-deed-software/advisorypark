@@ -1,0 +1,13 @@
+[14-Jul-2022 17:04:49 Asia/Kolkata] PHP Fatal error:  Cannot redeclare App\Http\Controllers\HomeController::scheme_state_bihar() in /home/gooddeed/public_html/shreeji/app/Http/Controllers/HomeController.php on line 89
+[14-Jul-2022 17:05:07 Asia/Kolkata] PHP Fatal error:  Cannot redeclare App\Http\Controllers\HomeController::scheme_state_bihar() in /home/gooddeed/public_html/shreeji/app/Http/Controllers/HomeController.php on line 89
+[29-Jul-2022 12:36:59 Asia/Kolkata] PHP Fatal error:  Cannot use App\Http\Controllers\Admin\AuthController as AuthController because the name is already in use in /home4/searc9pv/advisorypark.com/routes/web.php on line 5
+[29-Jul-2022 12:38:53 Asia/Kolkata] PHP Fatal error:  Cannot use App\Http\Controllers\Admin\Auth\AuthController as AuthController because the name is already in use in /home4/searc9pv/advisorypark.com/routes/web.php on line 5
+[29-Jul-2022 12:41:34 Asia/Kolkata] PHP Fatal error:  Cannot use App\Http\Controllers\Admin\Auth\AuthController as AuthController because the name is already in use in /home4/searc9pv/advisorypark.com/routes/web.php on line 6
+[05-Aug-2022 18:57:11 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 400560128 bytes) in /home/gooddeed/public_html/advisorypark/app/Http/Controllers/HomeController.php on line 44
+[08-Aug-2022 10:27:25 UTC] PHP Notice:  Constant LARAVEL_START already defined in /home/gooddeed/public_html/advisorypark/public/index.php on line 6
+[08-Aug-2022 10:27:26 UTC] PHP Notice:  Constant LARAVEL_START already defined in /home/gooddeed/public_html/advisorypark/public/index.php on line 6
+[08-Aug-2022 10:28:00 UTC] PHP Notice:  Constant LARAVEL_START already defined in /home/gooddeed/public_html/advisorypark/public/index.php on line 6
+[08-Aug-2022 10:59:13 UTC] PHP Deprecated:  Directive 'allow_url_include' is deprecated in Unknown on line 0
+[08-Aug-2022 10:59:14 UTC] PHP Deprecated:  Directive 'allow_url_include' is deprecated in Unknown on line 0
+[08-Aug-2022 10:59:32 UTC] PHP Deprecated:  Directive 'allow_url_include' is deprecated in Unknown on line 0
+[08-Aug-2022 11:14:58 UTC] PHP Deprecated:  Directive 'allow_url_include' is deprecated in Unknown on line 0
