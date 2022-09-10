@@ -19,10 +19,10 @@ class HomeController extends Controller
         $config['tags']       =   Tag::where('status','1')->get();
     
         if(Auth::check()){
-            $posts      =   Post::with('users','categories','comments')->where('created_by','!=',Auth::user()->id)->orderby('id','desc')->get();
+            $posts      =   Post::with('users','comments')->where('created_by','!=',Auth::user()->id)->orderby('id','desc')->get();
             $users      =   User::where('id','!=',Auth::user()->id)->limit(5)->orderby('id','desc')->get();
         }else{
-            $posts      =   Post::with('users','categories','comments')->orderby('id','desc')->get();
+            $posts      =   Post::with('users','comments')->orderby('id','desc')->get();
             $users      =   User::limit(5)->orderby('id','desc')->get();
         }
 		return view('index',compact('config','posts','users'/*,'likes'*/));
@@ -264,7 +264,7 @@ class HomeController extends Controller
     
     public function posts(Request $request)
     {   
-		$data = $request->except(['_token']); 
+		$data = $request->except(['_token','id']); 
 	    
         $validator = Validator::make($request->all(), [
             'title'     => 'required', 
@@ -272,17 +272,36 @@ class HomeController extends Controller
             'skill'     => 'required', 
             'tag'       => 'required', 
         ]);
+
+        /* check if category is new*/
+        $new_cat = addNewCategory($request->category);
+        if(!empty($new_cat)){
+            $request->category = $new_cat;
+        }
+        /* check if skill is new*/
+        $new_skill = addNewSkill($request->skill);
+        if(!empty($new_skill)){
+            $request->skill = $new_skill;
+        }
+        /* check if tag is new */
+        $new_tag = addNewTag($request->skill);
+        if(!empty($new_tag)){
+            $request->tag = $new_tag;
+        }
         
         if ($validator->fails()){
             return back()->withInput()->withErrors($validator);
         }else{
+            if($request->file('image')){   
+                $imageName = time().'-'.$request->image->getClientOriginalName();
+                $request->image->move(public_path('front/images/posts'), $imageName);
+                $data['image'] = $imageName;
+            }
             
             $data['category'] = implode(',',$request->category);
             $data['skill'] = implode(',',$request->skill);
-            $data['tag'] = implode(',',$request->tag);
-            
-             $data['slug'] = Str::slug($request->title);
-            
+            $data['tag'] = implode(',',$request->tag); 
+            $data['slug'] = Str::slug($request->title);
             $data['created_by'] = Auth::user()->id;
             
             Post::create($data);
@@ -291,20 +310,87 @@ class HomeController extends Controller
         }
        
     }
+
+    public function postEdit($id)
+    {
+        $post = Post::find($id);
+        return response()->json($post);
+    }
     
     public function postDetails($slug)
     {   
-        
-        $categories =   Category::where('status','1')->get();
-        
-        $skills     =   Skill::where('status','1')->get();
-        $tags       =   Tag::where('status','1')->get();
+        $config['categories'] =   Category::where('status','1')->get();       
+        $config['skills']     =   Skill::where('status','1')->get();
+        $config['tags']       =   Tag::where('status','1')->get();
         
         $comments   =   Comment::orderby('id','desc')->get();
         
         $post = Post::with('users')->where('slug',$slug)->first();
         
-        return view('post-details',compact('post','categories','skills','tags','comments'));
+        return view('post-details',compact('post','config','comments'));
+    }
+
+    public function postUpdate(Request $request)
+    {   
+        if(!$request->id){
+            return redirect()->back()->withError('Something went wrong !');
+        }
+
+		$data = $request->except(['_token','id']); 
+	    
+        $validator = Validator::make($request->all(), [
+            'title'     => 'required', 
+            'category'  => 'required', 
+            'skill'     => 'required', 
+            'tag'       => 'required', 
+        ]);
+
+        /* check if category is new*/
+        $new_cat = addNewCategory($request->category);
+        if(!empty($new_cat)){
+            $request->category = $new_cat;
+        }
+        /* check if skill is new*/
+        $new_skill = addNewSkill($request->skill);
+        if(!empty($new_skill)){
+            $request->skill = $new_skill;
+        }
+        /* check if tag is new */
+        $new_tag = addNewTag($request->tag);
+        if(!empty($new_tag)){
+            $request->tag = $new_tag;
+        }
+        
+        if ($validator->fails()){
+            return back()->withInput()->withErrors($validator);
+        }else{
+            if($request->file('image')){   
+                $imageName = time().'-'.$request->image->getClientOriginalName();
+                $request->image->move(public_path('front/images/posts'), $imageName);
+                $data['image'] = $imageName;
+            }
+            
+            $data['category'] = implode(',',$request->category);
+            $data['skill'] = implode(',',$request->skill);
+            $data['tag'] = implode(',',$request->tag); 
+            $data['slug'] = Str::slug($request->title);
+            
+            Post::find($request->id)->update($data);
+            
+            return redirect()->back()->withSuccess('New Post Updated!');
+        }
+       
+    }
+
+    public function postDelete($id)
+    {
+        $post = Post::find($id);
+        $post->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => "Post deleted Successfully"
+        ]);
     }
     
     

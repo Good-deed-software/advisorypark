@@ -6,7 +6,7 @@
 		     @if(Auth::user()->cover_image !== null)
 			<img src='{{asset("front/images/users/$cover_image")}}' alt="" height="375px">
 			@else
-			<img src="http://via.placeholder.com/1600x400" alt="" height="375px">
+			<img src="https://via.placeholder.com/1600x400" alt="" height="375px">
 			@endif
 			<a href="#" id="cover" title=""><i class="fa fa-camera"></i> Change Cover</a>
 			<input type="file" id="my_cover" style="display: none;" data-id="{{Auth::user()->id}}" />
@@ -346,15 +346,26 @@
 													<li><a href="#" title="">Full Time</a></li>
 													<li><span>$30 / hr</span></li>
 												</ul>-->
+												@php
+													$cats = getPostCategories($data->category);
+													$skills = getPostSkills($data->skill);
+													$tags = getPostTags($data->tag);
+												@endphp
+
+												@foreach($cats as $id => $name)
+											    	<span class="badge badge-info float-right mr-1">{{$name}}</span>
+												@endforeach
 												<p class="more">{{$data->description}}</p>
-												@php 
-												    $kk = \DB::select("select name from tags where id in ($data->tag)");
-												  
-												@endphp 
+
+												<ul class="skills">
+												    @foreach($skills as $id => $name)
+													<li><a href="javascript:void(0);" title="">{{$name}}</a></li>
+													@endforeach
+												</ul>
 												
 												<ul class="skill-tags">
-												    @foreach($kk as $v)
-													<li><a href="#" title="">{{$v->name}}</a></li>
+												    @foreach($tags as $name)
+													<li><a href="javascript:void(0);" title="">{{$name}}</a></li>
 													@endforeach
 												</ul>
 											</div>
@@ -477,47 +488,32 @@
 												</div>
 												<div class="job_descp">
 												  
-												    @php 
-													
-												    $category = $data->posts->category;
-												
-												    $kk = \DB::select("select name from skills where id in ($category)");
-												 
-    												@endphp 
-												    @foreach($kk as $v)
-												    <span class="badge badge-info float-right">{{$v->name}}</span>
-    												@endforeach
+													@php
+														$cats = getPostCategories($data->posts->category);
+														$skills = getPostSkills($data->posts->skill);
+														$tags = getPostTags($data->posts->tag);
+													@endphp
+
+													@foreach($cats as $id => $name)
+														<span class="badge badge-info float-right mr-1">{{$name}}</span>
+													@endforeach
 												   <h3>{{$data->posts->title}}</h3>
 													<!--<ul class="job-dt">
 														<li><a href="#" title="">Full Time</a></li>
 														<li><span>$30 / hr</span></li>
 													</ul>-->
 													<p class="more">{{$data->posts->description}}</p>
-													
-													
-													@php 
-													
-													    $skill = $data->posts->skill;
-													
-    												    $kk = \DB::select("select name from skills where id in ($skill)");
-    												 
-    												@endphp 
     												
     												<ul class="skills">
-    												    @foreach($kk as $v)
-    													<li><a href="#" title="">{{$v->name}}</a></li>
+    												    @foreach($skills as $name)
+    													<li><a href="javascript:void(0);" title="">{{$name}}</a></li>
     													@endforeach
     												</ul>
-													
-													@php 
-													    $tag = $data->posts->tag;
-    												    $kk = \DB::select("select name from tags where id in ($tag)");
-    												  
-    												@endphp 
+
     												
     												<ul class="skill-tags">
-    												    @foreach($kk as $v)
-    													<li><a href="#" title="">{{$v->name}}</a></li>
+    												    @foreach($tags as $name)
+    													<li><a href="javascript:void(0);" title="">{{$name}}</a></li>
     													@endforeach
     												</ul>
 												</div>
@@ -965,11 +961,11 @@
                                                       <td>
                                                           
                                                         <li class="list-inline-item">
-                                                            <button class="btn btn-primary btn-sm rounded-0 edit" type="button" data-toggle="tooltip" data-placement="top" title="Edit" data-id="{{$data->id}}"><i class="fa fa-edit"></i></button>
+                                                            <button class="btn btn-info btn-sm edit mr-1 mb-1" type="button" data-toggle="tooltip" data-placement="top" title="Edit" data-id="{{$data->id}}"><i class="fa fa-edit"></i></button>
                                                             
                                                         </li>
                                                         <li class="list-inline-item">
-                                                            <button class="btn btn-danger btn-sm rounded-0 delete" type="button" data-toggle="tooltip" data-placement="top" title="Delete" data-id="{{$data->id}}" onclick="return confirm('Are You Sure?');"><i class="fa fa-trash"></i></button>
+                                                            <button class="btn btn-danger btn-sm delete" type="button" data-toggle="tooltip" data-placement="top" title="Delete" data-id="{{$data->id}}" onclick="return confirm('Are You Sure?');"><i class="fa fa-trash"></i></button>
                                                         </li>
                                                       </td>
                                                     </tr>
@@ -1080,26 +1076,38 @@
 											 <h3>
 											    <a href="#" title="" class="overview-open">My Post</a> 
 											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" style="background:#008069"><i class="fa fa-plus"></i> Add Business Profile</button>-->
-											    <button type="button" class="btn w-25 float-right " data-toggle="modal" data-target=".mypost-modal" style="background:#008069"><i class="fa fa-plus"></i> Add Post</button>
-										    </h3>
-										    <table class="table">
+											    <!-- <button type="button" class="btn w-25 float-right " data-toggle="modal" data-target=".mypost-modal" style="background:#008069"><i class="fa fa-plus"></i> Add Post</button> -->
+										    	<button type="button" class="btn w-25 float-right "style="background:#008069"><a class="post-jb active" href="#" title="">Add Post</a></button>
+											</h3>
+											<table class="table display responsive example" cellspacing="0" style="width:100%">
                                               <thead>
                                                 <tr>
                                                   <th scope="col">#</th>
                                                   <th scope="col">Post</th>
                                                   <th scope="col">Image</th>
-                                                  <th scope="col">Action</th>
-                                                  									
+                                                  <th scope="col">Action</th>							
                                                 </tr>
                                               </thead>
                                               <tbody>
+												@forelse($posts as $k => $post)
                                                 <tr>
-                                                  <th scope="row"></th>
-                                                  <td></td>
-                                                  <td></td>
-                                                  <td></td>
+													<th scope="row">{{++$k}}</th>
+													<td>{{$post->title}}</td>
+													<td>
+														@if(!empty($post->image))
+															<a target="_blank" href="{{url('front/images/posts/'.$post->image)}}"><img src="{{asset('front/images/posts/'.$post->image)}}" width="50px" class="" alt=""></a>
+														@else
+															N/A
+														@endif
+													</td>
+													<td>
+														<button class="btn btn-info btn-sm editPost mr-1" data-toggle="tooltip" data-placement="top" title="Edit" data-id="{{$post->id}}"><i class="fa fa-edit"></i></button>
+														<button class="btn btn-danger btn-sm deletePost" data-toggle="tooltip" data-placement="top" title="delete" data-id="{{$post->id}}"><i class="fa fa-trash"></i></button>
+													</td>
                                                 </tr>
-                                                
+												@empty
+													<td colspan=3>You haven't posted any post</td>
+												@endforelse
                                               </tbody>
                                             </table>
 										    
@@ -1658,7 +1666,7 @@
         
         
          <!-----------------------------------------------------My Post------------------------------------------------------------------------->
-        <div class="modal fade mypost-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+       <!--  <div class="modal fade mypost-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
              
@@ -1695,7 +1703,7 @@
                 </div>
             </div>
           </div>
-        </div>
+        </div> -->
         
 @endsection
 @push('js')
@@ -1717,27 +1725,19 @@
         }
     </style>
     <script>
-    
-          /*----open comment box-------*/
-    
+        /*----open comment box-------*/
         function openComment(id){
             console.log(id);
     
             $('#comment-box-'+id).slideToggle();
         }
     
-    
-        $(document).ready(function(){
-            
+        $(document).ready(function(){     
             $(".share").on('click',function(){
                 $(".social-media-icons").fadeToggle();
             });
-        
-            
             
             /*---------My Profile--------------*/
-            
-            
             $('#profile-form').validate({
                 rules: {
                     name : {
@@ -1838,11 +1838,9 @@
               },
             });
             
-            
-            
             $('[data-toggle="tooltip"]').tooltip();
             
-             $('#example').DataTable({
+			$('#example').DataTable({
                 responsive: {
                     details: {
                         type: 'column'
@@ -1855,7 +1853,15 @@
                 } ],
                 order: [ 1, 'asc' ]
             } );
-            
+
+			$('.example').DataTable({
+                responsive: {
+                    details: {
+                        type: 'column'
+                    }
+                }
+            } );
+
             /*---------Profile Image--------------*/
             $("a[id='image']").click(function() {
                 $("input[id='my_file']").click();
@@ -1904,7 +1910,7 @@
                 $("input[id='my_cover']").click();
             });
             
-             $("#my_cover").change(function() {
+			$("#my_cover").change(function() {
                
                 var cover_img = $(this).prop('files')[0];
                 var id = $(this).data('id');
@@ -1940,123 +1946,119 @@
                     }
                 });
                   
-             });
-             
+			});
              
             /*---------Advisory Listing--------------*/
-            
-            
-            $('#advisory-listing').validate({
-               submitHandler: function(form) 
-              {
-    
-                  var form = $('#advisory-listing')[0];
-                  var datas = new FormData(form); 
-                
-                  $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                  });
-                  $.ajax({
-                      url: "{{route('advisory-listing.create')}}", 
-                      type: "POST",             
-                      data: datas,
-                      cache: false,             
-                      processData: false,
-                      contentType: false,
-                      dataType: "json",  
-                      
-                      success: function(data) 
-                      {
-                        //  $('.loader_gif').css("display", "none");
-                        
-                            // $('#companydata').trigger("reset");
-                            // $('#modal-id').modal('hide');
-                         if(data.status == true){
-                            toastr.success("Success!", data.message);
-                            location.reload();
-                         }else{
-                            toastr.error("Opps!", data.message);
-                            location.reload();
-                         }
-                      }
-                  });
-                  return false;
-              },
-            });
-            
-            
-            $('body').on('click', '.edit', function () {
-                
-              var id = $(this).data('id');
-              
-              $.get("{{ url('advisory-listing-edit') }}" +'/' + id, function (data) {
-                  $('#exampleModalLabel1').html("Edit Advisory Listing");
-                  $('#saveBtn').text("Update");
-                  $('.advisory-listing-modal').modal('show');
-                  
-                  
-                  $('#id').val(data.id);
-                  $('#type').find('option[value="' + data.type + '"]').attr("selected", "selected");
-                  $('#category').find('option[value="' + data.category + '"]').attr("selected", "selected");
-                  $('#listing_name').val(data.listing_name);
-                  $('#duration_in_hours').val(data.duration_in_hours);
-                  $('#duration_in_minutes').val(data.duration_in_minutes);
-                  $('#fees').val(data.fees);
-                  $('#about_listing').val(data.about_listing);
-                  $('#experience').val(data.experience);
-                  $('#exp_in_years').val(data.exp_in_years);
-                  $('#exp_in_months').val(data.exp_in_months);
-                  
-                  var mode = JSON.parse(data.mode);
-                  $(".mode").each(function(x,y){
-                        if(mode.includes($(this).val())){
-                            $(this).attr('checked', true);
-                        }
-                  });
-              });
-              $('body').on('click', '#saveBtn', function () {
-                        
-                    
-                      var editid = $('#id').val();
-                    //   alert(editid);
-                    
-                      var edit_form = $('#advisory-listing')[0];
-                      var edit_datas = new FormData(edit_form); 
-                    //   alert(edit_datas.valid());
-    
-                      $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                      });
-                      $.ajax({
-                          url: "{{ url('advisory-listing-update') }}" +'/' + editid,
-                          type: "POST",             
-                          data: edit_datas,
-                          cache: false,             
-                          processData: false,
-                          contentType: false,
-                          dataType: "json",  
-                          
-                          success: function(data) 
-                          {
-                            //  $('.loader_gif').css("display", "none");
-                            
-                            $('#advisory-listing').trigger("reset");
-                            $('#advisory-listing-modal').modal('hide');
-                             if(data.status == true){
-                                toastr.success("Success!", data.message);
-                                //location.reload();
-                             }else{
-                                toastr.error("Opps!", data.message);
-                                //location.reload();
-                             }
-                          }
-                      });
-                    });
-            });
+			$('#advisory-listing').validate({
+			submitHandler: function(form) 
+			{
+	
+				var form = $('#advisory-listing')[0];
+				var datas = new FormData(form); 
+				
+				$.ajaxSetup({
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					}
+				});
+				$.ajax({
+					url: "{{route('advisory-listing.create')}}", 
+					type: "POST",             
+					data: datas,
+					cache: false,             
+					processData: false,
+					contentType: false,
+					dataType: "json",  
+					
+					success: function(data) 
+					{
+						//  $('.loader_gif').css("display", "none");
+						
+							// $('#companydata').trigger("reset");
+							// $('#modal-id').modal('hide');
+						if(data.status == true){
+							toastr.success("Success!", data.message);
+							location.reload();
+						}else{
+							toastr.error("Opps!", data.message);
+							location.reload();
+						}
+					}
+				});
+				return false;
+			},
+			});
+		
+			$('body').on('click', '.edit', function () {
+			
+				var id = $(this).data('id');
+			
+				$.get("{{ url('advisory-listing-edit') }}" +'/' + id, function (data) {
+				$('#exampleModalLabel1').html("Edit Advisory Listing");
+				$('#saveBtn').text("Update");
+				$('.advisory-listing-modal').modal('show');
+				
+				
+				$('#id').val(data.id);
+				$('#type').find('option[value="' + data.type + '"]').attr("selected", "selected");
+				$('#category').find('option[value="' + data.category + '"]').attr("selected", "selected");
+				$('#listing_name').val(data.listing_name);
+				$('#duration_in_hours').val(data.duration_in_hours);
+				$('#duration_in_minutes').val(data.duration_in_minutes);
+				$('#fees').val(data.fees);
+				$('#about_listing').val(data.about_listing);
+				$('#experience').val(data.experience);
+				$('#exp_in_years').val(data.exp_in_years);
+				$('#exp_in_months').val(data.exp_in_months);
+				
+				var mode = JSON.parse(data.mode);
+				$(".mode").each(function(x,y){
+						if(mode.includes($(this).val())){
+							$(this).attr('checked', true);
+						}
+				});
+			});
+			$('body').on('click', '#saveBtn', function () {
+					
+				
+					var editid = $('#id').val();
+				//   alert(editid);
+				
+					var edit_form = $('#advisory-listing')[0];
+					var edit_datas = new FormData(edit_form); 
+				//   alert(edit_datas.valid());
+
+					$.ajaxSetup({
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					}
+					});
+					$.ajax({
+						url: "{{ url('advisory-listing-update') }}" +'/' + editid,
+						type: "POST",             
+						data: edit_datas,
+						cache: false,             
+						processData: false,
+						contentType: false,
+						dataType: "json",  
+						
+						success: function(data) 
+						{
+						//  $('.loader_gif').css("display", "none");
+						
+						$('#advisory-listing').trigger("reset");
+						$('#advisory-listing-modal').modal('hide');
+							if(data.status == true){
+							toastr.success("Success!", data.message);
+							//location.reload();
+							}else{
+							toastr.error("Opps!", data.message);
+							//location.reload();
+							}
+						}
+					});
+				});
+			});
             
             /*----show more/show less-------*/
             var showChar = 200;  
@@ -2092,8 +2094,76 @@
                 $(this).prev().toggle();
                 return false;
             });
-            
-        });      
+
+
+			/* Posts Edit Popup */
+
+			$('body').on('click', '.editPost', function () {
+                
+				var id = $(this).data('id');
+				let route = "{{route('post.update')}}";
+
+		  
+			  	$.get("{{ url('post-edit') }}" +'/' + id, function (data) {
+					$("#post_form").attr('action',route);
+
+					$('#saveBtn').text("Update");
+					$(".post-popup.job_post").addClass("active");
+        			$(".wrapper").addClass("overlay");
+					
+					$('#post_id').val(data.id);
+					$('#post_title').val(data.title);
+					
+					var categories = data.category.split(',');
+					var skills = data.skill.split(',');
+					var tags = data.tag.split(',');
+
+					$('#category_p').val(categories);
+					$('#category_p').trigger("change");
+
+					$('#skill_p').val(skills);
+					$('#skill_p').trigger("change");
+					
+					$('#tag_p').val(tags);
+					$('#tag_p').trigger("change");
+
+					$('#post_description').text(data.description);
+				});
+			}); 
+			/* Posts Edit Popup */
+			/* Posts delete */
+			$(".deletePost").click(function(){
+				let r = confirm('Do you really want to delete this post ?');
+
+				if(r == true){
+					var id = $(this).data("id");
+					var token = "{{csrf_token()}}";
+					$.ajax(
+					{
+						url: "{{ url('post-delete') }}" +'/' + id,
+						type: 'Delete',
+						dataType: "JSON",
+						data: {
+							"id": id,
+							"_method": 'DELETE',
+							"_token": token,
+						},
+						success: function (data)
+						{
+							if(data.status == true){
+									toastr.error("Success!", data.message);
+									location.reload();
+							}else{
+								toastr.error("Opps!", data.message);
+								location.reload();
+							}
+						}
+					});
+				}
+
+			});
+			/* Posts delete */
+		});      
             
     </script>
     

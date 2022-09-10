@@ -66,9 +66,13 @@ Route::get('messages',[App\Http\Controllers\HomeController::class,'messages'])->
 
 Route::post('requirements',[App\Http\Controllers\HomeController::class,'requirements'])->name('requirements');
 
-Route::post('posts',[App\Http\Controllers\HomeController::class,'posts'])->name('posts');
-
+/* POSTS  */
+Route::post('post-store',[App\Http\Controllers\HomeController::class,'posts'])->name('post.store');
 Route::get('post-details/{slug}',[App\Http\Controllers\HomeController::class,'postDetails'])->name('post_details');
+Route::get('post-edit/{id}',[App\Http\Controllers\HomeController::class,'postEdit'])->name('post.edit');
+Route::post('post-update',[App\Http\Controllers\HomeController::class,'postUpdate'])->name('post.update');
+Route::delete('post-delete/{id}',[App\Http\Controllers\HomeController::class,'postDelete'])->name('post.delete');
+/* POSTS  */
 
 Route::get('like',[App\Http\Controllers\HomeController::class,'like'])->name('like');
 

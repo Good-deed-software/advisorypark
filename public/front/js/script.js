@@ -19,6 +19,13 @@ $(window).on("load", function() {
     //  ============= POST JOB POPUP FUNCTION =========
 
     $(".post-jb").on("click", function(){
+        $('#post_form').find("input").not(':button, :submit,[name="_token"]').val(""); //reset all input
+        $('#post_form').find("textarea").text(""); //reset all textarea
+        $('#post_form').find("select").val("").trigger("change"); //reset all select options
+
+        let route = window.location.origin;
+        $('#post_form').attr('action',route+'/post-store');
+
         $(".post-popup.job_post").addClass("active");
         $(".wrapper").addClass("overlay");
         return false;

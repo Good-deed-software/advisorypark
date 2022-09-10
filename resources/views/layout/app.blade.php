@@ -56,15 +56,16 @@
 			<div class="post-project">
 				<h3>Post</h3>
 				<div class="post-project-fields">
-					<form action="{{route('posts')}}" method="post">
+					<form action="" id="post_form" method="post" enctype="multipart/form-data">
 					    @csrf
+						<input type="hidden" name="id" id="post_id" value="">
 						<div class="row">
 							<div class="col-lg-12">
-                                <label> Title </label>
-								<input type="text" name="title" placeholder="Title" required>
+                                <label> Title <span class="text-danger">*</span></label>
+								<input type="text" id="post_title" name="title" placeholder="Title" required>
 							</div>
 						    <div class="col-lg-12">
-                                <label> Category </label>
+                                <label> Category <span class="text-danger">*</span></label>
 								<div class="inp-field">
 									<select name="category[]" class="multiple" id="category_p" multiple required>
 									@foreach($config['categories'] as $c)
@@ -74,7 +75,7 @@
 								</div>
 							</div>
 							<div class="col-lg-12">
-                                <label> Skills  </label>
+                                <label> Skills  <span class="text-danger">*</span></label>
 								<div class="inp-field">
 									<select name="skill[]" class="multiple" id="skill_p" multiple required>
 									@foreach($config['skills'] as $s)
@@ -84,7 +85,7 @@
 								</div>
 							</div>
 							<div class="col-lg-12">
-                                <label> Tags  </label>
+                                <label> Tags  <span class="text-danger">*</span></label>
 								<div class="inp-field">
 									<select name="tag[]" class="multiple" id="tag_p" multiple required>
 									@foreach($config['tags'] as $t)
@@ -92,6 +93,10 @@
 									@endforeach
 									</select>
 								</div>
+							</div>
+							<div class="col-lg-12">
+    				            <label>Upload Image</label>
+    				            <input type="file" class="form-control" name="image" accept="image/*">
 							</div>
 							<!--<div class="col-lg-6">
 								<div class="price-br">
@@ -109,7 +114,7 @@
 							</div>-->
 							<div class="col-lg-12">
                                 <label> Description  </label>
-								<textarea name="description" placeholder="Description" required></textarea>
+								<textarea name="description" id="post_description" placeholder="Description" required></textarea>
 							</div>
 							<div class="col-lg-12">
 								<ul>
@@ -242,6 +247,15 @@
             @elseif(Session::has('success'))
                 toastr.success("{{ Session::get('success') }}");
             @endif
+
+
+			/* SELECT2 multiple */
+			$(".multiple").select2({
+                placeholder: "Select",
+                allowClear: true,
+                tags: true
+            });
+			/* SELECT2 multiple */
     </script>
 
     

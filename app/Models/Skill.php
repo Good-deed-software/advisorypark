@@ -12,4 +12,21 @@ class Skill extends Model
     protected $table = 'skills';
     
     protected $guarded = ['id'];
+
+    public function addNewSkills($arr)
+    {
+        $skiils_id = [];
+        $_this = new self;
+        
+        if(!empty($arr)){
+            foreach($arr as $v){
+                $insert = $_this->create(['name' => $v]);
+                $skiils_id[] = $insert->id;
+            }
+    
+            return $skiils_id;
+        }else{
+            return [];
+        }
+    }
 }

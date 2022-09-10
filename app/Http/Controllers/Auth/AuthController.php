@@ -140,7 +140,9 @@ class AuthController extends Controller
     
     public function logout()
     {   
-        User::whereId(Auth::user()->id)->update(['is_active'=>0]);
+        if(Auth::check()){
+            User::whereId(Auth::user()->id)->update(['is_active'=>0]);
+        }
         Auth::logout();
 
         return redirect()->route('login')->with('error', 'Logout Successfully.');
