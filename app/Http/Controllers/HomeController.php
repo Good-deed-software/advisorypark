@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{User,Category,Skill,Tag,Requirement,Post,Like,Comment,Save,Following,Follower,AdvisoryListing,AdvisoryRequest};
+use App\Models\{User,Category,Skill,Tag,Requirement,Post,Like,Comment,Save,Following,Follower,AdvisoryListing,AdvisoryRequest,BusinessProfile};
 use Auth;
 use Validator;
 use Illuminate\Support\Str;
@@ -43,6 +43,8 @@ class HomeController extends Controller
             $follower   =  Follower::where('auth_id',Auth::user()->id)->where('status',1)->count();
          
             $advisory_listings = AdvisoryListing::orderby('id','desc')->get();
+            
+            $business_profile = BusinessProfile::orderby('id','desc')->get();
          
             $advisory_request = AdvisoryRequest::with('users')->where('listing_user_id',Auth::user()->id)->orderby('id','desc')->get();
             
@@ -53,7 +55,7 @@ class HomeController extends Controller
             $config['tags']       =   Tag::where('status','1')->get();
 
 		    
-		    return view('profile',compact('config','posts','following','follower','advisory_listings','advisory_request','saved_post'));
+		    return view('profile',compact('config','posts','following','follower','advisory_listings','advisory_request','saved_post','business_profile'));
         
             
         }else{
@@ -652,12 +654,80 @@ class HomeController extends Controller
     
     
     public function advisoryListingDelete($id)
-    {
+    {   
+        
         AdvisoryListing::find($id)->delete();
       
         return response()->json(['status'=>false,'message'=>'Advisory Listing Deleted!']);
     }
    
+    public function businessProfileCreate(Request $request)
+    {   
+       
+        $data = $request->except(['_token','id']); 
+
+        $images=array();
+            if($files=$request->file('org_images')){
+                foreach($files as $file){
+                    $imageName = $file->getClientOriginalName();
+                    $file->move(public_path('front/images/business_profile'),$imageName);
+                    $images[] = $imageName;
+                }
+                $data['org_images'] = implode(',',$images);
+            }
+           
+        $data['user_id'] = Auth::user()->id;
+        $data['nature_of_business'] = json_encode($request->nature_of_business);
+
+        // dd($data);
+	    if($data){
+            BusinessProfile::create($data);
+            
+            return response()->json(['status'=>true,'message'=>'Business Profile Added!']);
+        }else{
+            return response()->json(['status'=>false,'message'=>'Something went wrong!']);
+        }
+    }
     
+     public function businessProfileEdit($id)
+    {
+        $data = BusinessProfile::find($id);
+        return response()->json($data);
+    }
+    
+    public function businessProfileUpdate(Request $request)
+    {   
+       
+        $data = $request->except(['_token','method']); 
+        
+        $images=array();
+            if($files=$request->file('org_images')){
+                foreach($files as $file){
+                    $imageName = $file->getClientOriginalName();
+                    $file->move(public_path('front/images/business_profile'),$imageName);
+                    $images[] = $imageName;
+                }
+                $data['org_images'] = implode(',',$images);
+            }
+           
+        $data['nature_of_business'] = json_encode($request->nature_of_business);
+        
+        if($data){
+            BusinessProfile::whereId($request->id)->update($data);
+            
+            return response()->json(['status'=>true,'message'=>'Business Profile Updated!']);
+        }else{
+            return response()->json(['status'=>false,'message'=>'Something went wrong!']);
+        }
+    }
+    
+    
+    public function businessProfileDelete($id)
+    {   
+        
+        BusinessProfile::find($id)->delete();
+      
+        return response()->json(['status'=>false,'message'=>'Business Profile Deleted!']);
+    }
 
 }

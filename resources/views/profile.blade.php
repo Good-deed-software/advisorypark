@@ -887,7 +887,7 @@
 											 <h3>
 											    <a href="#" title="" class="overview-open">Business Profile</a> 
 											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" style="background:#008069"><i class="fa fa-plus"></i> Add Business Profile</button>-->
-											    <button type="button" class="btn w-25 float-right " data-toggle="modal" data-target=".business-profile-modal" style="background:#008069"><i class="fa fa-plus"></i> Add Business Profile</button>
+											    <button type="button" class="btn w-25 float-right business-profile-jb" data-toggle="modal" data-target=".business-profile-modal" style="background:#008069"><i class="fa fa-plus"></i> Add Business Profile</button>
 
                     
 										    </h3>
@@ -896,18 +896,30 @@
                                                 <tr>
                                                   <th scope="col">#</th>
                                                   <th scope="col">Name of the Organization</th>
-                                                  <th scope="col"></th>
-                                                  <th scope="col"></th>
+                                                  <th scope="col">State</th>
+                                                  <th scope="col">City</th>
+                                                  <th scope="col">Action</th>
                                                 </tr>
                                               </thead>
                                               <tbody>
+												@foreach($business_profile as $k=>$data)
                                                 <tr>
-                                                  <th scope="row"></th>
-                                                  <td></td>
-                                                  <td></td>
-                                                  <td></td>
+                                                  <th scope="row">{{++$k}}</th>
+                                                  <td>{{$data->org_name}}</td>
+                                                  <td>{{$data->state}}</td>
+                                                  <td>{{$data->city}}</td>
+												  <td>
+                                                          
+                                                        <li class="list-inline-item">
+                                                            <button class="btn btn-primary btn-sm rounded-0 editbp" type="button" data-toggle="tooltip" data-placement="top" title="Edit" data-id="{{$data->id}}"><i class="fa fa-edit"></i></button>
+                                                            
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <button class="btn btn-danger btn-sm rounded-0 deletebp" type="button" data-toggle="tooltip" data-placement="top" title="Delete" data-id="{{$data->id}}" onclick="return confirm('Are You Sure?');"><i class="fa fa-trash"></i></button>
+                                                        </li>
+                                                      </td>
                                                 </tr>
-                                                
+                                                @endforeach
                                               </tbody>
                                             </table>
 										    
@@ -921,7 +933,7 @@
 											 <h3>
 											    <a href="#" title="" class="overview-open">Advisory Listing</a> 
 											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" style="background:#008069"><i class="fa fa-plus"></i> Add Business Profile</button>-->
-											    <button type="button" class="btn w-25 float-right " data-toggle="modal" data-target=".advisory-listing-modal" style="background:#008069"><i class="fa fa-plus"></i> Add Advisory Listing</button>
+											    <button type="button" class="btn w-25 float-right advisory-listing-jb" data-toggle="modal" data-target=".advisory-listing-modal" style="background:#008069"><i class="fa fa-plus"></i> Add Advisory Listing</button>
 										    </h3>
 										    <!--<table class="table">-->
 										    <div class="table-responsive">
@@ -1089,7 +1101,7 @@
                                                 </tr>
                                               </thead>
                                               <tbody>
-												@forelse($posts as $k => $post)
+												@foreach($posts as $k => $post)
                                                 <tr>
 													<th scope="row">{{++$k}}</th>
 													<td>{{$post->title}}</td>
@@ -1105,9 +1117,7 @@
 														<button class="btn btn-danger btn-sm deletePost" data-toggle="tooltip" data-placement="top" title="delete" data-id="{{$post->id}}"><i class="fa fa-trash"></i></button>
 													</td>
                                                 </tr>
-												@empty
-													<td colspan=3>You haven't posted any post</td>
-												@endforelse
+												@endforeach
                                               </tbody>
                                             </table>
 										    
@@ -1351,186 +1361,206 @@
              
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Business Profile</h5>
+                    <h5 class="modal-title" id="exampleModalLabel1">Add Business Profile</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <div class="modal-body">
-                     <div class="container">
-                          <div class="row mb-2">
-        				    <div class="col-md-6">
-        				            <label>Name of the Organization<span class="text-danger">*</span></label>
-        				            <input type="text" class="form-control" name="name" value="" placeholder="Name of the Organization" >
-        				        </div>
-        				       
-        				  </div>
-        				  <div class="row mb-2">
-        				    
-        				    <div class="col-md-12">
-    				          <h6>Address of the Organization</h6>
-    				        </div>
-        				    <div class="col-md-6">
-    				            <label>Line 1<span class="text-danger">*</span></label>
-    				            <input type="text" class="form-control" name="address_line_1" value="" placeholder="Line 1" >
-    				        </div>
-        				     <div class="col-md-6">
-    				            <label>Line 2</label>
-    				            <input type="text" class="form-control" name="address_line_2" value="" placeholder="Line 2" >
-    				        </div>  
-        				  </div>
-        				  <div class="row mb-2">
-					        <div class="col-md-6">
-					            <label>Country<span class="text-danger">*</span></label>
-					            <select class="form-control" name="country">
-					                <option selected>India</option>
-					            </select>
-					        </div>
-					        <div class="col-md-6">
-					            <label>State<span class="text-danger">*</span></label>
-					            <select class="form-control" name="state">
-					                <option selected>Select</option>
-					                <option value="Andhra Pradesh" >Andhra Pradesh</option>
-					                <option value="Andaman and Nicobar Islands" >Andaman and Nicobar Islands</option>
-					                <option value="Arunachal Pradesh" >Arunachal Pradesh</option>
-					                <option value="Assam" >Assam</option>
-					                <option value="Bihar" >Bihar</option>
-					                <option value="Chattisgarh" >Chattisgarh</option>
-					                <option value="Chandigarh" >Chandigarh</option>
-					                <option value="Dadra and Nagar Haveli and Daman & Diu">Dadra and Nagar Haveli and Daman & Diu</option>
-					                <option value="Delhi" >Delhi</option>
-					                <option value="Goa" >Goa</option>
-					                <option value="Gujarat" >Gujarat</option>
-					                <option value="Haryana" >Haryana</option>
-					                <option value="Himachal Pradesh">Himachal Pradesh</option>
-					                <option value="Jammu & Kashmir" >Jammu & Kashmir</option>
-					                <option value="Jharkhand" >Jharkhand</option>
-					                <option value="Karnataka">Karnataka</option>
-					                <option value="Kerala" >Kerala</option>
-					                <option value="Ladakh" >Ladakh</option>
-					                <option value="Lakshadweep" >Lakshadweep</option>
-					                <option value="Madhya Pradesh">Madhya Pradesh</option>
-					                <option value="Maharashtra" >Maharashtra</option>
-					                <option value="Manipur" >Manipur</option>
-					                <option value="Meghalaya" >Meghalaya</option>
-					                <option value="Mizoram" >Mizoram</option>
-					                <option value="Nagaland" >Nagaland</option>
-					                <option value="Odisha" >Odisha</option>
-					                <option value="Puducherry" >Puducherry</option>
-					                <option value="Punjab" >Punjab</option>
-					                <option value="Rajasthan" >Rajasthan</option>
-					                <option value="Sikkim" >Sikkim</option>
-					                <option value="Tamil Nadu" >Tamil Nadu</option>
-					                <option value="Telangana" >Telangana</option>
-					                <option value="Tripura">Tripura</option>
-					                <option value="Uttarakhand" >Uttarakhand</option>
-					                <option value="Uttar Pradesh" >Uttar Pradesh</option>
-					                <option value="West Bengal" >West Bengal</option>
+				  	<form action="#" id="business-profile" onsubmit="return false;">
+						<div class="modal-body">
+							<div class="container">
+							<input type="hidden" name="id" id="bpid" value="">
+								<div class="row mb-2">
+									<div class="col-md-6">
+											<label>Name of the Organization<span class="text-danger">*</span></label>
+											<input type="text" class="form-control" name="org_name" id="org_name" value="" placeholder="Name of the Organization" >
+										</div>
+									
+								</div>
+								<div class="row mb-2">
+									
+									<div class="col-md-12">
+									<h6>Address of the Organization</h6>
+									</div>
+									<div class="col-md-6">
+										<label>Line 1<span class="text-danger">*</span></label>
+										<input type="text" class="form-control" name="org_address_line_1" id="org_address_line_1"  value="" placeholder="Line 1" >
+									</div>
+									<div class="col-md-6">
+										<label>Line 2</label>
+										<input type="text" class="form-control" name="org_address_line_2" id="org_address_line_1" value="" placeholder="Line 2" >
+									</div>  
+								</div>
+								<div class="row mb-2">
+									<div class="col-md-6">
+										<label>Country<span class="text-danger">*</span></label>
+										<select class="form-control" name="country" id="country">
+											<option value="" selected>India</option>
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label>State<span class="text-danger">*</span></label>
+										<select class="form-control" name="state" id="state">
+											<option value="" selected>Select State</option>
+											<option value="Andhra Pradesh" >Andhra Pradesh</option>
+											<option value="Andaman and Nicobar Islands" >Andaman and Nicobar Islands</option>
+											<option value="Arunachal Pradesh" >Arunachal Pradesh</option>
+											<option value="Assam" >Assam</option>
+											<option value="Bihar" >Bihar</option>
+											<option value="Chattisgarh" >Chattisgarh</option>
+											<option value="Chandigarh" >Chandigarh</option>
+											<option value="Dadra and Nagar Haveli and Daman & Diu">Dadra and Nagar Haveli and Daman & Diu</option>
+											<option value="Delhi" >Delhi</option>
+											<option value="Goa" >Goa</option>
+											<option value="Gujarat" >Gujarat</option>
+											<option value="Haryana" >Haryana</option>
+											<option value="Himachal Pradesh">Himachal Pradesh</option>
+											<option value="Jammu & Kashmir" >Jammu & Kashmir</option>
+											<option value="Jharkhand" >Jharkhand</option>
+											<option value="Karnataka">Karnataka</option>
+											<option value="Kerala" >Kerala</option>
+											<option value="Ladakh" >Ladakh</option>
+											<option value="Lakshadweep" >Lakshadweep</option>
+											<option value="Madhya Pradesh">Madhya Pradesh</option>
+											<option value="Maharashtra" >Maharashtra</option>
+											<option value="Manipur" >Manipur</option>
+											<option value="Meghalaya" >Meghalaya</option>
+											<option value="Mizoram" >Mizoram</option>
+											<option value="Nagaland" >Nagaland</option>
+											<option value="Odisha" >Odisha</option>
+											<option value="Puducherry" >Puducherry</option>
+											<option value="Punjab" >Punjab</option>
+											<option value="Rajasthan" >Rajasthan</option>
+											<option value="Sikkim" >Sikkim</option>
+											<option value="Tamil Nadu" >Tamil Nadu</option>
+											<option value="Telangana" >Telangana</option>
+											<option value="Tripura">Tripura</option>
+											<option value="Uttarakhand" >Uttarakhand</option>
+											<option value="Uttar Pradesh" >Uttar Pradesh</option>
+											<option value="West Bengal" >West Bengal</option>
 
-					            </select>
-					        </div>
-					        
-					    </div>
-        				  <div class="row mb-2">
-        				        <div class="col-md-6">
-					            <label>City<span class="text-danger">*</span></label>
-    					            <input type="text" name="city" class="form-control" value="">
-    					        </div>
-        				        
-        				        <div class="col-md-6">
-        				            <label>Pincode</label>
-        				            <input type="number" class="form-control" name="pincode" value="" placeholder="Pincode" >
-        				        </div>
-        				       
-        				    </div>
-        				   <div class="row">
-				                 <div class="col-md-12">
-    				                <label>Type of the Organisation<span class="text-danger">*</span></label>
-    				             </div>
-            				     <div class="col-md-3">
-        				            <input type="radio" class="organization_type" name="organization_type" value="Properitorship" > Properitorship
-        				         </div>
-        				         <div class="col-md-3">
-        				            <input type="radio" class="organization_type" name="organization_type" value="Partnership" > Partnership
-        				         </div>
-        				         <div class="col-md-3">
-        				            <input type="radio" class="organization_type" name="organization_type" value="Private Limited" > Private Limited
-        				         </div>
-        				         <div class="col-md-3">
-        				            <input type="radio" class="organization_type" name="organization_type" value="Public Limited" > Public Limited
-        				         </div>
-        				         <div class="col-md-3">
-        				            <input type="radio" class="organization_type" name="organization_type" value="LLP" > LLP
-        				         </div>
-        				         <div class="col-md-3">
-        				            <input type="radio" class="organization_type" name="organization_type" value="Listed Co." > Listed Co.
-        				         </div>
-        				         <div class="col-md-3">
-        				            <input type="radio" class="organization_type" name="organization_type" value="Other" > Other
-        				         </div>
-            				</div>
-        				   
-    				       <div class="row mb-2">
-        				        <div class="col-md-12">
-        				            <label>Write about your Organisation<span class="text-danger">*</span></label>
-        				            <textarea class="form-control" name="about_organisation" id="about_organisation" placeholder="Write about how your advise is beneficial for others" ></textarea>
-    				            </div>
-    				        </div>
-        				   <div class="row mb-2">
-    				        
-    				            <div class="col-md-12">
-    				                <label>Upload Organisation Pictures</label>
-    				                <input type="file" class="form-control" name="org_images[]" required>
-    				            </div>
-    				        
-    				        </div>
-    				        <div class="row mb-2">
-        				        <div class="col-md-12">
-        				            <label>Orgnisation is ISO Certified 
-        				                <input type="radio" name="ios_cert" class="ios_cert" value="1">Yes
-        				                <input type="radio" name="ios_cert" class="ios_cert" value="0">Not now
-        				            </label>
-        				            <textarea class="form-control" name="about_organisation" id="about_organisation" placeholder="Add Your ISO certification like ISO 9001:2015, ISO 14001, ISO 18001 etc." ></textarea>
-    				            </div>
-    				        </div>
-    				        <div class="row mb-2">
-        				        <div class="col-md-12">
-        				            <label>Any Accomplishment/awards/honer/achievements
-        				                <input type="radio" name="achievement" class="achievement" value="1">Yes
-        				                <input type="radio" name="achievement" class="achievement" value="0">Not now
-        				            </label>
-        				            <textarea class="form-control" name="about_achievement" id="about_achievement" placeholder="Write Something..." ></textarea>
-    				            </div>
-    				        </div>
-    				        <div class="row mb-2">
-        				        <div class="col-md-12">
-        				            <label>Have registered trademark
-        				                <input type="radio" name="trademark" class="trademark" value="1">Yes
-        				                <input type="radio" name="trademark" class="trademark" value="0">Not now
-        				            </label>
-        				            <textarea class="form-control" name="about_trademark" id="about_trademark" placeholder="Name of the Trademark" ></textarea>
-    				            </div>
-    				        </div>
-    				        <div class="row">
-				                 <div class="col-md-12">
-    				                <label>Please select your business is related<span class="text-danger">*</span></label>
-    				             </div>
-            				     <div class="col-md-3">
-        				            <input type="radio" class="business_sector" name="business_sector" value="Product Sector" > Product Sector
-        				         </div>
-        				         <div class="col-md-3">
-        				            <input type="radio" class="business_sector" name="business_sector" value="Service Sector" > Service Sector
-        				         </div>
-        				         <div class="col-md-3">
-        				            <input type="radio" class="business_sector" name="business_sector" value="Both" > Both
-        				         </div>
-        				         
-            				</div>
-                      </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn " style="background:#008069">Save</button>
-                  </div>
+										</select>
+									</div>
+									
+								</div>
+								<div class="row mb-2">
+										<div class="col-md-6">
+										<label>City<span class="text-danger">*</span></label>
+											<input type="text" name="city" id="city" placeholder="City" class="form-control" value="">
+										</div>
+										
+										<div class="col-md-6">
+											<label>Pincode</label>
+											<input type="number" class="form-control" id="pincode" name="pincode" value="" placeholder="Pincode" >
+										</div>
+									
+									</div>
+								<div class="row">
+										<div class="col-md-12">
+											<label>Type of the Organisation<span class="text-danger">*</span></label>
+										</div>
+										<div class="col-md-3">
+											<input type="radio" class="org_type" name="org_type" value="Properitorship" > Properitorship
+										</div>
+										<div class="col-md-3">
+											<input type="radio" class="org_type" name="org_type" value="Partnership" > Partnership
+										</div>
+										<div class="col-md-3">
+											<input type="radio" class="org_type" name="org_type" value="Private Limited" > Private Limited
+										</div>
+										<div class="col-md-3">
+											<input type="radio" class="org_type" name="org_type" value="Public Limited" > Public Limited
+										</div>
+										<div class="col-md-3">
+											<input type="radio" class="org_type" name="org_type" value="LLP" > LLP
+										</div>
+										<div class="col-md-3">
+											<input type="radio" class="org_type" name="org_type" value="Listed Co." > Listed Co.
+										</div>
+										<div class="col-md-3">
+											<input type="radio" class="org_type" name="org_type" value="Other" > Other
+										</div>
+									</div>
+								
+								<div class="row mb-2">
+										<div class="col-md-12">
+											<label>Write about your Organisation<span class="text-danger">*</span></label>
+											<textarea class="form-control" name="about_org" id="about_org" placeholder="Write about how your advise is beneficial for others" ></textarea>
+										</div>
+									</div>
+								<div class="row mb-2">
+									
+										<div class="col-md-12">
+											<label>Upload Organisation Pictures</label>
+											<input type="file" class="form-control" name="org_images[]" multiple >
+											<br>
+											
+										</div>
+									
+									</div>
+									<div class="row mb-2">
+										<div class="col-md-12">
+											<label>Orgnisation is ISO Certified 
+												<input type="radio" name="iso_cert" class="iso_cert" value="1">Yes
+												<input type="radio" name="iso_cert" class="iso_cert" value="0">Not now
+											</label>
+											<textarea class="form-control" name="desc_iso_cert" id="desc_iso_cert" placeholder="Add Your ISO certification like ISO 9001:2015, ISO 14001, ISO 18001 etc." ></textarea>
+										</div>
+									</div>
+									<div class="row mb-2">
+										<div class="col-md-12">
+											<label>Any Accomplishment/awards/honer/achievements
+												<input type="radio" name="achievement" class="achievement" value="1">Yes
+												<input type="radio" name="achievement" class="achievement" value="0">Not now
+											</label>
+											<textarea class="form-control" name="desc_achievement" id="desc_achievement" placeholder="Write Something..." ></textarea>
+										</div>
+									</div>
+									<div class="row mb-2">
+										<div class="col-md-12">
+											<label>Have registered trademark
+												<input type="radio" name="trademark" class="trademark" value="1">Yes
+												<input type="radio" name="trademark" class="trademark" value="0">Not now
+											</label>
+											<textarea class="form-control" name="desc_trademark" id="desc_trademark" placeholder="Name of the Trademark" ></textarea>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<label>Please select your business is related<span class="text-danger">*</span></label>
+										</div>
+										<div class="col-md-3">
+											<input type="radio" class="business_sector" name="business_sector" value="Product Sector" > Product Sector
+										</div>
+										<div class="col-md-3">
+											<input type="radio" class="business_sector" name="business_sector" value="Service Sector" > Service Sector
+										</div>
+										<div class="col-md-3">
+											<input type="radio" class="business_sector" name="business_sector" value="Both" > Both
+										</div>
+										
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<label>Please select nature of your business<span class="text-danger">*</span></label>
+										</div>
+										<div class="col-md-4">
+											<input type="checkbox" class="nature_of_business" name="nature_of_business[]" value="Domestic Service Provider" > Domestic Service Provider
+										</div>
+										<div class="col-md-4">
+											<input type="checkbox" class="nature_of_business" name="nature_of_business[]" value="International Service Provider" > International Service Provider
+										</div>
+										<div class="col-md-4">
+											<input type="checkbox" class="nature_of_business" name="nature_of_business[]" value="Other" > Other
+										</div>
+										
+									</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn" id="bpBtn" style="background:#008069">Save</button>
+						</div>
+					</form>
                 </div>
             </div>
           </div>
@@ -1543,7 +1573,7 @@
              
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1">Add Advisory Listing</h5>
+                    <h5 class="modal-title" id="exampleModalLabel2">Add Advisory Listing</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -1672,7 +1702,7 @@
              
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel2">Add Post</h5>
+                    <h5 class="modal-title" id="exampleModalLabel3">Add Post</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -1841,11 +1871,6 @@
             $('[data-toggle="tooltip"]').tooltip();
             
 			$('#example').DataTable({
-                responsive: {
-                    details: {
-                        type: 'column'
-                    }
-                },
                 columnDefs: [ {
                     className: 'dtr-control',
                     orderable: false,
@@ -1946,119 +1971,398 @@
                     }
                 });
                   
+             });
+             
+
+			 /*---------Business Profile--------------*/
+            
+            
+			 $('#business-profile').validate({
+				rules: {
+                    org_name : {
+                        required: true,
+                        minlength: 5
+                    },
+                    org_address_line_1: {
+                        required: true,
+                    },
+                    country: {
+                        required: true,
+                    },
+                    state: {
+                        required: true,
+                    },
+                    city: {
+                        required: true,
+                    },
+					about_org : {
+                        required: true,
+                    }                  
+                },
+                messages: {
+                    org_name : {
+                        required: "Enter Your Organization Name",
+                    },
+					org_address_line_1 : {
+                        required: "Enter Your Organization Address",
+                    },
+                     country : {
+                        required: "Select Your Country",
+                    },
+                    state : {
+                        required: "Select Your State",
+                    },
+                    city : {
+                        required: "Enter Your City",
+                    },
+                    about_org : {
+                        required: "Write About Your Organization",
+                    }
+                },
+               submitHandler: function(form) 
+              {
+    
+                  var form = $('#business-profile')[0];
+                  var datas = new FormData(form); 
+                
+                  $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                  });
+                  $.ajax({
+                      url: "{{route('business-profile.create')}}", 
+                      type: "POST",             
+                      data: datas,
+                      cache: false,             
+                      processData: false,
+                      contentType: false,
+                      dataType: "json",  
+                      
+                      success: function(data) 
+                      {
+                        
+                         if(data.status == true){
+                            toastr.success("Success!", data.message);
+                            location.reload();
+                         }else{
+                            toastr.error("Opps!", data.message);
+                            location.reload();
+                         }
+                      }
+                  });
+                  return false;
+              },
+            });
+            
+            
+            $('body').on('click', '.editbp', function () {
+                
+              var id = $(this).data('id');
+              
+              $.get("{{ url('business-profile-edit') }}" +'/' + id, function (data) {
+                  $('#exampleModalLabel1').html("Edit Business Profile");
+                  $('#bpBtn').text("Update");
+                  $('.business-profile-modal').modal('show');
+                  
+                  $('#bpid').val(data.id);
+				  $('#org_name').val(data.org_name);
+                  $('#org_address_line_1').val(data.org_address_line_1);
+                  $('#org_address_line_2').val(data.org_address_line_2);
+                  $('#country').find('option[value="' + data.country + '"]').attr("selected", "selected");
+				  $('#state').find('option[value="' + data.state + '"]').attr("selected", "selected");
+                  $('#city').val(data.city);
+                  $('#pincode').val(data.pincode);
+				  $(".org_type").each(function(x,y){
+                        if(data.org_type.includes($(this).val())){
+                            $(this).attr('checked', true);
+                        }
+                  });
+                  $('#about_org').val(data.about_org);
+				  $('#iso_cert').find('option[value="' + data.iso_cert + '"]').attr("checked", "checked");
+				  $(".iso_cert").each(function(x,y){
+                        if(data.iso_cert.includes($(this).val())){
+                            $(this).attr('checked', true);
+                        }
+                  });
+				  $('#desc_iso_cert').val(data.desc_iso_cert);
+				  $(".achievement").each(function(x,y){
+                        if(data.achievement.includes($(this).val())){
+                            $(this).attr('checked', true);
+                        }
+                  }); 
+				  $('#desc_achievement').val(data.desc_achievement);
+                  $('#about_listing').val(data.about_listing);
+                  $(".trademark").each(function(x,y){
+                        if(data.trademark.includes($(this).val())){
+                            $(this).attr('checked', true);
+                        }
+                  }); 
+				  $('#desc_trademark').val(data.desc_trademark);
+                  $(".business_sector").each(function(x,y){
+                        if(data.business_sector.includes($(this).val())){
+                            $(this).attr('checked', true);
+                        }
+                  });
+				  var nature_of_business = JSON.parse(data.nature_of_business);
+                  $(".nature_of_business").each(function(x,y){
+                        if(nature_of_business.includes($(this).val())){
+                            $(this).attr('checked', true);
+                        }
+                  });
+
+				  /* $('.org_img').attr('id',"org_img_"+data.id);
+				  var org_img = data.org_images.split(',');
+				  console.log(org_img);
+                  org_img.forEach(function(x,y){
+					console.log(x);
+							var path = "{{asset('front/images/business_profile')}}/"+x;
+                            $('#org_img_'+y).attr('src', path);   
+							<img src="" class="org_img" height="80" width="80">
+                  }); */
+                 
+              });
+                $('body').on('click', '#bpBtn', function (e) {
+					e.preventDefault();
+                      
+                      var editid = $('#bpid').val();
+                     
+                      var edit_form = $('#business-profile')[0];
+                      var edit_datas = new FormData(edit_form); 
+                    //   alert(edit_datas.valid());
+    
+                      $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                      });
+                      $.ajax({
+                          url: "{{ url('business-profile-update') }}" +'/' + editid,
+                          type: "POST",             
+                          data: edit_datas,
+                          cache: false,             
+                          processData: false,
+                          contentType: false,
+                          dataType: "json",  
+                          
+                          success: function(data) 
+                          {
+                            //  $('.loader_gif').css("display", "none");
+                            
+                            $('#business-profile').trigger("reset");
+                            $('#business-profile-modal').modal('hide');
+                             if(data.status == true){
+                                toastr.success("Success!", data.message);
+                                location.reload();
+                             }else{
+                                toastr.error("Opps!", data.message);
+                                location.reload();
+                             }
+                          }
+                      });
+                    });
+            	});
+
+				$(".deletebp").click(function(){
+				var id = $(this).data("id");
+				var token = "{{csrf_token()}}";
+				$.ajax(
+				{
+					url: "{{ url('business-profile-delete') }}" +'/' + id,
+					type: 'Delete',
+					dataType: "JSON",
+					data: {
+						"id": id,
+						"_method": 'DELETE',
+						"_token": token,
+					},
+					success: function (data)
+					{
+						if(data.status == true){
+                                toastr.error("Success!", data.message);
+                                location.reload();
+						}else{
+						toastr.error("Opps!", data.message);
+						location.reload();
+						}
+					}
+				});
 			});
+
+
+			$('.iso_cert').on('click', function(){
+			
+				var get_val = $(this).attr('value');
+				if(get_val=='1'){
+					$('#desc_iso_cert').css('display', 'block');
+				}else{
+					$('#desc_iso_cert').css('display', 'none');
+				}
+			});
+
+			$('.achievement').on('click', function(){
+				
+				var get_val = $(this).attr('value');
+				if(get_val=='1'){
+					$('#desc_achievement').css('display', 'block');
+				}else{
+					$('#desc_achievement').css('display', 'none');
+				}
+			});
+
+			$('.trademark').on('click', function(){
+				
+				var get_val = $(this).attr('value');
+				if(get_val=='1'){
+					$('#desc_trademark').css('display', 'block');
+				}else{
+					$('#desc_trademark').css('display', 'none');
+				}
+			});
+
              
             /*---------Advisory Listing--------------*/
-			$('#advisory-listing').validate({
-			submitHandler: function(form) 
-			{
-	
-				var form = $('#advisory-listing')[0];
-				var datas = new FormData(form); 
-				
-				$.ajaxSetup({
-					headers: {
-						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					}
-				});
-				$.ajax({
-					url: "{{route('advisory-listing.create')}}", 
-					type: "POST",             
-					data: datas,
-					cache: false,             
-					processData: false,
-					contentType: false,
-					dataType: "json",  
-					
-					success: function(data) 
-					{
-						//  $('.loader_gif').css("display", "none");
-						
-							// $('#companydata').trigger("reset");
-							// $('#modal-id').modal('hide');
-						if(data.status == true){
-							toastr.success("Success!", data.message);
-							location.reload();
-						}else{
-							toastr.error("Opps!", data.message);
-							location.reload();
-						}
-					}
-				});
-				return false;
-			},
-			});
-		
-			$('body').on('click', '.edit', function () {
-			
-				var id = $(this).data('id');
-			
-				$.get("{{ url('advisory-listing-edit') }}" +'/' + id, function (data) {
-				$('#exampleModalLabel1').html("Edit Advisory Listing");
-				$('#saveBtn').text("Update");
-				$('.advisory-listing-modal').modal('show');
-				
-				
-				$('#id').val(data.id);
-				$('#type').find('option[value="' + data.type + '"]').attr("selected", "selected");
-				$('#category').find('option[value="' + data.category + '"]').attr("selected", "selected");
-				$('#listing_name').val(data.listing_name);
-				$('#duration_in_hours').val(data.duration_in_hours);
-				$('#duration_in_minutes').val(data.duration_in_minutes);
-				$('#fees').val(data.fees);
-				$('#about_listing').val(data.about_listing);
-				$('#experience').val(data.experience);
-				$('#exp_in_years').val(data.exp_in_years);
-				$('#exp_in_months').val(data.exp_in_months);
-				
-				var mode = JSON.parse(data.mode);
-				$(".mode").each(function(x,y){
-						if(mode.includes($(this).val())){
-							$(this).attr('checked', true);
-						}
-				});
-			});
-			$('body').on('click', '#saveBtn', function () {
-					
-				
-					var editid = $('#id').val();
-				//   alert(editid);
-				
-					var edit_form = $('#advisory-listing')[0];
-					var edit_datas = new FormData(edit_form); 
-				//   alert(edit_datas.valid());
+            
+            
+            $('#advisory-listing').validate({
+               submitHandler: function(form) 
+              {
+    
+                  var form = $('#advisory-listing')[0];
+                  var datas = new FormData(form); 
+                
+                  $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                  });
+                  $.ajax({
+                      url: "{{route('advisory-listing.create')}}", 
+                      type: "POST",             
+                      data: datas,
+                      cache: false,             
+                      processData: false,
+                      contentType: false,
+                      dataType: "json",  
+                      
+                      success: function(data) 
+                      {
+                        //  $('.loader_gif').css("display", "none");
+                        
+                            // $('#companydata').trigger("reset");
+                            // $('#modal-id').modal('hide');
+                         if(data.status == true){
+                            toastr.success("Success!", data.message);
+                            location.reload();
+                         }else{
+                            toastr.error("Opps!", data.message);
+                            location.reload();
+                         }
+                      }
+                  });
+                  return false;
+              },
+            });
+            
+            
+            $('body').on('click', '.edit', function () {
+                
+              var id = $(this).data('id');
+              
+              $.get("{{ url('advisory-listing-edit') }}" +'/' + id, function (data) {
+                  $('#exampleModalLabel1').html("Edit Advisory Listing");
+                  $('#saveBtn').text("Update");
+                  $('.advisory-listing-modal').modal('show');
+                  
+                  
+                  $('#id').val(data.id);
+                  $('#type').find('option[value="' + data.type + '"]').attr("selected", "selected");
+                  $('#category').find('option[value="' + data.category + '"]').attr("selected", "selected");
+                  $('#listing_name').val(data.listing_name);
+                  $('#duration_in_hours').val(data.duration_in_hours);
+                  $('#duration_in_minutes').val(data.duration_in_minutes);
+                  $('#fees').val(data.fees);
+                  $('#about_listing').val(data.about_listing);
+                  $('#experience').val(data.experience);
+                  $('#exp_in_years').val(data.exp_in_years);
+                  $('#exp_in_months').val(data.exp_in_months);
+                  
+                  var mode = JSON.parse(data.mode);
+                  $(".mode").each(function(x,y){
+                        if(mode.includes($(this).val())){
+                            $(this).attr('checked', true);
+                        }
+                  });
+              });
+              $('body').on('click', '#saveBtn', function (e) {
+                        
+					e.preventDefault();
+                    var editid = $('#id').val();
+                    //   alert(editid);
+                    
+                    var edit_form = $('#advisory-listing')[0];
+                    var edit_datas = new FormData(edit_form); 
+                    //   alert(edit_datas.valid());
+    
+                      $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                      });
+                      $.ajax({
+                          url: "{{ url('advisory-listing-update') }}" +'/' + editid,
+                          type: "POST",             
+                          data: edit_datas,
+                          cache: false,             
+                          processData: false,
+                          contentType: false,
+                          dataType: "json",  
+                          
+                          success: function(data) 
+                          {
+                            //  $('.loader_gif').css("display", "none");
+                            
+                            $('#advisory-listing').trigger("reset");
+                            $('#advisory-listing-modal').modal('hide');
+                             if(data.status == true){
+                                toastr.success("Success!", data.message);
+                                location.reload();
+                             }else{
+                                toastr.error("Opps!", data.message);
+                                location.reload();
+                             }
+                          }
+                      });
+                    });
+            });
 
-					$.ajaxSetup({
-					headers: {
-						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					}
-					});
-					$.ajax({
-						url: "{{ url('advisory-listing-update') }}" +'/' + editid,
-						type: "POST",             
-						data: edit_datas,
-						cache: false,             
-						processData: false,
-						contentType: false,
-						dataType: "json",  
-						
-						success: function(data) 
-						{
-						//  $('.loader_gif').css("display", "none");
-						
-						$('#advisory-listing').trigger("reset");
-						$('#advisory-listing-modal').modal('hide');
-							if(data.status == true){
-							toastr.success("Success!", data.message);
-							//location.reload();
-							}else{
-							toastr.error("Opps!", data.message);
-							//location.reload();
-							}
+
+			$(".delete").click(function(){
+				var id = $(this).data("id");
+				var token = "{{csrf_token()}}";
+				$.ajax(
+				{
+					url: "{{ url('advisory-listing-delete') }}" +'/' + id,
+					type: 'Delete',
+					dataType: "JSON",
+					data: {
+						"id": id,
+						"_method": 'DELETE',
+						"_token": token,
+					},
+					success: function (data)
+					{
+						if(data.status == true){
+                                toastr.error("Success!", data.message);
+                                location.reload();
+						}else{
+						toastr.error("Opps!", data.message);
+						location.reload();
 						}
-					});
+					}
 				});
 			});
+
             
             /*----show more/show less-------*/
             var showChar = 200;  
