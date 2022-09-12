@@ -166,10 +166,8 @@
 					<div class="user-account">
 						<div class="user-info">
     						 @auth
-    						     @php $image = Auth::user()->image @endphp
-    						  
-    						    <img src='{{asset("admin/images/$image")}}' alt="" height="25px">
-    						   
+    						    @php $image = Auth::user()->image ? Auth::user()->image : "image.jpg"; @endphp
+    						    <img src='{{asset("front/images/users/$image")}}' alt="" height="25px">
     							<a href="#" title="">
     							    {{Auth::user()->name}}
     							</a>

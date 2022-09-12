@@ -3,7 +3,7 @@
 @section('content')
 		<section class="cover-sec">
 		    @php $cover_image = Auth::user()->cover_image; @endphp
-		     @if(Auth::user()->cover_image !== null)
+			@if(Auth::user()->cover_image !== null)
 			<img src='{{asset("front/images/users/$cover_image")}}' alt="" height="375px">
 			@else
 			<img src="https://via.placeholder.com/1600x400" alt="" height="375px">
@@ -984,26 +984,37 @@
 											    <a href="#" title="" class="overview-open">Leads</a> 
 											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" style="background:#008069"><i class="fa fa-plus"></i> Add Business Profile</button>-->
 											</h3>
-											<div class="row">
-										     @foreach($advisory_request as $data)
-                                              <div class="col-sm-6">
-                                                <div class="card">
-                                                  <div class="card-body">
-                                                    <h3 class="card-title"><a href="#">Request Recieved From : {{$data->users->name}}</a></h3>
-                                                    <p class="card-text">Date and time of Request Received : {{date('M d,Y h:i A',strtotime($data->created_at))}}</p>
-                                                    <p class="card-text">Subject : {{$data->listing_name}}</p>
-                                                    <p class="card-text">Advisory Type : {{$data->type}}</p>
-                                                    <p class="card-text">User Requirement : {{$data->title}}</p>
-                                                    <p class="card-text">Request Status : <span class="badge @if($data->status == 'pending') badge-warning @elseif($data->status == 'accepted') badge-success @else badge-danger @endif">{{$data->status}}</span></p>
-                                                    <p class="card-text">Payment : {{$data->fees}}</p>
-                                                    <p class="card-text">Comment : </p>
-                                                  
-                                                  </div>
-                                                </div>
-                                              </div>
-                                              @endforeach
-                                            </div>
-										    
+											<table class="table display responsive example" cellspacing="0" style="width: 100%;">
+												<thead>
+													<tr>
+														<th scope="col">#</th>
+														<th scope="col">Request From</th>
+														<th scope="col">Requested date</th>
+														<th scope="col">Subject</th>
+														<th scope="col">User Requirment</th>
+														<th scope="col">Type</th>
+														<th scope="col">Status</th>
+														<th scope="col">Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													@foreach($advisory_request as $k => $data)
+													<tr>
+														<th scope="row">{{++$k}}</th>
+														<td>{{$data->users->name}}</td>
+														<td>{{date('M d,Y h:i A',strtotime($data->created_at))}}</td>
+														<td>{{$data->listing_name}}</td>
+														<td>{{$data->title}}</td>
+														<td>{{$data->type}}</td>
+														<td><span class="badge @if($data->status == 'pending') badge-warning @elseif($data->status == 'accepted') badge-success @else badge-danger @endif">{{$data->status}}</span></td>
+														<td>
+															<button class="btn btn-info btn-sm editPost mb-1" data-toggle="tooltip" data-placement="top" title="Edit" data-id="{{$data->id}}"><i class="fa fa-edit"></i></button>
+															<button class="btn btn-danger btn-sm deletePost" data-toggle="tooltip" data-placement="top" title="delete" data-id="{{$data->id}}"><i class="fa fa-trash"></i></button>
+														</td>
+													</tr>
+													@endforeach
+												</tbody>
+											</table>										    
 										</div>	
 									
 									</div>
@@ -1089,7 +1100,7 @@
                                                 </tr>
                                               </thead>
                                               <tbody>
-												@forelse($posts as $k => $post)
+												@foreach($posts as $k => $post)
                                                 <tr>
 													<th scope="row">{{++$k}}</th>
 													<td>{{$post->title}}</td>
@@ -1105,9 +1116,7 @@
 														<button class="btn btn-danger btn-sm deletePost" data-toggle="tooltip" data-placement="top" title="delete" data-id="{{$post->id}}"><i class="fa fa-trash"></i></button>
 													</td>
                                                 </tr>
-												@empty
-													<td colspan=3>You haven't posted any post</td>
-												@endforelse
+												@endforeach
                                               </tbody>
                                             </table>
 										    
