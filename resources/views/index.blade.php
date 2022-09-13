@@ -7,7 +7,7 @@
 				<div class="container">
 					<div class="main-section-data">
 						<div class="row">
-							<div class="col-lg-3 col-md-4 pd-left-none no-pd">
+							<div class="col-lg-3 col-md-4 pd-left-none no-pd suggestion">
 								<div class="main-left-sidebar no-margin">
 									<div class="suggestions full-width">
 										<div class="sd-title">
