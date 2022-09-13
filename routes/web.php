@@ -94,6 +94,15 @@ Route::post('advisory-listing-update/{id}',[App\Http\Controllers\HomeController:
 
 Route::delete('advisory-listing-delete/{id}',[App\Http\Controllers\HomeController::class,'advisoryListingDelete'])->name('advisory-listing.delete');
 
+Route::post('business-profile-create',[App\Http\Controllers\HomeController::class,'businessProfileCreate'])->name('business-profile.create');
+
+Route::get('business-profile-edit/{id}',[App\Http\Controllers\HomeController::class,'businessProfileEdit'])->name('business-profile.edit');
+
+Route::post('business-profile-update/{id}',[App\Http\Controllers\HomeController::class,'businessProfileUpdate'])->name('business-profile.update');
+
+Route::delete('business-profile-delete/{id}',[App\Http\Controllers\HomeController::class,'businessProfileDelete'])->name('business-profile.delete');
+
+
 Route::post('send-advisory-request',[App\Http\Controllers\HomeController::class,'SendAdvisoryRequest'])->name('send_advisory_request');
 
 Route::post('change-status',[App\Http\Controllers\HomeController::class,'changeStatus'])->name('change_status');
