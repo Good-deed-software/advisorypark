@@ -16,6 +16,33 @@ $(window).on("load", function() {
         return false;
     });
 
+
+    //  ============= BUSINESS PROFILE FUNCTION =========
+
+    $(".business-profile-jb").on("click", function(){
+        $("#business-profile")[0].reset();
+        $('#business-profile').find("input").not(':button, :submit,[name="_token"]').val(""); //reset all input
+        // $('#business-profile').find("textarea").text(""); //reset all textarea
+        $('#business-profile').find("select").val("").trigger("change"); //reset all select options
+        $('#business-profile').find("input[type='radio']").removeAttr("checked");  //reset all radio options
+        $('#business-profile').find("input[type='checkbox']").removeAttr("checked"); //reset all checkbox options
+
+      
+    });
+
+    //  ============= ADVISORY LISTING FUNCTION =========
+
+    $(".advisory-listing-jb").on("click", function(){
+        $("#advisory-listing")[0].reset();
+        $('#advisory-listing').find("input").not(':button, :submit,[name="_token"]').val(""); //reset all input
+        // $('#business-profile').find("textarea").text(""); //reset all textarea
+        $('#advisory-listing').find("select").val("").trigger("change"); //reset all select options
+        $('#advisory-listing').find("input[type='radio']").removeAttr("checked");  //reset all radio options
+        $('#advisory-listing').find("input[type='checkbox']").removeAttr("checked"); //reset all checkbox options
+
+      
+    });
+    
     //  ============= POST JOB POPUP FUNCTION =========
 
     $(".post-jb").on("click", function(){
