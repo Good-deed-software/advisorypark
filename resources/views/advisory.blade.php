@@ -24,14 +24,14 @@
 							<div class="col-lg-3">
 								<div class="filter-secs">
 									<div class="filter-heading">
-										<h3 class="text-primary">Filters</h3>
+										<h3 style="color:#008069;">Filters</h3>
 										<a href="#" title="">Clear all filters</a>
 									</div><!--filter-heading end-->
 									<div class="paddy">
 										<div class="filter-dd">
 										    <form>
     											<div class="filter-ttl">
-    												<button type="submit" class="btn btn-primary btn-sm float-right" title="">Apply</button>
+    												<button type="submit" class="btn btn-sm float-right" style="background:#008069;" title="">Apply</button>
     											</div>
 										
     												<h6>Provide In</h6>
@@ -45,14 +45,10 @@
 												   <label class="p-1">Team Viewer</label> 
 												   
 												   	<h6>Fees</h6>
-											       <input type="checkbox"  name="fees" value="Voice call"  {{ (request()->get('fees') == 'Voice call') ? 'checked' : '' }}>
-												   <label class="p-1">Voice call</label> 
-												   <input type="checkbox"  name="fees" value="Video call" {{ (request()->get('fees') == 'Video call') ? 'checked' : ''}}>
-												   <label class="p-1">Video call</label> 
-												   <input type="checkbox"  name="fees" value="Any Desk" {{ (request()->get('fees') == 'Any Desk') ? 'checked' : ''}}>
-												   <label class="p-1">Any Desk</label> 
-												   <input type="checkbox"  name="fees" value="Team Viewer" {{ (request()->get('fees') == 'Team Viewer') ? 'checked' : ''}}>
-												   <label class="p-1">Team Viewer</label> 
+													<p class="range-value">
+														<input type="text" id="amount" value="" readonly>
+													</p>
+													<div id="slider-range" class="range-bar"></div>
 											</form>
 										</div>
 									{{--<div class="filter-dd">
@@ -213,7 +209,7 @@
 											<div class="job_descp">
 											    <div class="row">
 											        <div class="col-md-2">
-											            <img src='{{asset("front/images/advisory_listing/$data->image")}}' alt="" width="50" height="80">
+											            <img src='{{asset("front/images/advisory_listing/$data->image")}}' alt="" width="120" height="120">
 											        </div>
 											        <div class="col-md-10">
 											            <!--<span class="badge badge-info float-right">{{$data->category}}</span>-->
@@ -221,12 +217,12 @@
         											    <!--	<ul class="job-dt">
         													<li><span>$300 - $350</span></li>
         												</ul>-->
-        												<h6><strong>Description about the Problem :</strong></h6>
+        												<h6><strong>Description :</strong></h6>
         												<p>
         												    {{$data->about_listing}}    
         												</p>
         												
-        												<h6><strong>Proficiency of the Advisor :</strong></h6>
+        												<h6><strong>Proficiency :</strong></h6>
         												<p>
         												    {{$data->experience}}    
         												</p>
@@ -237,7 +233,7 @@
         												</ul>
         												<ul class="skills">
         												   
-        													<li><strong>Time Taken to Complete the Task : </strong><a href="#" title="">{{$data->duration_in_hours}} Hours,{{$data->duration_in_minutes}} Minutes</a></li>
+        													<li><strong>Task Completion Time : </strong><a href="#" title="">{{$data->duration_in_hours}} Hours,{{$data->duration_in_minutes}} Minutes</a></li>
         												
         												</ul>
         												<ul class="skills">
