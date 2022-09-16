@@ -137,11 +137,11 @@
 					<form action="{{route('requirements')}}" method="post">
 					    @csrf
 						<div class="row">
-							<div class="col-lg-12">
+							<div class="col-lg-6">
                                 <label>Title </label>
 								<input type="text" name="title" placeholder="Title" required>
 							</div>
-							<div class="col-lg-12">
+							<div class="col-lg-6">
                                 <label>Category </label>
 								<div class="inp-field">
 									<select name="category[]" class="multiple" id="category_r" multiple required>
@@ -151,7 +151,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="col-lg-12">
+							<div class="col-lg-6">
                             <label>Required Skill </label>
 								<div class="inp-field">
 									<select name="skill[]" class="multiple" id="skill_r" multiple required>
@@ -161,7 +161,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="col-lg-12">
+							<div class="col-lg-6">
                             <label>Tags </label>
 								<div class="inp-field">
 									<select name="tag[]" class="form-control multiple" id="tag_r" multiple required>

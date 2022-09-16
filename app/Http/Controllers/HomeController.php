@@ -325,11 +325,9 @@ class HomeController extends Controller
         $config['skills']     =   Skill::where('status','1')->get();
         $config['tags']       =   Tag::where('status','1')->get();
         
-        $comments   =   Comment::orderby('id','desc')->get();
+        $post = Post::with('users','comments')->where('slug',$slug)->first();
         
-        $post = Post::with('users')->where('slug',$slug)->first();
-        
-        return view('post-details',compact('post','config','comments'));
+        return view('post-details',compact('post','config'));
     }
 
     public function postUpdate(Request $request)
