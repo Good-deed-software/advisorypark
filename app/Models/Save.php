@@ -24,5 +24,13 @@ class Save extends Model
        return $this->hasOne(User::class,'id','user_id');
        
     }
+
+    public function comments(){
+        
+      $instance = $this->hasMany(Comment::class,'blog_id','id');
+      $instance->getQuery()->where('blog_type', 'post');
+      
+      return $instance;
+  }
     
 }

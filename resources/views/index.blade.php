@@ -25,10 +25,10 @@
 												
 												@auth
 												<a class="float-right" href="{{route('following')}}?auth_id={{Auth::user()->id}}&user_id={{$u->id}}">
-												    <i {!! App\Models\Following::where('auth_id',Auth::user()->id)->where('user_id',$u->id)->where('status',1)->exists() == true ? ' class="la la-check-square la-2x bg-primary" style="color:#fff"' : 'class="la la-plus-square la-2x" style="background:#fff;color:#000"' !!}></i>
+												    <i {!! App\Models\Following::where('auth_id',Auth::user()->id)->where('user_id',$u->id)->where('status',1)->exists() == true ? ' class="la la-check-square la-2x " style="background:#008069;color:#fff"' : 'class="la la-plus-square la-2x" style="background:#fff;color:#000"' !!}></i>
 												</a>
 												 @else
-											    <a class="float-right" href="{{route('login')}}">
+											    <a class="float-right text-dark" href="{{route('login')}}">
 											        <i class="la la-plus-square la-2x" ></i> 
 											    </a>
 											    @endauth
@@ -104,7 +104,7 @@
 													<li>
 													    @auth
 													    <a href="{{route('save')}}?user_id={{Auth::user()->id}}&blog_type=post&blog_id={{$data->id}}" >
-													     <i class="la la-bookmark"  {!! App\Models\Save::where('user_id',Auth::user()->id)->where('blog_type','post')->where('blog_id',$data->id)->where('status',1)->exists() == true ? 'style="background:#53d690;color:#fff"' : 'style="background:#fff;color:#000"' !!}></i> 
+													     <i class="la la-bookmark"  {!! App\Models\Save::where('user_id',Auth::user()->id)->where('blog_type','post')->where('blog_id',$data->id)->where('status',1)->exists() == true ? 'style="background:#008069;color:#fff"' : 'style="background:#fff;color:#000"' !!}></i> 
 													    </a>
 													    @else
 													    <a href="{{route('login')}}" title="">
@@ -195,7 +195,7 @@
 													 </li>
 													 @endauth
 												</ul>
-												<a><i class="la la-eye"></i>Views</a>
+												<!-- <a><i class="la la-eye"></i>Views</a> -->
 											</div>
 											<div class="bg-light p-2 comment-box" id="comment-box-{{$data->id}}" style="display:none;">
 											    <form action="{{route('comment')}}" method="post">

@@ -1,11 +1,88 @@
 @extends('layout.app')
+@push('css')
+	<style>
+		
+		#time-range {
+			margin: 0 auto;
+			color: #000;
+			font-weight: 300;
+		}
+
+		.slider-time,
+
+		.slider-time2 {
+			font-weight: 400;
+		}
+
+		.flat-slider.ui-corner-all,
+		.flat-slider .ui-corner-all {
+			border-radius: 0;
+		}
+
+		.flat-slider.ui-slider {
+			border: 0;
+			background: #ebebeb;
+			border-radius: 6px;
+		}
+
+		.flat-slider.ui-slider-horizontal {
+			height: 6px;
+		}
+
+		.flat-slider.ui-slider-vertical {
+			height: 15em;
+			width: 6px;
+		}
+
+		.flat-slider .ui-slider-handle {
+			width: 22px;
+			height: 22px;
+			background: #008069;
+			border-radius: 50%;
+			border: none;
+			cursor: pointer;
+			box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+		}
+
+		.flat-slider.ui-slider-horizontal .ui-slider-handle {
+			top: 50%;
+			margin-top: -11px;
+		}
+
+		.flat-slider.ui-slider-vertical .ui-slider-handle {
+			left: 50%;
+			margin-left: -11px;
+		}
+
+		.flat-slider .ui-slider-handle:hover {
+			box-shadow: 0 0 8px rgba(0, 0, 0, 0.35);
+		}
+
+		.flat-slider .ui-slider-range {
+			border: 0;
+			border-radius: 6;
+			background: #ebebeb;
+		}
+
+		.flat-slider.ui-slider-horizontal .ui-slider-range {
+			top: 0;
+			height: 6px;
+		}
+
+		.flat-slider.ui-slider-vertical .ui-slider-range {
+			left: 0;
+			width: 6px;
+		}
+
+	</style>
+@endpush
 @section('content')
 		<div class="search-sec">
 			<div class="container">
 				<div class="search-box">
 					<form>
 					   
-						 <input class="typeahead form-control" placeholder="Search keywords" id="search" type="text" name="search">
+						 <input class="typeahead form-control" placeholder="Search Advisory Listings..." id="search" type="text" name="search">
 			        
 						 <!--<a href="{{route('login')}}" title="">Signup / Login</a>-->
 					
@@ -25,7 +102,7 @@
 								<div class="filter-secs">
 									<div class="filter-heading">
 										<h3 style="color:#008069;">Filters</h3>
-										<a href="#" title="">Clear all filters</a>
+										<a href="{{route('advisory')}}" title="">Clear all filters</a>
 									</div><!--filter-heading end-->
 									<div class="paddy">
 										<div class="filter-dd">
@@ -45,38 +122,19 @@
 												   <label class="p-1">Team Viewer</label> 
 												   
 												   	<h6>Fees</h6>
-													<p class="range-value">
-														<input type="text" id="amount" value="" readonly>
-													</p>
-													<div id="slider-range" class="range-bar"></div>
+													<div id="time-range">
+														<p><span class="slider-time text-dark">₹1</span> to <span class="slider-time2">₹1000</span>
+														</p>
+														<div class="sliders_step1">
+															<div class="flat-slider" id="slider-range">
+																<input type="hidden" name="from" id="sliderfrom" value="">
+																<input type="hidden" name="to" id="sliderto" value="">
+															</div>
+														</div>
+													</div>
 											</form>
 										</div>
-									{{--<div class="filter-dd">
-											<div class="filter-ttl">
-												<h3>Categories</h3>
-												<!--<a href="#" title="">Clear</a>-->
-											</div>
-											<form>
-												@foreach($categories as $c)
-												<input type="checkbox" name="search-categories[]" multiple placeholder="Search categories" value="{{$c->name}}">
-            								    <label class="p-1">{{$c->name}}</label> 
-            									@endforeach
-												
-											</form>
-										</div>
-										<div class="filter-dd">
-											<div class="filter-ttl">
-												<h3>Tags</h3>
-												<!--<a href="#" title="">Clear</a>-->
-											</div>
-											<form>
-												@foreach($tags as $t)
-												<input type="checkbox" name="search-tags[]" multiple placeholder="Search tags" value="{{$t->name}}">
-            									  <label class="p-1">{{$t->name}}</label> 
-            									@endforeach
-												
-											</form>
-										</div> --}}
+									
 									<!--	<div class="filter-dd">
 											<div class="filter-ttl">
 												<h3>Availabilty</h3>
@@ -557,6 +615,29 @@
                 $(".social-media-icons").fadeToggle();
             });
             
+			/*----filter price slider-------*/
+			$("#slider-range").slider({
+				range: true,
+				min: 1,
+				max: 1000,
+				step: 1,
+				values: [1, 1000],
+				slide: function(e, ui) {
+					console.log(ui.value); 
+					// $( "#sliderVal" ).val( "₹" + ui.values[ 0 ] + " - ₹" + ui.values[ 1 ] );
+					$( "#sliderfrom" ).val(ui.values[ 0 ]);
+					$( "#sliderto" ).val(ui.values[ 1 ] );
+					var min = Math.floor(ui.values[0]);
+					$('.slider-time').html('₹'+ min);
+
+					var max = Math.floor(ui.values[1]);
+					
+					$('.slider-time2').html('₹'+ max);
+
+					
+
+				}
+			});
             
             
         

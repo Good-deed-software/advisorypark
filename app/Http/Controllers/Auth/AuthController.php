@@ -102,7 +102,7 @@ class AuthController extends Controller
                   'token' => $token
                 ]);
                 
-            try{
+            /* try{
                 
                 Mail::send('emails.email-verification', ['token' => $token], function($message) use($request){
                       $message->to($request->email);
@@ -112,7 +112,7 @@ class AuthController extends Controller
                   
             }catch(Exception $e){
                 dd($e->message());
-            }
+            } */
            return redirect()->route('login')->with('success', 'Your account is created. Login Now!');
     }
     
