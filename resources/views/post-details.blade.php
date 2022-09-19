@@ -57,6 +57,15 @@
 												</ul>
 											</div>
 											<div class="job_descp">
+												@php
+													$cats = getPostCategories($post->category);
+													$skills = getPostSkills($post->skill);
+													$tags = getPostTags($post->tag);
+												@endphp
+
+												@foreach($cats as $id => $name)
+											    	<span class="badge badge-info float-right mr-1">{{$name}}</span>
+												@endforeach
 												<h3>{{$post->title}}</h3>
 												<!--<ul class="job-dt">
 													<li><a href="#" title="">Full Time</a></li>
@@ -65,15 +74,15 @@
 												<p class="more">{{$post->description}}</p> 
 												<!--<p>{{Str::limit($post->description,200)}} <a href="#" title="">view more</a></p>-->
 												
-												
-												@php 
-												    $kk = \DB::select("select name from tags where id in ($post->tag)");
-												  
-												@endphp 
+												<ul class="skills">
+												    @foreach($skills as $id => $name)
+													<li><a href="javascript:void(0);" title="">{{$name}}</a></li>
+													@endforeach
+												</ul>
 												
 												<ul class="skill-tags">
-												    @foreach($kk as $v)
-													<li><a href="#" title="">{{$v->name}}</a></li>
+												    @foreach($tags as $id => $name)
+													<li><a href="javascript:void(0);" title="">{{$name}}</a></li>
 													@endforeach
 												</ul>
 											</div>
@@ -87,11 +96,11 @@
 													 </li>
 													 <li>
 													    <a href="javascript:void(0)" class="comment p-0">
-													     <i class="la la-comment"></i> Comment {{ count($comments) }}</a>
+													     <i class="la la-comment"></i> Comment {{ count($post->comments) }}</a>
 													 </li>
 													 <li>
 													    <a href="javascript:void(0)" class="share">
-													     <i class="la la-share"></i> Share {{ count($comments) }}</a>
+													     <i class="la la-share"></i> Share {{ count($post->comments) }}</a>
 													 </li>
 													 
 													 <li class="social arrow-left social-edia-icons" style="display: none;">
@@ -119,7 +128,7 @@
 													 </li>
 													 <li>
 													    <a href="javascript:void(0)" class="comment p-0">
-													     <i class="la la-comment"></i> Comment {{ count($comments) }}</a>
+													     <i class="la la-comment"></i> Comment {{ count($post->comments) }}</a>
 													 </li>
 													 @endauth
 												</ul>
@@ -141,7 +150,7 @@
                                                     </div>
                                                 </form>
                                                  
-                                                @foreach($comments as $cm)
+                                                @foreach($post->comments as $cm)
                                                 <div class="commented-section m-2">
                                                     <div class="d-flex flex-row align-items-center commented-user">
                                                        <h5 class="mr-2"> {{$cm->user_name}}</h5>
