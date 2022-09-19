@@ -34,28 +34,26 @@ class HomeController extends Controller
         
         if(Auth::check()){
             
-            $posts      =  Post::where('created_by',Auth::user()->id)->orderby('id','desc')->get();
+            $posts                =   Post::where('created_by',Auth::user()->id)->orderby('id','desc')->get();
             
-            // dd($posts);
+            $following            =   Following::where('auth_id',Auth::user()->id)->where('status',1)->count();
          
-            $following  =  Following::where('auth_id',Auth::user()->id)->where('status',1)->count();
+            $follower             =   Follower::where('auth_id',Auth::user()->id)->where('status',1)->count();
          
-            $follower   =  Follower::where('auth_id',Auth::user()->id)->where('status',1)->count();
-         
-            $advisory_listings = AdvisoryListing::orderby('id','desc')->get();
+            $advisory_listings    =   AdvisoryListing::orderby('id','desc')->get();
             
-            $business_profile = BusinessProfile::orderby('id','desc')->get();
+            $business_profile     =   BusinessProfile::orderby('id','desc')->get();
          
-            $advisory_request = AdvisoryRequest::with('users')->where('listing_user_id',Auth::user()->id)->orderby('id','desc')->get();
+            $advisory_request     =   AdvisoryRequest::with('users')->where('listing_user_id',Auth::user()->id)->orderby('id','desc')->get();
             
-            $saved_post = Save::with('posts','users')->where('user_id',Auth::user()->id)->where('status','1')->orderby('id','desc')->get();
+            $saved_post           =   Save::with('posts','users')->where('blog_type','post')->where('user_id',Auth::user()->id)->where('status','1')->orderby('id','desc')->get();
             
             $config['categories'] =   Category::where('status','1')->get();       
             $config['skills']     =   Skill::where('status','1')->get();
             $config['tags']       =   Tag::where('status','1')->get();
 
 		    
-		    return view('profile',compact('config','posts','following','follower','advisory_listings','advisory_request','saved_post','business_profile'));
+		    return view('profile',compact('config','posts','following','follower','advisory_listings','business_profile','advisory_request','saved_post'));
         
             
         }else{
@@ -111,46 +109,36 @@ class HomeController extends Controller
     
     public function advisory(Request $request)
     {   
+        // dd($request);
         $config['categories'] =   Category::where('status','1')->get();       
         $config['skills']     =   Skill::where('status','1')->get();
         $config['tags']       =   Tag::where('status','1')->get();
+        
         if($request->search){
             
-           $advisory_listings = AdvisoryListing::where('listing_name', 'LIKE', '%'. $request->get('search'). '%')->get();
-           
-            $comments   =   Comment::orderby('id','desc')->get();
+            $advisory_listings = AdvisoryListing::where('listing_name', 'LIKE', '%'. $request->get('search'). '%')->get();
         }
         elseif($request->mode){
-            
-            $categories =   Category::where('status','1')->get(); 
-            
-            $skills     =   Skill::where('status','1')->get();
-            $tags       =   Tag::where('status','1')->get();
-            
-           // $advisory_listings = AdvisoryListing::where('mode', 'LIKE', '%'. $request->get('mode'). '%')->where('added_by','!=',Auth::user()->id)->get();
-            $advisory_listings = AdvisoryListing::where('mode', 'LIKE', '%'. $request->get('mode'). '%')->get();
            
-            $comments   =   Comment::orderby('id','desc')->get();
+            $advisory_listings = AdvisoryListing::where('mode', 'LIKE', '%'. $request->get('mode'). '%')->get();
+        }
+        elseif($request->from && $request->to){
+            
+            $advisory_listings = AdvisoryListing::whereBetween('fees', [$request->from, $request->to])->get();
         }
         else{
+           
             if(Auth::check()){           
-                
                 
                 $advisory_listings = AdvisoryListing::orderby('id','desc')->where('added_by','!=',Auth::user()->id)->get();
                 
-              
-                $comments   =   Comment::orderby('id','desc')->get();
             }else{
                         
-                // $advisory_listings = AdvisoryListing::orderby('id','desc')->where('added_by','!=',Auth::user()->id)->get();
                 $advisory_listings = AdvisoryListing::orderby('id','desc')->get();
-                
-              
-                $comments   =   Comment::orderby('id','desc')->get();
             }
         }
        
-		return view('advisory',compact('config','advisory_listings','comments'/*,'likes'*/));
+		return view('advisory',compact('config','advisory_listings'));
 
     }
 
