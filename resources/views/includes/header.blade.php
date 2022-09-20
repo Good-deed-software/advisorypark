@@ -71,7 +71,7 @@
 									<div class="nott-list">
 										<div class="notfication-details">
 							  				<div class="noty-user-img">
-							  					<img src="{{asset('front/images/resources/ny-img1.png')}}" alt="">
+							  					<img src="#" alt="">
 							  				</div>
 							  				<div class="notification-info">
 							  					<h3><a href="messages.html" title="">Jassica William</a> </h3>
@@ -81,7 +81,7 @@
 						  				</div>
 						  				<div class="notfication-details">
 							  				<div class="noty-user-img">
-							  					<img src="{{asset('front/images/resources/ny-img2.png')}}" alt="">
+							  					<img src="#" alt="">
 							  				</div>
 							  				<div class="notification-info">
 							  					<h3><a href="messages.html" title="">Jassica William</a></h3>
@@ -91,7 +91,7 @@
 						  				</div>
 						  				<div class="notfication-details">
 							  				<div class="noty-user-img">
-							  					<img src="{{asset('front/images/resources/ny-img3.png')}}" alt="">
+							  					<img src="#" alt="">
 							  				</div>
 							  				<div class="notification-info">
 							  					<h3><a href="messages.html" title="">Jassica William</a></h3>
@@ -118,7 +118,7 @@
 									<div class="nott-list">
 										<div class="notfication-details">
 							  				<div class="noty-user-img">
-							  					<img src="{{asset('front/images/resources/ny-img1.png')}}" alt="">
+							  					<img src="#" alt="">
 							  				</div>
 							  				<div class="notification-info">
 							  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
@@ -127,7 +127,7 @@
 						  				</div>
 						  				<div class="notfication-details">
 							  				<div class="noty-user-img">
-							  					<img src="{{asset('front/images/resources/ny-img2.png')}}" alt="">
+							  					<img src="#" alt="">
 							  				</div>
 							  				<div class="notification-info">
 							  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
@@ -136,7 +136,7 @@
 						  				</div>
 						  				<div class="notfication-details">
 							  				<div class="noty-user-img">
-							  					<img src="{{asset('front/images/resources/ny-img3.png')}}" alt="">
+							  					<img src="#" alt="">
 							  				</div>
 							  				<div class="notification-info">
 							  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
@@ -145,7 +145,7 @@
 						  				</div>
 						  				<div class="notfication-details">
 							  				<div class="noty-user-img">
-							  					<img src="{{asset('front/images/resources/ny-img2.png')}}" alt="">
+							  					<img src="#" alt="">
 							  				</div>
 							  				<div class="notification-info">
 							  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>

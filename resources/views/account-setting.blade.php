@@ -262,8 +262,8 @@
 							  					</div>
 							  					<div class="accept-feat">
 							  						<ul>
-							  							<li><button type="submit" class="accept-req" onclick="reqAccept(this,'accepted','{{$data->id}}');">Accept</button></li>
-							  							<li><button type="submit" class="close-req" onclick="reqClose(this,'declined','{{$data->id}}');"><i class="la la-close"></i></button></li>
+							  							<li><button type="submit" class="accept-req" onclick="reqAccept(this,'Accepted','{{$data->id}}');">Accept</button></li>
+							  							<li><button type="submit" class="close-req" onclick="reqClose(this,'Rejected','{{$data->id}}');"><i class="la la-close"></i></button></li>
 							  						</ul>
 							  					</div>
 							  				</div>
@@ -418,6 +418,32 @@
 				</div>
 			</div>
 		</footer>
+
+		<!-- The Modal -->
+		<div class="modal" id="myModal">
+			<div class="modal-dialog">
+			<div class="modal-content">
+			
+				<!-- Modal Header -->
+				<div class="modal-header">
+				<h4 class="modal-title">Reason for Decline Request</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				
+				<!-- Modal body -->
+				<div class="modal-body">
+					<textarea name="reason_for_reject" class="form-control" id="reason" cols="30" rows="3" placeholder="Reason...."></textarea>
+				</div>
+				
+				<!-- Modal footer -->
+				<div class="modal-footer">
+				<button type="button" class="btn btn-primary reason_save">Save</button>
+				</div>
+				
+			</div>
+			</div>
+		</div>
+
 @endsection
 @push('js')
     <script>
@@ -454,6 +480,34 @@
                    }
                 }
             })
+        }
+		function reqClose(_this,status,id){
+             //alert(status);
+			$('#myModal').modal('show');
+			$('.reason_save').click(function(){
+				var reason = $('textarea#reason').val();
+				if(!reason){
+					alert('Reason is required!');
+				}else{
+					$.ajax({
+						url:"{{route('change_status')}}",
+						type:"POST",
+						data:{status:status,_token:"{{csrf_token()}}",id:id,reason:reason},
+						success:function(response){
+							if(response.status == true){
+								$('#myModal').modal('toggle');
+								toastr.error("Opps!", response.message);
+								_this.closest("div.request-details").remove();s
+								location.reload();
+							}else{
+								$('#myModal').modal('toggle');
+								toastr.error("Opps!", response.message);
+								location.reload();
+							}
+						}
+					})
+				}
+			})
         }
     </script>
 @endpush

@@ -34,7 +34,7 @@ $(window).on("load", function() {
 
     $(".advisory-listing-jb").on("click", function(){
         $("#advisory-listing")[0].reset();
-        $('#advisory-listing').find("input").not(':button, :submit,[name="_token"]').val(""); //reset all input
+        $('#advisory-listing').find("input").not(':button, :submit,input[type="checkbox"],[name="_token"]').val(""); //reset all input
         // $('#business-profile').find("textarea").text(""); //reset all textarea
         $('#advisory-listing').find("select").val("").trigger("change"); //reset all select options
         $('#advisory-listing').find("input[type='radio']").removeAttr("checked");  //reset all radio options

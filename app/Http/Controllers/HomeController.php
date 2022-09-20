@@ -40,11 +40,13 @@ class HomeController extends Controller
          
             $follower             =   Follower::where('auth_id',Auth::user()->id)->where('status',1)->count();
          
-            $advisory_listings    =   AdvisoryListing::orderby('id','desc')->get();
+            $advisory_listings    =   AdvisoryListing::where('added_by',Auth::user()->id)->orderby('id','desc')->get();
             
             $business_profile     =   BusinessProfile::orderby('id','desc')->get();
          
             $advisory_request     =   AdvisoryRequest::with('users')->where('listing_user_id',Auth::user()->id)->orderby('id','desc')->get();
+           
+            $request_sent         =   AdvisoryRequest::with('listing_user')->where('user_id',Auth::user()->id)->orderby('id','desc')->get();
             
             $saved_post           =   Save::with('posts','users')->where('blog_type','post')->where('user_id',Auth::user()->id)->where('status','1')->orderby('id','desc')->get();
             
@@ -53,7 +55,7 @@ class HomeController extends Controller
             $config['tags']       =   Tag::where('status','1')->get();
 
 		    
-		    return view('profile',compact('config','posts','following','follower','advisory_listings','business_profile','advisory_request','saved_post'));
+		    return view('profile',compact('config','posts','following','follower','advisory_listings','business_profile','advisory_request','request_sent','saved_post'));
         
             
         }else{
@@ -199,12 +201,18 @@ class HomeController extends Controller
         
         if($data){
             
-            AdvisoryRequest::whereId($request->id)->update(['status'=>$request->status]);
             
-            if($request->status == 'accepted'){
+            if($request->status == 'Accepted'){
+                 AdvisoryRequest::whereId($request->id)->update(['status'=>$request->status]);
                  $message = 'Request Accepted!';
-            }else{
+            }
+            elseif($request->status == 'Rejected'){
+                AdvisoryRequest::whereId($request->id)->update(['status'=>$request->status,'reason_for_reject'=>$request->reason]);
                  $message = 'Request Rejected!';
+            }
+            elseif($request->status == 'Payment Done'){
+                AdvisoryRequest::whereId($request->id)->update(['status'=>$request->status]);
+                 $message = 'Payment Done!';
             }
             
             return response()->json(['status'=>true,'message'=>$message]);
