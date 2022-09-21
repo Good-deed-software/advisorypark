@@ -53,18 +53,16 @@
 										  @if(\Session::get('type') == 'User')  
 										  
 											<li data-tab="info-dd" ><a href="#" title="">My Profile</a></li>
-											<li data-tab="advisory-listing-dd"><a href="#" title="">My Advisory Listing</a></li>
-											<li data-tab="myleads-dd"><a href="#" title="">My Leads</a></li>
+											<li data-tab="letsconnect-dd"><a href="#" title="">Let's Connect</a></li>
 											<li ><a href="{{route('logout')}}" title="">Logout</a></li>
 											
-										  @elseif(\Session::get('type') == 'Advisor')
-										  
+											@elseif(\Session::get('type') == 'Advisor')
+											
 										    <li data-tab="info-dd" ><a href="#" title="">My Profile</a></li>
 											<li data-tab="business-dd" ><a href="#" title="">My Business Profile</a></li>
 											<li data-tab="advisory-listing-dd"><a href="#" title="">My Advisory Listing</a></li>
 											<li data-tab="myleads-dd"><a href="#" title="">My Leads</a></li>
-											<li data-tab="letsconnect-dd"><a href="#" title="">Let's Connect</a></li>
-											<!--<li data-tab="outbox-dd"><a href="#" title="">Outbox</a></li>-->
+											<!-- <li data-tab="letsconnect-dd"><a href="#" title="">Let's Connect</a></li> -->
 											<li data-tab="myposts-dd"><a href="#" title="">My Posts</a></li>
 											<li data-tab="myscorecard-dd"><a href="#" title="">My Score card</a></li>
 											<li ><a href="{{route('logout')}}" title="">Logout</a></li>
@@ -324,7 +322,7 @@
 										<div class="post-bar">
 											<div class="post_topbar">
 												<div class="usy-dt">
-													<img src="http://via.placeholder.com/50x50" alt="">
+													<img src="#" alt="">
 													<div class="usy-name">
 														<h3>{{$data->users->name}}</h3>
 														<span><img src="{{asset('front/images/clock.png')}}" alt="">{{$data->created_at->diffForHumans()}}</span>
@@ -470,21 +468,21 @@
 											<div class="post-bar">
 												<div class="post_topbar">
 													<div class="usy-dt">
-														<img src="http://via.placeholder.com/50x50" alt="">
+														<img src="#" alt="">
 														<div class="usy-name">
 															@php 
 																$post_creator =	App\Models\User::whereId($data->posts->created_by)->first();
 															@endphp
 															<h3>{{$post_creator->name}}</h3>
-															<span><img src="images/clock.png" alt="">{{$data->posts->created_at->diffForHumans()}}</span>
+															<span><img src="#" alt="">{{$data->posts->created_at->diffForHumans()}}</span>
 														</div>
 													</div>
 													
 												</div>
 												<div class="epi-sec">
 													<ul class="descp">
-														<li><img src="images/icon8.png" alt=""><span>{{$post_creator->designation}}</span></li>
-														<li><img src="images/icon9.png" alt=""><span>{{$post_creator->address}}</span></li>
+														<li><img src="#" alt=""><span>{{$post_creator->designation}}</span></li>
+														<li><img src="#" alt=""><span>{{$post_creator->address}}</span></li>
 													</ul>
 													<ul class="bk-links">
 														<!--<li><a href="#" title=""><i class="la la-bookmark"></i></a></li>-->
@@ -610,7 +608,7 @@
 															<img src="images/liked-img.png" alt="">
 															<span>25</span>
 														</li> 
-														<li><a href="#" title="" class="com"><img src="images/com.png" alt=""> Comment 15</a></li>
+														<li><a href="#" title="" class="com"><img src="#" alt=""> Comment 15</a></li>
 													</ul>
 													<a><i class="la la-eye"></i>Views 50</a>
 												</div>-->
@@ -620,7 +618,7 @@
 											 <h5 class="text-center">No Post Found.</h5>
 											@endif
 											<div class="process-comm">
-												<a href="#" title=""><img src="images/process-icon.png" alt=""></a>
+												<a href="#" title=""><img src="#" alt=""></a>
 											</div>
 										</div>
 									</div>
@@ -629,10 +627,10 @@
 											<div class="post-bar">
 												<div class="post_topbar">
 													<div class="usy-dt">
-														<img src="http://via.placeholder.com/50x50" alt="">
+														<img src="#" alt="">
 														<div class="usy-name">
 															<h3>John Doe</h3>
-															<span><img src="images/clock.png" alt="">3 min ago</span>
+															<span><img src="#" alt="">3 min ago</span>
 														</div>
 													</div>
 													<div class="ed-opts">
@@ -648,8 +646,8 @@
 												</div>
 												<div class="epi-sec">
 													<ul class="descp">
-														<li><img src="images/icon8.png" alt=""><span>Frontend Developer</span></li>
-														<li><img src="images/icon9.png" alt=""><span>India</span></li>
+														<li><img src="#" alt=""><span>Frontend Developer</span></li>
+														<li><img src="#" alt=""><span>India</span></li>
 													</ul>
 													<ul class="bk-links">
 														<li><a href="#" title=""><i class="la la-bookmark"></i></a></li>
@@ -678,10 +676,10 @@
 													<ul class="like-com">
 														<li>
 															<a href="#"><i class="la la-heart"></i> Like</a>
-															<img src="images/liked-img.png" alt="">
+															<img src="#" alt="">
 															<span>25</span>
 														</li> 
-														<li><a href="#" title="" class="com"><img src="images/com.png" alt=""> Comment 15</a></li>
+														<li><a href="#" title="" class="com"><img src="#" alt=""> Comment 15</a></li>
 													</ul>
 													<a><i class="la la-eye"></i>Views 50</a>
 												</div>
@@ -689,10 +687,10 @@
 											<div class="post-bar">
 												<div class="post_topbar">
 													<div class="usy-dt">
-														<img src="http://via.placeholder.com/50x50" alt="">
+														<img src="#" alt="">
 														<div class="usy-name">
 															<h3>John Doe</h3>
-															<span><img src="images/clock.png" alt="">3 min ago</span>
+															<span><img src="#" alt="">3 min ago</span>
 														</div>
 													</div>
 													<div class="ed-opts">
@@ -708,8 +706,8 @@
 												</div>
 												<div class="epi-sec">
 													<ul class="descp">
-														<li><img src="images/icon8.png" alt=""><span>Frontend Developer</span></li>
-														<li><img src="images/icon9.png" alt=""><span>India</span></li>
+														<li><img src="#" alt=""><span>Frontend Developer</span></li>
+														<li><img src="#" alt=""><span>India</span></li>
 													</ul>
 													<ul class="bk-links">
 														<li><a href="#" title=""><i class="la la-bookmark"></i></a></li>
@@ -738,10 +736,10 @@
 													<ul class="like-com">
 														<li>
 															<a href="#"><i class="la la-heart"></i> Like</a>
-															<img src="images/liked-img.png" alt="">
+															<img src="#" alt="">
 															<span>25</span>
 														</li> 
-														<li><a href="#" title="" class="com"><img src="images/com.png" alt=""> Comment 15</a></li>
+														<li><a href="#" title="" class="com"><img src="#" alt=""> Comment 15</a></li>
 													</ul>
 													<a><i class="la la-eye"></i>Views 50</a>
 												</div>
@@ -749,10 +747,10 @@
 											<div class="post-bar">
 												<div class="post_topbar">
 													<div class="usy-dt">
-														<img src="http://via.placeholder.com/50x50" alt="">
+														<img src="#" alt="">
 														<div class="usy-name">
 															<h3>John Doe</h3>
-															<span><img src="images/clock.png" alt="">3 min ago</span>
+															<span><img src="#" alt="">3 min ago</span>
 														</div>
 													</div>
 													<div class="ed-opts">
@@ -768,8 +766,8 @@
 												</div>
 												<div class="epi-sec">
 													<ul class="descp">
-														<li><img src="images/icon8.png" alt=""><span>Frontend Developer</span></li>
-														<li><img src="images/icon9.png" alt=""><span>India</span></li>
+														<li><img src="#" alt=""><span>Frontend Developer</span></li>
+														<li><img src="#" alt=""><span>India</span></li>
 													</ul>
 													<ul class="bk-links">
 														<li><a href="#" title=""><i class="la la-bookmark"></i></a></li>
@@ -798,10 +796,10 @@
 													<ul class="like-com">
 														<li>
 															<a href="#"><i class="la la-heart"></i> Like</a>
-															<img src="images/liked-img.png" alt="">
+															<img src="#" alt="">
 															<span>25</span>
 														</li> 
-														<li><a href="#" title="" class="com"><img src="images/com.png" alt=""> Comment 15</a></li>
+														<li><a href="#" title="" class="com"><img src="#" alt=""> Comment 15</a></li>
 													</ul>
 													<a><i class="la la-eye"></i>Views 50</a>
 												</div>
@@ -809,10 +807,10 @@
 											<div class="post-bar">
 												<div class="post_topbar">
 													<div class="usy-dt">
-														<img src="http://via.placeholder.com/50x50" alt="">
+														<img src="#" alt="">
 														<div class="usy-name">
 															<h3>John Doe</h3>
-															<span><img src="images/clock.png" alt="">3 min ago</span>
+															<span><img src="#" alt="">3 min ago</span>
 														</div>
 													</div>
 													<div class="ed-opts">
@@ -828,8 +826,8 @@
 												</div>
 												<div class="epi-sec">
 													<ul class="descp">
-														<li><img src="images/icon8.png" alt=""><span>Frontend Developer</span></li>
-														<li><img src="images/icon9.png" alt=""><span>India</span></li>
+														<li><img src="#" alt=""><span>Frontend Developer</span></li>
+														<li><img src="#" alt=""><span>India</span></li>
 													</ul>
 													<ul class="bk-links">
 														<li><a href="#" title=""><i class="la la-bookmark"></i></a></li>
@@ -858,16 +856,16 @@
 													<ul class="like-com">
 														<li>
 															<a href="#"><i class="la la-heart"></i> Like</a>
-															<img src="images/liked-img.png" alt="">
+															<img src="#" alt="">
 															<span>25</span>
 														</li> 
-														<li><a href="#" title="" class="com"><img src="images/com.png" alt=""> Comment 15</a></li>
+														<li><a href="#" title="" class="com"><img src="#" alt=""> Comment 15</a></li>
 													</ul>
 													<a><i class="la la-eye"></i>Views 50</a>
 												</div>
 											</div><!--post-bar end-->
 											<div class="process-comm">
-												<a href="#" title=""><img src="images/process-icon.png" alt=""></a>
+												<a href="#" title=""><img src="#" alt=""></a>
 											</div><!--process-comm end-->
 										</div><!--posts-section end-->
 									</div>
@@ -888,14 +886,14 @@
 												</li>
 											</ul>
 											<div class="lt-sec">
-												<img src="images/lt-icon.png" alt="">
+												<img src="#" alt="">
 												<h4>All your transactions are saved here</h4>
 												<a href="#" title="">Click Here</a>
 											</div>
 										</div><!--billing-method end-->
 										<div class="add-billing-method">
 											<h3>Add Billing Method</h3>
-											<h4><img src="images/dlr-icon.png" alt=""><span>With workwise payment protection , only pay for work delivered.</span></h4>
+											<h4><img src="#" alt=""><span>With workwise payment protection , only pay for work delivered.</span></h4>
 											<div class="payment_methods">
 												<h4>Credit or Debit Cards</h4>
 												<form>
@@ -904,10 +902,10 @@
 															<div class="cc-head">
 																<h5>Card Number</h5>
 																<ul>
-																	<li><img src="images/cc-icon1.png" alt=""></li>
-																	<li><img src="images/cc-icon2.png" alt=""></li>
-																	<li><img src="images/cc-icon3.png" alt=""></li>
-																	<li><img src="images/cc-icon4.png" alt=""></li>
+																	<li><img src="#" alt=""></li>
+																	<li><img src="#" alt=""></li>
+																	<li><img src="#" alt=""></li>
+																	<li><img src="#" alt=""></li>
 																</ul>
 															</div>
 															<div class="inpt-field pd-moree">
@@ -1104,11 +1102,14 @@
 														<td>{{$data->listing_name}}</td>
 														<td>{{$data->title}}</td>
 														<td>{{$data->type}}</td>
-														<td><span class="badge @if($data->status == 'pending') badge-warning @elseif($data->status == 'accepted') badge-success @else badge-danger @endif">{{$data->status}}</span></td>
+														<td><span class="badge @if($data->status == 'Pending') badge-warning @elseif($data->status == 'Accepted') badge-success @else badge-danger @endif">{{$data->status}}</span></td>
+														@if($data->status == 'Pending')
 														<td>
-															<button class="btn btn-info btn-sm editPost mb-1" data-toggle="tooltip" data-placement="top" title="Edit" data-id="{{$data->id}}"><i class="fa fa-edit"></i></button>
-															<button class="btn btn-danger btn-sm deletePost" data-toggle="tooltip" data-placement="top" title="delete" data-id="{{$data->id}}"><i class="fa fa-trash"></i></button>
+															<button class="btn btn-sm accept_req mb-1" onclick="reqAccept(this,'Accepted','{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Accept" style="background:#008069">Accept</i></button>
+															<button class="btn btn-danger btn-sm decline_req" onclick="reqClose(this,'Rejected','{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Reject" >Reject</i></button>
+															
 														</td>
+														@endif
 													</tr>
 													@endforeach
 												</tbody>
@@ -1120,65 +1121,53 @@
 									
 										<div class="user-profile-ov">
 											 <h3>
-											    <a href="#" title="" class="overview-open">Let's Connect Inbox</a> 
+											    <a href="#" title="" class="overview-open">Let's Connect</a> 
 											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" style="background:#008069"><i class="fa fa-plus"></i> Add Business Profile</button>-->
 											</h3>
 											
 											<table class="table">
-                                              <thead>
-                                                <tr>
-                                                  <th scope="col">#</th>
-                                                  <th scope="col"></th>
-                                                  <th scope="col"></th>
-                                                  <th scope="col"></th>
-                                                  <th scope="col"></th>			
-                                                </tr>
-                                              </thead>
-                                              <tbody>
-                                                <tr>
-                                                  <th scope="row"></th>
-                                                  <td></td>
-                                                  <td></td>
-                                                  <td></td>
-                                                  <td></td>
-                                                  
-                                                </tr>
-                                                
-                                              </tbody>
+												<thead>
+													<tr>
+														<th scope="col">#</th>
+														<th scope="col">Request Sent To</th>
+														<th scope="col">Request Sent date</th>
+														<th scope="col">Subject</th>
+														<th scope="col">My Requirement</th>
+														<th scope="col">Type</th>
+														<th scope="col">Status</th>
+														<th scope="col">Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													@foreach($request_sent as $k => $data)
+													<tr>
+														<th scope="row">{{++$k}}</th>
+														<td>{{$data->listing_user->name}}</td>
+														<td>{{date('M d,Y h:i A',strtotime($data->created_at))}}</td>
+														<td>{{$data->listing_name}}</td>
+														<td>{{$data->title}}</td>
+														<td>{{$data->type}}</td>
+														<td>
+															<span class="badge @if($data->status == 'Pending') badge-warning @elseif($data->status == 'Accepted') badge-success @else badge-danger @endif">
+																@if($data->status == 'Pending'){{$data->status}} @elseif($data->status == 'Accepted') {{$data->status}} @else {{$data->status}} ({{$data->reason_for_reject}})@endif
+															</span>@if($data->status == 'Rejected') {{$data->reason_for_reject}} @endif
+														</td>
+														
+														<td>
+															<button class="btn btn-sm mb-1 payment" onclick="reqPayment(this,'Payment Done','{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="" style="background:#008069"></i>Payment</button>
+															<button class="btn brn-primary btn-sm mb-1 feedback"  data-toggle="tooltip" data-placement="top" title="Reject" style="background:#008069"></i>Feedback</button>
+															
+														</td>
+														
+													</tr>
+													@endforeach
+												</tbody>
                                             </table>
 										    	
 										</div>	
 									
 									</div>
-									<!--<div class="product-feed-tab" id="outbox-dd">
 									
-										<div class="user-profile-ov">
-											 <h3>
-											    <a href="#" title="" class="overview-open">Outbox</a> 
-											  
-											</h3>
-										    <div class="row">
-                                              <div class="col-sm-6">
-                                                <div class="card">
-                                                  <div class="card-body">
-                                                    <h3 class="card-title"><a href="#">Request Recieved From :</a></h3>
-                                                    <p class="card-text">Date and time of Request Received : Aug 31,2022 03:33 PM</p>
-                                                    <p class="card-text">Subject : </p>
-                                                    <p class="card-text">Advisory Type : </p>
-                                                    <p class="card-text">User Requirement : </p>
-                                                    <p class="card-text">Request Status : <span class="badge badge-warning">Pending</span></p>
-                                                    <p class="card-text">Payment : </p>
-                                                    <p class="card-text">Comment : </p>
-                                                  
-                                                  </div>
-                                                </div>
-                                              </div>
-                                              
-                                            </div>
-										    	
-										</div>	
-									
-									</div>-->
 									<div class="product-feed-tab" id="myposts-dd">
 									
 										<div class="user-profile-ov">
@@ -1264,18 +1253,18 @@
 										</div>
 										<div class="pf-gallery">
 											<ul>
-												<li><a href="#" title=""><img src="http://via.placeholder.com/70x70" alt=""></a></li>
-												<li><a href="#" title=""><img src="http://via.placeholder.com/70x70" alt=""></a></li>
-												<li><a href="#" title=""><img src="http://via.placeholder.com/70x70" alt=""></a></li>
-												<li><a href="#" title=""><img src="http://via.placeholder.com/70x70" alt=""></a></li>
-												<li><a href="#" title=""><img src="http://via.placeholder.com/70x70" alt=""></a></li>
-												<li><a href="#" title=""><img src="http://via.placeholder.com/70x70" alt=""></a></li>
-												<li><a href="#" title=""><img src="http://via.placeholder.com/70x70" alt=""></a></li>
-												<li><a href="#" title=""><img src="http://via.placeholder.com/70x70" alt=""></a></li>
-												<li><a href="#" title=""><img src="http://via.placeholder.com/70x70" alt=""></a></li>
-												<li><a href="#" title=""><img src="http://via.placeholder.com/70x70" alt=""></a></li>
-												<li><a href="#" title=""><img src="http://via.placeholder.com/70x70" alt=""></a></li>
-												<li><a href="#" title=""><img src="http://via.placeholder.com/70x70" alt=""></a></li>
+												<li><a href="#" title=""><img src="#" alt=""></a></li>
+												<li><a href="#" title=""><img src="#" alt=""></a></li>
+												<li><a href="#" title=""><img src="#" alt=""></a></li>
+												<li><a href="#" title=""><img src="#" alt=""></a></li>
+												<li><a href="#" title=""><img src="#" alt=""></a></li>
+												<li><a href="#" title=""><img src="#" alt=""></a></li>
+												<li><a href="#" title=""><img src="#" alt=""></a></li>
+												<li><a href="#" title=""><img src="#" alt=""></a></li>
+												<li><a href="#" title=""><img src="#" alt=""></a></li>
+												<li><a href="#" title=""><img src="#" alt=""></a></li>
+												<li><a href="#" title=""><img src="#" alt=""></a></li>
+												<li><a href="#" title=""><img src="#" alt=""></a></li>
 											</ul>
 										</div>
 									</div>
@@ -1300,8 +1289,8 @@
 						<li><a href="#" title="">Language</a></li>
 						<li><a href="#" title="">Copyright Policy</a></li>
 					</ul>
-					<p><img src="images/copy-icon2.png" alt="">Copyright 2022</p>
-					<img class="fl-rgt" src="images/logo2.png" alt="">
+					<p><img src="#" alt="">Copyright 2022</p>
+					<img class="fl-rgt" src="#" alt="">
 				</div>
 			</div>
 		</footer><!--footer end-->
@@ -1425,7 +1414,7 @@
 						<input type="file" name="file">
 					</div>
 					<div class="pf-img">
-						<img src="http://via.placeholder.com/60x60" alt="">
+						<img src="#" alt="">
 					</div>
 					<input type="text" name="website-url" placeholder="htp://www.example.com">
 					<button type="submit" class="save">Update</button>
@@ -1791,46 +1780,31 @@
           </div>
         </div>
         
-        
-         <!-----------------------------------------------------My Post------------------------------------------------------------------------->
-       <!--  <div class="modal fade mypost-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-             
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel3">Add Post</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                     <div class="container">
-                       
-    				    <div class="row mb-2">
-    				        <div class="col-md-12">
-    				            <label>Write something here<span class="text-danger">*</span></label>
-    				            <textarea class="form-control" name="problem" placeholder="Write about how your advise is beneficial for others" ></textarea>
-    				        </div>
-    				        
-    				    </div>
-    				    <div class="row mb-2">
-    				         <div class="col-md-6">
-    				            <label>Upload Image</label>
-    				            <input type="file" class="form-control" name="image" >
-    				        </div>
-    				        
-    				    </div>
-    				    
-                     </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn" style="background:#008069">Save</button>
-                  </div>
-                </div>
-            </div>
-          </div>
-        </div> -->
+
+		<!-- The Modal -->
+		<div class="modal" id="myModal">
+			<div class="modal-dialog">
+			<div class="modal-content">
+			
+				<!-- Modal Header -->
+				<div class="modal-header">
+				<h4 class="modal-title">Reason for Decline Request</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				
+				<!-- Modal body -->
+				<div class="modal-body">
+					<textarea name="reason_for_reject" class="form-control" id="reason" cols="30" rows="3" placeholder="Reason...."></textarea>
+				</div>
+				
+				<!-- Modal footer -->
+				<div class="modal-footer">
+				<button type="button" class="btn btn-primary reason_save" style="background:#008069">Save</button>
+				</div>
+				
+			</div>
+			</div>
+		</div>
         
 @endsection
 @push('js')
@@ -2567,6 +2541,76 @@
 		});      
             
     </script>
-    
+     <script>
+		/* Change Status Advisory Request */
+        function reqAccept(_this,status,id){
+           // alert(status);
+            $.ajax({
+                url:"{{route('change_status')}}",
+                type:"POST",
+                data:{status:status,_token:"{{csrf_token()}}",id:id},
+                success:function(response){
+                   if(response.status == true){
+                      toastr.success("Success!", response.message);
+                     _this.closest("td").remove();
+					 location.reload();
+                     
+                   }else{
+                       toastr.error("Opps!", response.message);
+					   location.reload();
+                   }
+                }
+            })
+            
+        }
+        function reqClose(_this,status,id){
+            //  alert(status);
+			$('#myModal').modal('show');
+			$('.reason_save').click(function(){
+				var reason = $('textarea#reason').val();
+				if(!reason){
+					alert('Reason is required!');
+				}else{
+					$.ajax({
+						url:"{{route('change_status')}}",
+						type:"POST",
+						data:{status:status,_token:"{{csrf_token()}}",id:id,reason:reason},
+						success:function(response){
+							if(response.status == true){
+								$('#myModal').modal('toggle');
+								toastr.error("Opps!", response.message);
+								_this.closest("td").remove();
+								location.reload();
+							}else{
+								$('#myModal').modal('toggle');
+								toastr.error("Opps!", response.message);
+								location.reload();
+							}
+						}
+					})
+				}
+			})
+        }
+		function reqPayment(_this,status,id){
+           alert(status);
+            /* $.ajax({
+                url:"{{route('change_status')}}",
+                type:"POST",
+                data:{status:status,_token:"{{csrf_token()}}",id:id},
+                success:function(response){
+                   if(response.status == true){
+                      toastr.success("Success!", response.message);
+                     _this.closest("td").remove();
+					 location.reload();
+                     
+                   }else{
+                       toastr.error("Opps!", response.message);
+					   location.reload();
+                   }
+                }
+            }) */
+            
+        }
+    </script>
    
 @endpush
