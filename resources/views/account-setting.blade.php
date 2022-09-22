@@ -262,8 +262,8 @@
 							  					</div>
 							  					<div class="accept-feat">
 							  						<ul>
-							  							<li><button type="submit" class="accept-req" onclick="reqAccept(this,'Accepted','{{$data->id}}');">Accept</button></li>
-							  							<li><button type="submit" class="close-req" onclick="reqClose(this,'Rejected','{{$data->id}}');"><i class="la la-close"></i></button></li>
+							  							<li><button type="submit" class="accept-req" onclick="reqAccept(this,2,'{{$data->id}}');">Accept</button></li>
+							  							<li><button type="submit" class="close-req" onclick="reqClose(this,3,'{{$data->id}}');"><i class="la la-close"></i></button></li>
 							  						</ul>
 							  					</div>
 							  				</div>

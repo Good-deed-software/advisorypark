@@ -25,7 +25,7 @@ class CreateAdvisoryRequestsTable extends Migration
             $table->string('city_name')->nullable();
             $table->text('image')->nullable();
             $table->text('description')->nullable();
-            $table->string('status')->default('pending');
+            $table->enum('status',['1', '2', '3','4','5','6'])->default('1')->comment("1=>'Pending',2=>'Accepted',3=>'Rejected',4=>'Payment Done',5=>'Satisfied',6=>'Dissatisfied'");
             $table->string('req_type')->nullable();
             $table->tinyint('satisfied')->nullable();
             $table->text('comment')->nullable();

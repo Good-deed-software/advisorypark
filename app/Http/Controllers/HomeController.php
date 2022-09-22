@@ -185,7 +185,7 @@ class HomeController extends Controller
     
     public function accountSetting()
     {   
-         $advisory_request = AdvisoryRequest::with('users')->where('listing_user_id',Auth::user()->id)->where('status','pending')->orderby('id','desc')->get();
+         $advisory_request     =   AdvisoryRequest::with('users')->where('listing_user_id',Auth::user()->id)->where('status','pending')->orderby('id','desc')->get();
          $config['categories'] =   Category::where('status','1')->get();       
          $config['skills']     =   Skill::where('status','1')->get();
          $config['tags']       =   Tag::where('status','1')->get();
@@ -201,18 +201,26 @@ class HomeController extends Controller
         
         if($data){
             
-            
-            if($request->status == 'Accepted'){
-                 AdvisoryRequest::whereId($request->id)->update(['status'=>$request->status]);
+            $message = "";
+            if($request->status == '2'){
+                 AdvisoryRequest::whereId($request->id)->update(['status'=>$request->status,'reason_for_reject'=>Null]);
                  $message = 'Request Accepted!';
             }
-            elseif($request->status == 'Rejected'){
+            elseif($request->status == '3'){
                 AdvisoryRequest::whereId($request->id)->update(['status'=>$request->status,'reason_for_reject'=>$request->reason]);
                  $message = 'Request Rejected!';
             }
-            elseif($request->status == 'Payment Done'){
-                AdvisoryRequest::whereId($request->id)->update(['status'=>$request->status]);
+            elseif($request->status == '4'){
+                AdvisoryRequest::whereId($request->id)->update(['status'=>$request->status,'reason_for_reject'=>Null]);
                  $message = 'Payment Done!';
+            }
+            elseif($request->status == '5'){
+                AdvisoryRequest::whereId($request->id)->update(['status'=>$request->status,'feedback'=>$request->feedback]);
+                 $message = 'Satisfied!';
+            }
+            elseif($request->status == '6'){
+                AdvisoryRequest::whereId($request->id)->update(['status'=>$request->status,'feedback'=>$request->feedback]);
+                 $message = 'Dissatisfied!';
             }
             
             return response()->json(['status'=>true,'message'=>$message]);
@@ -243,11 +251,11 @@ class HomeController extends Controller
             return back()->withInput()->withErrors($validator);
         }else{
             
-            $data['category'] = implode(',',$request->category);
-            $data['skill'] = implode(',',$request->skill);
-            $data['tag'] = implode(',',$request->tag);
+            $data['category']   = implode(',',$request->category);
+            $data['skill']      = implode(',',$request->skill);
+            $data['tag']        = implode(',',$request->tag);
             
-            $data['slug'] = Str::slug($request->title);
+            $data['slug']       = Str::slug($request->title);
             
             $data['created_by'] = Auth::user()->id;
             
@@ -296,10 +304,10 @@ class HomeController extends Controller
                 $data['image'] = $imageName;
             }
             
-            $data['category'] = implode(',',$request->category);
-            $data['skill'] = implode(',',$request->skill);
-            $data['tag'] = implode(',',$request->tag); 
-            $data['slug'] = Str::slug($request->title);
+            $data['category']   = implode(',',$request->category);
+            $data['skill']      = implode(',',$request->skill);
+            $data['tag']        = implode(',',$request->tag); 
+            $data['slug']       = Str::slug($request->title);
             $data['created_by'] = Auth::user()->id;
             
             Post::create($data);
@@ -366,10 +374,10 @@ class HomeController extends Controller
                 $data['image'] = $imageName;
             }
             
-            $data['category'] = implode(',',$request->category);
-            $data['skill'] = implode(',',$request->skill);
-            $data['tag'] = implode(',',$request->tag); 
-            $data['slug'] = Str::slug($request->title);
+            $data['category']   = implode(',',$request->category);
+            $data['skill']      = implode(',',$request->skill);
+            $data['tag']        = implode(',',$request->tag); 
+            $data['slug']       = Str::slug($request->title);
             
             Post::find($request->id)->update($data);
             
@@ -536,14 +544,14 @@ class HomeController extends Controller
                 $following = new Following;
                 $following->auth_id = $request->auth_id;
                 $following->user_id = $request->user_id;
-                $following->status = 1;
+                $following->status  = 1;
                 
                 $following->save();
                 
                 $follower = new Follower;
                 $follower->auth_id = $request->user_id;
                 $follower->user_id = $request->auth_id;
-                $follower->status = 0;
+                $follower->status  = 0;
                 
                 $follower->save();
                 
@@ -604,10 +612,10 @@ class HomeController extends Controller
            
         }
         
-        $data['slug'] = Str::slug($request->listing_name);
+        $data['slug']       = Str::slug($request->listing_name);
             
-        $data['added_by'] = Auth::user()->id;
-        $data['mode'] = json_encode($request->mode);
+        $data['added_by']   = Auth::user()->id;
+        $data['mode']       = json_encode($request->mode);
 	    if($data){
             AdvisoryListing::create($data);
             
