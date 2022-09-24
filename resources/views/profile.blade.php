@@ -1102,14 +1102,18 @@
 														<td>{{$data->listing_name}}</td>
 														<td>{{$data->title}}</td>
 														<td>{{$data->type}}</td>
-														<td><span class="badge @if($data->status == 'Pending') badge-warning @elseif($data->status == 'Accepted') badge-success @else badge-danger @endif">{{$data->status}}</span></td>
-														@if($data->status == 'Pending')
 														<td>
-															<button class="btn btn-sm accept_req mb-1" onclick="reqAccept(this,'Accepted','{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Accept" style="background:#008069">Accept</i></button>
-															<button class="btn btn-danger btn-sm decline_req" onclick="reqClose(this,'Rejected','{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Reject" >Reject</i></button>
-															
+															<span class="badge @if($data->status == '1') badge-warning @elseif($data->status == '2') badge-success @elseif($data->status == '3') badge-danger @elseif($data->status == '4') badge-info @elseif($data->status == '5') badge-success @elseif($data->status == '6') badge-secondary @endif">
+															@if($data->status == '1') Pending @elseif($data->status == '2') Accepted @elseif($data->status == '3') Rejected @elseif($data->status == '4') Payment Done @elseif($data->status == '5') Satisfied @elseif($data->status == '6') Dissatisfied @endif
+															</span>@if($data->status == '6') ({{$data->feedback}}) @elseif($data->status == '5' && $data->feedback != null) ({{$data->feedback}})@endif
 														</td>
-														@endif
+														<td>
+															@if($data->status == '1')
+															<button class="btn btn-sm  mb-1" onclick="reqAccept(this,2,'{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Accept" style="background:#008069">Accept</i></button>
+															<button class="btn btn-danger btn-sm " onclick="reqClose(this,3,'{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Reject" >Reject</i></button>
+															
+															@endif
+														</td>
 													</tr>
 													@endforeach
 												</tbody>
@@ -1124,45 +1128,53 @@
 											    <a href="#" title="" class="overview-open">Let's Connect</a> 
 											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" style="background:#008069"><i class="fa fa-plus"></i> Add Business Profile</button>-->
 											</h3>
-											
-											<table class="table">
-												<thead>
-													<tr>
-														<th scope="col">#</th>
-														<th scope="col">Request Sent To</th>
-														<th scope="col">Request Sent date</th>
-														<th scope="col">Subject</th>
-														<th scope="col">My Requirement</th>
-														<th scope="col">Type</th>
-														<th scope="col">Status</th>
-														<th scope="col">Action</th>
-													</tr>
-												</thead>
-												<tbody>
-													@foreach($request_sent as $k => $data)
-													<tr>
-														<th scope="row">{{++$k}}</th>
-														<td>{{$data->listing_user->name}}</td>
-														<td>{{date('M d,Y h:i A',strtotime($data->created_at))}}</td>
-														<td>{{$data->listing_name}}</td>
-														<td>{{$data->title}}</td>
-														<td>{{$data->type}}</td>
-														<td>
-															<span class="badge @if($data->status == 'Pending') badge-warning @elseif($data->status == 'Accepted') badge-success @else badge-danger @endif">
-																@if($data->status == 'Pending'){{$data->status}} @elseif($data->status == 'Accepted') {{$data->status}} @else {{$data->status}} ({{$data->reason_for_reject}})@endif
-															</span>@if($data->status == 'Rejected') {{$data->reason_for_reject}} @endif
-														</td>
-														
-														<td>
-															<button class="btn btn-sm mb-1 payment" onclick="reqPayment(this,'Payment Done','{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="" style="background:#008069"></i>Payment</button>
-															<button class="btn brn-primary btn-sm mb-1 feedback"  data-toggle="tooltip" data-placement="top" title="Reject" style="background:#008069"></i>Feedback</button>
+											<div class="table-responsive">
+										        <table id="example" class="table display responsive" cellspacing="0" style="width:100%">
+													<thead>
+														<tr>
+															<th scope="col">#</th>
+															<th scope="col">Request Sent To</th>
+															<th scope="col">Request Sent date</th>
+															<th scope="col">Subject</th>
+															<th scope="col">My Requirement</th>
+															<th scope="col">Type</th>
+															<th scope="col">Contact</th>
+															<th scope="col">Status</th>
+															<th scope="col">Action</th>
+														</tr>
+													</thead>
+													<tbody>
+														@foreach($request_sent as $k => $data)
+														<tr>
+															<th scope="row">{{++$k}}</th>
+															<td>{{$data->listing_user->name}}</td>
+															<td>{{date('M d,Y h:i A',strtotime($data->created_at))}}</td>
+															<td>{{$data->listing_name}}</td>
+															<td>{{$data->title}}</td>
+															<td>{{$data->type}}</td>
+															<td>
+																@if($data->status == '4' || $data->status == '5' || $data->status == '6'){{$data->listing_user->contact}} @endif
+															</td>
+															<td>
+																<span class="badge @if($data->status == '1') badge-warning @elseif($data->status == '2') badge-success @elseif($data->status == '3') badge-danger @elseif($data->status == '4') badge-info @elseif($data->status == '5') badge-success @elseif($data->status == '6') badge-secondary @endif">
+																	@if($data->status == '1') Pending @elseif($data->status == '2') Accepted @elseif($data->status == '3') Rejected @elseif($data->status == '4') Payment Done @elseif($data->status == '5') Satisfied @elseif($data->status == '6') Dissatisfied @endif
+																</span>@if($data->status == '3') ({{$data->reason_for_reject}}) @endif
+															</td>
 															
-														</td>
-														
-													</tr>
-													@endforeach
-												</tbody>
-                                            </table>
+															<td>
+																@if($data->status == '2')
+
+																<button class="btn btn-sm mb-1 payment" onclick="reqPayment(this,4,'{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Payment" style="background:#008069"></i>Payment</button>
+																@elseif($data->status == '3' || $data->status == '4')
+																<button class="btn btn-success btn-sm mb-1"  onclick="satisfy(this,5,'{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Satisfy" ></i>Satisfy</button>
+																<button class="btn btn-danger btn-sm mb-1"  onclick="disSatisfy(this,6,'{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Dissatisfy" ></i>Dissatisfy</button>
+																@endif
+															</td>
+															
+														</tr>
+														@endforeach
+													</tbody>
+												</table>
 										    	
 										</div>	
 									
@@ -1781,25 +1793,50 @@
         </div>
         
 
-		<!-- The Modal -->
+		<!------------------ Reject Request Reason Modal ------------------ -->
 		<div class="modal" id="myModal">
 			<div class="modal-dialog">
 			<div class="modal-content">
 			
-				<!-- Modal Header -->
+				
 				<div class="modal-header">
-				<h4 class="modal-title">Reason for Decline Request</h4>
+				<h4 class="modal-title">Reason for Reject Request</h4>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				
-				<!-- Modal body -->
+				
 				<div class="modal-body">
 					<textarea name="reason_for_reject" class="form-control" id="reason" cols="30" rows="3" placeholder="Reason...."></textarea>
 				</div>
 				
-				<!-- Modal footer -->
+				
 				<div class="modal-footer">
 				<button type="button" class="btn btn-primary reason_save" style="background:#008069">Save</button>
+				</div>
+				
+			</div>
+			</div>
+		</div>
+
+		<!------------------ Satisfy/Dissatisfy Feedback Modal ------------------ -->
+		<div class="modal" id="myModal1">
+			<div class="modal-dialog">
+			<div class="modal-content">
+			
+				
+				<div class="modal-header">
+				<h4 class="modal-title">Feedback</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				
+				
+				<div class="modal-body">
+					<textarea name="feedback" class="form-control" id="feedback" cols="30" rows="3" placeholder="Give your feedback...."></textarea>
+				</div>
+				
+				
+				<div class="modal-footer">
+				<button type="button" class="btn btn-primary feedback_save" style="background:#008069">Save</button>
 				</div>
 				
 			</div>
@@ -2591,9 +2628,10 @@
 				}
 			})
         }
+
 		function reqPayment(_this,status,id){
            alert(status);
-            /* $.ajax({
+            $.ajax({
                 url:"{{route('change_status')}}",
                 type:"POST",
                 data:{status:status,_token:"{{csrf_token()}}",id:id},
@@ -2608,8 +2646,62 @@
 					   location.reload();
                    }
                 }
-            }) */
+            })
             
+        }
+
+		function satisfy(_this,status,id){
+            $('#myModal1').modal('show');
+			$('.feedback_save').click(function(){
+				var feedback = $('textarea#feedback').val();
+				$.ajax({
+					url:"{{route('change_status')}}",
+					type:"POST",
+					data:{status:status,_token:"{{csrf_token()}}",id:id,feedback:feedback},
+					success:function(response){
+					if(response.status == true){
+						$('#myModal1').modal('toggle');
+						toastr.success("Success!", response.message);
+						_this.closest("td").remove();
+						location.reload();
+						
+					}else{
+						$('#myModal1').modal('toggle');
+						toastr.error("Opps!", response.message);
+						location.reload();
+					}
+					}
+				})
+			})
+            
+        }
+		function disSatisfy(_this,status,id){
+            //  alert(status);
+			$('#myModal1').modal('show');
+			$('.feedback_save').click(function(){
+				var feedback = $('textarea#feedback').val();
+				if(!feedback){
+					alert('Please Give Your Feedback..!');
+				}else{
+					$.ajax({
+						url:"{{route('change_status')}}",
+						type:"POST",
+						data:{status:status,_token:"{{csrf_token()}}",id:id,feedback:feedback},
+						success:function(response){
+							if(response.status == true){
+								$('#myModal1').modal('toggle');
+								toastr.error("Opps!", response.message);
+								_this.closest("td").remove();
+								location.reload();
+							}else{
+								$('#myModal1').modal('toggle');
+								toastr.error("Opps!", response.message);
+								location.reload();
+							}
+						}
+					})
+				}
+			})
         }
     </script>
    
