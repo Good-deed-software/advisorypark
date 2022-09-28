@@ -117,16 +117,30 @@ class HomeController extends Controller
         $config['tags']       =   Tag::where('status','1')->get();
         
         if($request->search){
-            
-            $advisory_listings = AdvisoryListing::where('listing_name', 'LIKE', '%'. $request->get('search'). '%')->get();
-        }
-        elseif($request->mode){
+            if(Auth::check()){           
+                
+                $advisory_listings = AdvisoryListing::where('listing_name', 'LIKE', '%'. $request->get('search'). '%')->where('added_by','!=',Auth::user()->id)->get();
+                
+            }else{
+                $advisory_listings = AdvisoryListing::where('listing_name', 'LIKE', '%'. $request->get('search'). '%')->get();
+                
+            }
+        }elseif($request->mode){
            
-            $advisory_listings = AdvisoryListing::where('mode', 'LIKE', '%'. $request->get('mode'). '%')->get();
-        }
-        elseif($request->from && $request->to){
+            if(Auth::check()){  
+                $advisory_listings = AdvisoryListing::where('mode', 'LIKE', '%'. $request->get('mode'). '%')->where('added_by','!=',Auth::user()->id)->get();
+            }else{
+                $advisory_listings = AdvisoryListing::where('mode', 'LIKE', '%'. $request->get('mode'). '%')->get();
+                
+            }
+        }elseif($request->from && $request->to){
             
-            $advisory_listings = AdvisoryListing::whereBetween('fees', [$request->from, $request->to])->get();
+            if(Auth::check()){           
+                $advisory_listings = AdvisoryListing::whereBetween('fees', array((int)$request->from, (int)$request->to))->where('added_by','!=',Auth::user()->id)->get();
+                
+            }else{
+                $advisory_listings = AdvisoryListing::whereBetween('fees', array((int)$request->from, (int)$request->to))->get();
+            }
         }
         else{
            

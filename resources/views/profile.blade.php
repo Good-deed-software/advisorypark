@@ -50,25 +50,26 @@
 										<div class=" tab-feed st2">
 										    <ul class="social_links" >
 										   
+											<li data-tab="info-dd" ><a href="#info-dd" title="">My Profile</a></li>
 										  @if(\Session::get('type') == 'User')  
 										  
+
+											<li data-tab="letsconnect-dd"><a href="#letsconnect-dd" title="">Let's Connect</a></li>
 											<li data-tab="info-dd" ><a href="#" title="">My Profile</a></li>
 											<li data-tab="letsconnect-dd"><a href="#" title="">Let's Connect</a></li>
 											<li data-tab="myrequirments-dd"><a href="#" title="">My requirments</a></li>
-											<li ><a href="{{route('logout')}}" title="">Logout</a></li>
+											<li ><a href="{{route('logout')}}" title="">Logout</a></
 											
 											@elseif(\Session::get('type') == 'Advisor')
 											
-										    <li data-tab="info-dd" ><a href="#" title="">My Profile</a></li>
-											<li data-tab="business-dd" ><a href="#" title="">My Business Profile</a></li>
-											<li data-tab="advisory-listing-dd"><a href="#" title="">My Advisory Listing</a></li>
-											<li data-tab="myleads-dd"><a href="#" title="">My Leads</a></li>
-											<!-- <li data-tab="letsconnect-dd"><a href="#" title="">Let's Connect</a></li> -->
-											<li data-tab="myposts-dd"><a href="#" title="">My Posts</a></li>
+										    <li data-tab="business-dd" ><a href="#business-dd" title="">My Business Profile</a></li>
+											<li data-tab="advisory-listing-dd"><a href="#advisory-listing-dd" title="">My Advisory Listing</a></li>
+											<li data-tab="myleads-dd"><a href="#myleads-dd" title="">My Leads</a></li>
+											<li data-tab="myposts-dd"><a href="#myposts-dd" title="">My Posts</a></li>
 											<li data-tab="myscorecard-dd"><a href="#" title="">My Score card</a></li>
-											<li ><a href="{{route('logout')}}" title="">Logout</a></li>
 											
-										  @endif
+											@endif
+											<li ><a href="{{route('logout')}}" title="">Logout</a></li>
 										</ul>
 										</div>
 										
@@ -1928,7 +1929,13 @@
             $('#comment-box-'+id).slideToggle();
         }
     
-        $(document).ready(function(){     
+        $(document).ready(function(){
+			var url = window.location.href;
+			var activeTab = url.substring(url.indexOf("#") + 1);
+			$(".tab-pane").removeClass("active in");
+			$("#" + activeTab).addClass("active in");
+			$('a[href="#'+ activeTab +'"]').tab('show')
+
             $(".share").on('click',function(){
                 $(".social-media-icons").fadeToggle();
             });
