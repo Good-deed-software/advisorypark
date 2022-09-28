@@ -126,7 +126,16 @@ class HomeController extends Controller
         }
         elseif($request->from && $request->to){
             
-            $advisory_listings = AdvisoryListing::whereBetween('fees', [$request->from, $request->to])->get();
+            // $advisory_listings = \DB::select("select * from `advisory_listing` where `fees` between $request->from and $request->to");
+            // dd($advisory_listings);
+            if(Auth::check()){           
+                
+                $advisory_listings = AdvisoryListing::whereBetween('fees', array((int)$request->from, (int)$request->to))->where('added_by','!=',Auth::user()->id)->get();
+                
+            }else{
+                        
+                $advisory_listings = AdvisoryListing::whereBetween('fees', array((int)$request->from, (int)$request->to))->get();
+            }
         }
         else{
            

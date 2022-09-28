@@ -123,12 +123,12 @@
 												   
 												   	<h6>Fees</h6>
 													<div id="time-range">
-														<p><span class="slider-time text-dark">₹1</span> to <span class="slider-time2">₹1000</span>
+														<p><span class="slider-time text-dark">₹1</span> to <span class="slider-time2">₹10000</span>
 														</p>
 														<div class="sliders_step1">
 															<div class="flat-slider" id="slider-range">
-																<input type="hidden" name="from" id="sliderfrom" value="">
-																<input type="hidden" name="to" id="sliderto" value="">
+																<input type="hidden" name="from" id="sliderfrom" value="@if(request()->get('from')){{ request()->get('from') }}@endif">
+																<input type="hidden" name="to" id="sliderto" value="@if(request()->get('to')){{ request()->get('to') }}@endif">
 															</div>
 														</div>
 													</div>
@@ -291,12 +291,12 @@
         												</ul>
         												<ul class="skills">
         												   
-        													<li><strong>Task Completion Time : </strong><a href="#" title="">{{$data->duration_in_hours}} Hours,{{$data->duration_in_minutes}} Minutes</a></li>
+        													<li><strong>Task Completion Time : </strong><a href="#" title="">{{$data->duration_in_hours}} Hours , {{$data->duration_in_minutes}} Minutes</a></li>
         												
         												</ul>
         												<ul class="skills">
         												   
-        													<li><strong>Experience : </strong><a href="#" title="">{{$data->exp_in_years}} Years,{{$data->exp_in_months}} Months</a></li>
+        													<li><strong>Experience : </strong><a href="#" title="">{{$data->exp_in_years}} Years , {{$data->exp_in_months}} Months</a></li>
         												
         												</ul>
         											
@@ -619,9 +619,9 @@
 			$("#slider-range").slider({
 				range: true,
 				min: 1,
-				max: 1000,
+				max: 10000,
 				step: 1,
-				values: [1, 1000],
+				values: [1, 10000],
 				slide: function(e, ui) {
 					console.log(ui.value); 
 					// $( "#sliderVal" ).val( "₹" + ui.values[ 0 ] + " - ₹" + ui.values[ 1 ] );
