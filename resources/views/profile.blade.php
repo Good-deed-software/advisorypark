@@ -53,10 +53,6 @@
 											<li data-tab="info-dd" ><a href="#info-dd" title="">My Profile</a></li>
 										  @if(\Session::get('type') == 'User')  
 									  
-
-											<li data-tab="letsconnect-dd"><a href="#letsconnect-dd" title="">Let's Connect</a></li>
-
-
 											<li data-tab="letsconnect-dd"><a href="#letsconnect-dd" title="">Let's Connect</a></li>
 											<li data-tab="info-dd" ><a href="#" title="">My Profile</a></li>
 											<li data-tab="letsconnect-dd"><a href="#" title="">Let's Connect</a></li>
