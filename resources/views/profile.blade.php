@@ -57,13 +57,8 @@
 											<li data-tab="letsconnect-dd"><a href="#letsconnect-dd" title="">Let's Connect</a></li>
 											<li data-tab="info-dd" ><a href="#" title="">My Profile</a></li>
 											<li data-tab="letsconnect-dd"><a href="#" title="">Let's Connect</a></li>
-<<<<<<< HEAD
 											<li data-tab="myrequirments-dd"><a href="#" title="">My Requirments</a></li>
 											<li ><a href="{{route('logout')}}" title="">Logout</a></li>
-=======
-											<li data-tab="myrequirments-dd"><a href="#" title="">My requirments</a></li>
-											<li ><a href="{{route('logout')}}" title="">Logout</a></
->>>>>>> dab473a74bd6ec217881bcaddcd9aadaca1f1741
 											
 											@elseif(\Session::get('type') == 'Advisor')
 											
