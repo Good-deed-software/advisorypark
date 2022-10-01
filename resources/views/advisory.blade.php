@@ -127,8 +127,8 @@
 														</p>
 														<div class="sliders_step1">
 															<div class="flat-slider" id="slider-range">
-																<input type="hidden" name="from" id="sliderfrom" value="">
-																<input type="hidden" name="to" id="sliderto" value="">
+																<input type="hidden" name="from" id="sliderfrom" value="@if(request()->get('from')){{ request()->get('from') }}@endif">
+																<input type="hidden" name="to" id="sliderto" value="@if(request()->get('to')){{ request()->get('to') }}@endif">
 															</div>
 														</div>
 													</div>
