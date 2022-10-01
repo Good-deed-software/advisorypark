@@ -54,7 +54,7 @@
 										  
 											<li data-tab="info-dd" ><a href="#" title="">My Profile</a></li>
 											<li data-tab="letsconnect-dd"><a href="#" title="">Let's Connect</a></li>
-											<li data-tab="myrequirments-dd"><a href="#" title="">My requirments</a></li>
+											<li data-tab="myrequirments-dd"><a href="#" title="">My Requirments</a></li>
 											<li ><a href="{{route('logout')}}" title="">Logout</a></li>
 											
 											@elseif(\Session::get('type') == 'Advisor')
@@ -282,7 +282,7 @@
 										   </div>
 										   <div class="row mb-2">
 										       <div class="col-md-12">
-										            <button type="submit" class="btn float-right" style="background:#008069">Update</button>
+										            <button type="submit" class="btn float-right theme-bg text-light" >Update</button>
 										        </div>
 										   </div>
 										</div>	
@@ -432,7 +432,7 @@
                                                         <textarea class="form-control ml-1 shadow-none textarea" placeholder="write a comment..." name="comment"></textarea>
                                                     </div>
                                                     <div class="mt-2 text-right">
-                                                        <button class="btn btn-sm shadow-none" type="submit" style="background:#008069;color:#fff">
+                                                        <button class="btn btn-sm shadow-none theme-bg text-light" type="submit">
                                                             Post comment
                                                         </button>
                                                     </div>
@@ -583,7 +583,7 @@
 															<textarea class="form-control ml-1 shadow-none textarea" placeholder="write a comment..." name="comment"></textarea>
 														</div>
 														<div class="mt-2 text-right">
-															<button class="btn btn-sm shadow-none" type="submit" style="background:#008069;color:#fff">
+															<button class="btn btn-sm shadow-none theme-bg text-light" type="submit" >
 																Post comment
 															</button>
 														</div>
@@ -971,8 +971,8 @@
 										<div class="user-profile-ov">
 											 <h3>
 											    <a href="#" title="" class="overview-open">Business Profile</a> 
-											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" style="background:#008069"><i class="fa fa-plus"></i> Add Business Profile</button>-->
-											    <button type="button" class="btn w-25 float-right business-profile-jb" data-toggle="modal" data-target=".business-profile-modal" style="background:#008069"><i class="fa fa-plus"></i> Add Business Profile</button>
+											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" ><i class="fa fa-plus"></i> Add Business Profile</button>-->
+											    <button type="button" class="btn w-25 float-right business-profile-jb theme-bg text-light" data-toggle="modal" data-target=".business-profile-modal" ><i class="fa fa-plus text-light"></i> Add Business Profile</button>
 
                     
 										    </h3>
@@ -1017,8 +1017,8 @@
 										<div class="user-profile-ov">
 											 <h3>
 											    <a href="#" title="" class="overview-open">Advisory Listing</a> 
-											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" style="background:#008069"><i class="fa fa-plus"></i> Add Business Profile</button>-->
-											    <button type="button" class="btn w-25 float-right advisory-listing-jb" data-toggle="modal" data-target=".advisory-listing-modal" style="background:#008069"><i class="fa fa-plus"></i> Add Advisory Listing</button>
+											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" ><i class="fa fa-plus"></i> Add Business Profile</button>-->
+											    <button type="button" class="btn w-25 float-right advisory-listing-jb theme-bg text-light"  data-toggle="modal" data-target=".advisory-listing-modal" ><i class="fa fa-plus text-light"></i> Add Advisory Listing</button>
 										    </h3>
 										    <!--<table class="table">-->
 										    <div class="table-responsive">
@@ -1079,7 +1079,7 @@
 										<div class="user-profile-ov">
 											 <h3>
 											    <a href="#" title="" class="overview-open">Leads</a> 
-											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" style="background:#008069"><i class="fa fa-plus"></i> Add Business Profile</button>-->
+											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" ><i class="fa fa-plus"></i> Add Business Profile</button>-->
 											</h3>
 											<table class="table display responsive example" cellspacing="0" style="width: 100%;">
 												<thead>
@@ -1110,7 +1110,7 @@
 														</td>
 														<td>
 															@if($data->status == '1')
-															<button class="btn btn-sm  mb-1" onclick="reqAccept(this,2,'{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Accept" style="background:#008069">Accept</i></button>
+															<button class="btn btn-sm mb-1 theme-bg" onclick="reqAccept(this,2,'{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Accept" >Accept</i></button>
 															<button class="btn btn-danger btn-sm " onclick="reqClose(this,3,'{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Reject" >Reject</i></button>
 															
 															@endif
@@ -1126,50 +1126,43 @@
 									<div class="product-feed-tab" id="myrequirments-dd">
 										<div class="user-profile-ov">
 											 <h3>
-											    <a href="#" title="" class="overview-open">My requirment</a> 
-											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" style="background:#008069"><i class="fa fa-plus"></i> Add Business Profile</button>-->
+											    <a href="#" title="" class="overview-open">My Requirment</a> 
+											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" ><i class="fa fa-plus"></i> Add Business Profile</button>-->
 											</h3>
 											<div class="table-responsive">
 										        <table id="example1" class="table display responsive" cellspacing="0" style="width:100%">
 													<thead>
 														<tr>
 															<th scope="col">#</th>
-															<th scope="col">My Requirement</th>
-															<th scope="col">Request Sent To</th>
-															<th scope="col">Request Sent date</th>
-															<th scope="col">Subject</th>
-															<th scope="col">Type</th>
-															<th scope="col">Contact</th>
-															<th scope="col">Status</th>
+															<th scope="col">Title</th>
+															<th scope="col">Category</th>
+															<th scope="col">Skill</th>
+															<th scope="col">Tag</th>
+															<th scope="col">Description</th>
+															<th scope="col">Created by</th>
 															<th scope="col">Action</th>
 														</tr>
 													</thead>
 													<tbody>
-														@foreach($request_sent as $k => $data)
+														@foreach($requirements as $k => $data)
 														<tr>
 															<th scope="row">{{++$k}}</th>
 															<td>{{$data->title}}</td>
-															<td>{{$data->listing_user->name}}</td>
-															<td>{{date('M d,Y h:i A',strtotime($data->created_at))}}</td>
-															<td>{{$data->listing_name}}</td>
-															<td>{{$data->type}}</td>
-															<td>
-																@if($data->status == '4' || $data->status == '5' || $data->status == '6'){{$data->listing_user->contact}} @endif
-															</td>
-															<td>
-																<span class="badge @if($data->status == '1') badge-warning @elseif($data->status == '2') badge-success @elseif($data->status == '3') badge-danger @elseif($data->status == '4') badge-info @elseif($data->status == '5') badge-success @elseif($data->status == '6') badge-secondary @endif">
-																	@if($data->status == '1') Pending @elseif($data->status == '2') Accepted @elseif($data->status == '3') Rejected @elseif($data->status == '4') Payment Done @elseif($data->status == '5') Satisfied @elseif($data->status == '6') Dissatisfied @endif
-																</span>@if($data->status == '3') ({{$data->reason_for_reject}}) @endif
-															</td>
+															@php 
+																$cats = getPostCategories($data->category); 
+																$skills = getPostSkills($data->skill);
+																$tags = getPostTags($data->tag);
+															@endphp
 															
+															<td>@foreach($cats as $v) {{$v}}, @endforeach</td>
+															
+															<td>@foreach($skills as $v) {{$v}}, @endforeach</td>
+															<td>@foreach($tags as $v) {{$v}}, @endforeach</td>
+															<td>{{$data->description}}</td>
+															<td>{{$data->users->name}}</td>
 															<td>
-																@if($data->status == '2')
-
-																<button class="btn btn-sm mb-1 payment" onclick="reqPayment(this,4,'{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Payment" style="background:#008069"></i>Payment</button>
-																@elseif($data->status == '3' || $data->status == '4')
-																<button class="btn btn-success btn-sm mb-1"  onclick="satisfy(this,5,'{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Satisfy" ></i>Satisfy</button>
-																<button class="btn btn-danger btn-sm mb-1"  onclick="disSatisfy(this,6,'{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Dissatisfy" ></i>Dissatisfy</button>
-																@endif
+																<!-- <button class="btn btn-info btn-sm editRequirement mr-1" data-toggle="tooltip" data-placement="top" title="Edit" data-id="{{$data->id}}"><i class="fa fa-edit"></i></button> -->
+																<button class="btn btn-danger btn-sm deleteRequirement" data-toggle="tooltip" data-placement="top" title="delete" data-id="{{$data->id}}"><i class="fa fa-trash"></i></button>
 															</td>
 															
 														</tr>
@@ -1178,13 +1171,13 @@
 												</table>
 										</div>	
 									</div>
-									<!-- My requirments -->
+									<!-- lets connect -->
 									<div class="product-feed-tab" id="letsconnect-dd">
 									
 										<div class="user-profile-ov">
 											 <h3>
 											    <a href="#" title="" class="overview-open">Let's Connect</a> 
-											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" style="background:#008069"><i class="fa fa-plus"></i> Add Business Profile</button>-->
+											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" ><i class="fa fa-plus"></i> Add Business Profile</button>-->
 											</h3>
 											<div class="table-responsive">
 										        <table id="example" class="table display responsive" cellspacing="0" style="width:100%">
@@ -1222,10 +1215,10 @@
 															<td>
 																@if($data->status == '2')
 
-																<button class="btn btn-sm mb-1 payment" onclick="reqPayment(this,4,'{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Payment" style="background:#008069"></i>Payment</button>
+																<button class="btn btn-sm mb-1 payment theme-bg" onclick="reqPayment(this,4,'{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Payment" >Payment</button>
 																@elseif($data->status == '3' || $data->status == '4')
-																<button class="btn btn-success btn-sm mb-1"  onclick="satisfy(this,5,'{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Satisfy" ></i>Satisfy</button>
-																<button class="btn btn-danger btn-sm mb-1"  onclick="disSatisfy(this,6,'{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Dissatisfy" ></i>Dissatisfy</button>
+																<button class="btn btn-success btn-sm mb-1"  onclick="satisfy(this,5,'{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Satisfy" >Satisfy</button>
+																<button class="btn btn-danger btn-sm mb-1"  onclick="disSatisfy(this,6,'{{$data->id}}');" data-toggle="tooltip" data-placement="top" title="Dissatisfy" >Dissatisfy</button>
 																@endif
 															</td>
 															
@@ -1243,9 +1236,9 @@
 										<div class="user-profile-ov">
 											 <h3>
 											    <a href="#" title="" class="overview-open">My Post</a> 
-											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" style="background:#008069"><i class="fa fa-plus"></i> Add Business Profile</button>-->
-											    <!-- <button type="button" class="btn w-25 float-right " data-toggle="modal" data-target=".mypost-modal" style="background:#008069"><i class="fa fa-plus"></i> Add Post</button> -->
-										    	<button type="button" class="btn w-25 float-right "style="background:#008069"><a class="post-jb active" href="#" title="">Add Post</a></button>
+											    <!--<button type="button" title="" class="overview-open w-25 float-right form-control" ><i class="fa fa-plus"></i> Add Business Profile</button>-->
+											    <!-- <button type="button" class="btn w-25 float-right " data-toggle="modal" data-target=".mypost-modal" ><i class="fa fa-plus"></i> Add Post</button> -->
+										    	<button type="button" class="btn w-25 float-right theme-bg text-light" ><a class="post-jb active" href="#" title="">Add Post</a></button>
 											</h3>
 											<table class="table display responsive example" cellspacing="0" style="width:100%">
                                               <thead>
@@ -1714,7 +1707,7 @@
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button type="submit" class="btn" id="bpBtn" style="background:#008069">Save</button>
+							<button type="submit" class="btn theme-bg" id="bpBtn" >Save</button>
 						</div>
 					</form>
                 </div>
@@ -1842,7 +1835,7 @@
                      </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="submit" class="btn" id="saveBtn" style="background:#008069">Save</button>
+                    <button type="submit" class="btn theme-bg" id="saveBtn" >Save</button>
                   </div>
                 </form>
                 </div>
@@ -1869,7 +1862,7 @@
 				
 				
 				<div class="modal-footer">
-				<button type="button" class="btn btn-primary reason_save" style="background:#008069">Save</button>
+				<button type="button" class="btn btn-primary reason_save theme-bg" >Save</button>
 				</div>
 				
 			</div>
@@ -1894,7 +1887,7 @@
 				
 				
 				<div class="modal-footer">
-				<button type="button" class="btn btn-primary feedback_save" style="background:#008069">Save</button>
+				<button type="button" class="btn btn-primary feedback_save theme-bg" >Save</button>
 				</div>
 				
 			</div>
@@ -2037,6 +2030,14 @@
             $('[data-toggle="tooltip"]').tooltip();
             
 			$('#example').DataTable({
+                columnDefs: [ {
+                    className: 'dtr-control',
+                    orderable: false,
+                    targets:   0
+                } ],
+                order: [ 1, 'asc' ]
+            } );
+			$('#example1').DataTable({
                 columnDefs: [ {
                     className: 'dtr-control',
                     orderable: false,
@@ -2533,8 +2534,8 @@
             /*----show more/show less-------*/
             var showChar = 200;  
             var ellipsestext = "...";
-            var moretext = "Show more";
-            var lesstext = "Show less";
+            var moretext = "Read more";
+            var lesstext = "Read less";
             
         
             $('.more').each(function() {
@@ -2633,6 +2634,77 @@
 
 			});
 			/* Posts delete */
+
+
+			/* Requirements Edit Popup */
+
+			$('body').on('click', '.editRequirement', function () {
+                
+				var id = $(this).data('id');
+				let route = "{{route('requirements.update')}}"; 
+
+		  
+			  	$.get("{{ url('requirements-edit') }}" +'/' + id, function (data) {
+					$("#requirements_form").attr('action',route);
+
+					$('#saveBtn').text("Update");
+					$(".requirements-popup.job_post").addClass("active");
+        			$(".wrapper").addClass("overlay");
+					
+					$('#requirements_id').val(data.id);
+					$('#requirements_title').val(data.title);
+					
+					var categories = data.category.split(',');
+					var skills = data.skill.split(',');
+					var tags = data.tag.split(',');
+
+					$('#category_r').val(categories);
+					$('#category_r').trigger("change");
+
+					$('#skill_r').val(skills);
+					$('#skill_r').trigger("change");
+					
+					$('#tag_r').val(tags);
+					$('#tag_r').trigger("change");
+
+					$('#requirements_description').text(data.description);
+				});
+			}); 
+			/* Requirement Edit Popup */
+			/* Requirement delete */
+			$(".deleteRequirement").click(function(){
+				let r = confirm('Do you really want to delete this requirement ?');
+
+				if(r == true){
+					var id = $(this).data("id");
+					var token = "{{csrf_token()}}";
+					$.ajax(
+					{
+						url: "{{ url('requirements-delete') }}" +'/' + id,
+						type: 'Delete',
+						dataType: "JSON",
+						data: {
+							"id": id,
+							"_method": 'DELETE',
+							"_token": token,
+						},
+						success: function (data)
+						{
+							if(data.status == true){
+									toastr.error("Success!", data.message);
+									location.reload();
+							}else{
+								toastr.error("Opps!", data.message);
+								location.reload();
+							}
+						}
+					});
+				}
+
+			});
+			/* Requirement delete */
+
+
 		});      
             
     </script>

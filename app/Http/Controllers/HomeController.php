@@ -43,19 +43,21 @@ class HomeController extends Controller
             $advisory_listings    =   AdvisoryListing::where('added_by',Auth::user()->id)->orderby('id','desc')->get();
             
             $business_profile     =   BusinessProfile::orderby('id','desc')->get();
-         
+            
             $advisory_request     =   AdvisoryRequest::with('users')->where('listing_user_id',Auth::user()->id)->orderby('id','desc')->get();
-           
+            
             $request_sent         =   AdvisoryRequest::with('listing_user')->where('user_id',Auth::user()->id)->orderby('id','desc')->get();
             
             $saved_post           =   Save::with('posts','users')->where('blog_type','post')->where('user_id',Auth::user()->id)->where('status','1')->orderby('id','desc')->get();
+            
+            $requirements         =   Requirement::with(['categories','skills','tags','users'])->orderby('id','desc')->get();
             
             $config['categories'] =   Category::where('status','1')->get();       
             $config['skills']     =   Skill::where('status','1')->get();
             $config['tags']       =   Tag::where('status','1')->get();
 
 		    
-		    return view('profile',compact('config','posts','following','follower','advisory_listings','business_profile','advisory_request','request_sent','saved_post'));
+		    return view('profile',compact('config','posts','following','follower','advisory_listings','business_profile','advisory_request','request_sent','saved_post','requirements'));
         
             
         }else{
@@ -117,16 +119,28 @@ class HomeController extends Controller
         $config['tags']       =   Tag::where('status','1')->get();
         
         if($request->search){
-            
-            $advisory_listings = AdvisoryListing::where('listing_name', 'LIKE', '%'. $request->get('search'). '%')->get();
+            if(Auth::check()){ 
+                $advisory_listings = AdvisoryListing::where('listing_name', 'LIKE', '%'. $request->get('search'). '%')->where('added_by','!=',Auth::user()->id)->get();
+            }else{
+                $advisory_listings = AdvisoryListing::where('listing_name', 'LIKE', '%'. $request->get('search'). '%')->get();
+
+            }
         }
         elseif($request->mode){
-           
-            $advisory_listings = AdvisoryListing::where('mode', 'LIKE', '%'. $request->get('mode'). '%')->get();
+            if(Auth::check()){ 
+                $advisory_listings = AdvisoryListing::where('mode', 'LIKE', '%'. $request->get('mode'). '%')->where('added_by','!=',Auth::user()->id)->get();
+            }else{
+                $advisory_listings = AdvisoryListing::where('mode', 'LIKE', '%'. $request->get('mode'). '%')->get();
+
+            }
         }
         elseif($request->from && $request->to){
-            
-            $advisory_listings = AdvisoryListing::whereBetween('fees', [$request->from, $request->to])->get();
+            if(Auth::check()){ 
+                $advisory_listings = AdvisoryListing::whereBetween('fees', [(int)$request->from, (int)$request->to])->where('added_by','!=',Auth::user()->id)->get();
+            }else{
+                $advisory_listings = AdvisoryListing::whereBetween('fees', [(int)$request->from, (int)$request->to])->get();
+
+            }
         }
         else{
            
@@ -161,11 +175,17 @@ class HomeController extends Controller
     }
     
     public function autocomplete(Request $request)
-    {
-        $data = AdvisoryListing::select("listing_name as value", "id")
+    {   
+        if(Auth::check()){
+            $data = AdvisoryListing::select("listing_name as value", "id")
                     ->where('listing_name', 'LIKE', '%'. $request->get('search'). '%')
                     ->where('added_by','!=',Auth::user()->id)
                     ->get();
+        }else{
+            $data = AdvisoryListing::select("listing_name as value", "id")
+                    ->where('listing_name', 'LIKE', '%'. $request->get('search'). '%')
+                    ->get();
+        }
         
             return response()->json($data);
        
@@ -236,7 +256,7 @@ class HomeController extends Controller
        
     }
     
-    public function requirements(Request $request)
+    public function requirementStore(Request $request)
     {   
 	    $data = $request->except(['_token']); 
 	    
@@ -246,11 +266,29 @@ class HomeController extends Controller
             'skill'     => 'required', 
             'tag'       => 'required', 
         ]);
+
+          /* check if category is new*/
+          $new_cat = addNewCategory($request->category);
+          if(!empty($new_cat)){
+              $request->category = $new_cat;
+          }
+          /* check if skill is new*/
+          $new_skill = addNewSkill($request->skill);
+          if(!empty($new_skill)){
+              $request->skill = $new_skill;
+          }
+          /* check if tag is new */
+          $new_tag = addNewTag($request->skill);
+          if(!empty($new_tag)){
+              $request->tag = $new_tag;
+          }
+          
         
         if ($validator->fails()){
             return back()->withInput()->withErrors($validator);
         }else{
-            
+
+           
             $data['category']   = implode(',',$request->category);
             $data['skill']      = implode(',',$request->skill);
             $data['tag']        = implode(',',$request->tag);
@@ -266,6 +304,76 @@ class HomeController extends Controller
        
         
        
+    }
+
+    public function requirementEdit($id)
+    {
+        $post = Requirement::find($id);
+        return response()->json($post);
+    }
+    
+
+    public function requirementUpdate(Request $request)
+    {   
+        if(!$request->id){
+            return redirect()->back()->withError('Something went wrong !');
+        }
+
+		$data = $request->except(['_token','id']); 
+	    
+        $validator = Validator::make($request->all(), [
+            'title'     => 'required', 
+            'category'  => 'required', 
+            'skill'     => 'required', 
+            'tag'       => 'required', 
+        ]);
+
+        /* check if category is new*/
+        $new_cat = addNewCategory($request->category);
+        if(!empty($new_cat)){
+            $request->category = $new_cat;
+        }
+        /* check if skill is new*/
+        $new_skill = addNewSkill($request->skill);
+        if(!empty($new_skill)){
+            $request->skill = $new_skill;
+        }
+        /* check if tag is new */
+        $new_tag = addNewTag($request->tag);
+        if(!empty($new_tag)){
+            $request->tag = $new_tag;
+        }
+        
+        if ($validator->fails()){
+            return back()->withInput()->withErrors($validator);
+        }else{
+            if($request->file('image')){   
+                $imageName = time().'-'.$request->image->getClientOriginalName();
+                $request->image->move(public_path('front/images/posts'), $imageName);
+                $data['image'] = $imageName;
+            }
+            
+            $data['category']   = implode(',',$request->category);
+            $data['skill']      = implode(',',$request->skill);
+            $data['tag']        = implode(',',$request->tag); 
+            $data['slug']       = Str::slug($request->title);
+            
+            Requirement::find($request->id)->update($data);
+            
+            return redirect()->back()->withSuccess('Requirement Updated!');
+        }
+       
+    }
+
+    public function requirementDelete($id)
+    {
+        $requirement = Requirement::find($id);
+        $requirement->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => "Requirement deleted Successfully"
+        ]);
     }
     
     public function posts(Request $request)
@@ -381,7 +489,7 @@ class HomeController extends Controller
             
             Post::find($request->id)->update($data);
             
-            return redirect()->back()->withSuccess('New Post Updated!');
+            return redirect()->back()->withSuccess('Post Updated!');
         }
        
     }

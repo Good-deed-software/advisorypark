@@ -959,6 +959,7 @@ main {
 .main-ws-sec {
 	float: left;
 	width: 100%;
+	box-shadow: 6px 1px 10px rgb(0 0 0 / 20%);
 }
 
 /* ============ post-topbar =========== */
@@ -1290,7 +1291,7 @@ main {
 .job-status-bar {
 	float: left;
 	width: 100%;
-	padding: 15px 20px;
+	padding: 10px 12px 0px 12px;
 }
 .like-com {
 	float: left;
@@ -3601,7 +3602,7 @@ a:hover {
 .search-box {
 	float: left;
 	width: 100%;
-	padding: 0 15px;
+	
 }
 .search-box form {
 	float: left;
@@ -3616,11 +3617,11 @@ a:hover {
 	color: #b2b2b2;
 	font-size: 14px;
 	border: 1px solid #e5e5e5;
-	-webkit-box-shadow: 0 4px 8px rgba(0,0,0,0.20);
-	-moz-box-shadow: 0 4px 8px rgba(0,0,0,0.20);
-	-ms-box-shadow: 0 4px 8px rgba(0,0,0,0.20);
-	-o-box-shadow: 0 4px 8px rgba(0,0,0,0.20);
-	box-shadow: 0 4px 8px rgba(0,0,0,0.20);
+	-webkit-box-shadow: 0 2px 5px rgba(0,0,0,0.20);
+	-moz-box-shadow: 0 2px 5px rgba(0,0,0,0.20);
+	-ms-box-shadow: 0 2px 5px rgba(0,0,0,0.20);
+	-o-box-shadow: 0 2px 5px rgba(0,0,0,0.20);
+	box-shadow: 0 2px 5px rgba(0,0,0,0.20);
 }
 .search-box form button {
 	position: absolute;
@@ -3649,6 +3650,7 @@ a:hover {
 	float: left;
 	width: 100%;
 	background-color: #fff;
+	box-shadow: 6px 1px 10px rgb(0 0 0 / 20%);
 }
 .filter-heading {
 	float: left;
@@ -5494,4 +5496,11 @@ span.select2.select2-container.select2-container--default.select2-container--bel
 	margin: 2px 5px 0px 2px !important;
     padding: 0px 10px !important;
 	height: 27px !important;
+}
+/* Theme Color-Background Color */
+.theme-color{
+	color: #008069;
+}
+.theme-bg{
+	background: #008069;
 }
