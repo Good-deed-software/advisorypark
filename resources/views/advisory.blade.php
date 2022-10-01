@@ -108,18 +108,18 @@
 										<div class="filter-dd">
 										    <form>
     											<div class="filter-ttl">
-    												<button type="submit" class="btn btn-sm float-right" style="background:#008069;" title="">Apply</button>
+    												<button type="submit" class="btn btn-sm float-right" style="background:#008069;color:#fff" title="">Apply</button>
     											</div>
 										
     												<h6>Provide In</h6>
 											       <input type="checkbox"  name="mode" value="Voice call"  {{ (request()->get('mode') == 'Voice call') ? 'checked' : '' }}>
-												   <label class="p-1">Voice call</label> 
+												   <label class="p-1">Voice call</label> <br>
 												   <input type="checkbox"  name="mode" value="Video call" {{ (request()->get('mode') == 'Video call') ? 'checked' : ''}}>
-												   <label class="p-1">Video call</label> 
+												   <label class="p-1">Video call</label> <br>
 												   <input type="checkbox"  name="mode" value="Any Desk" {{ (request()->get('mode') == 'Any Desk') ? 'checked' : ''}}>
-												   <label class="p-1">Any Desk</label> 
+												   <label class="p-1">Any Desk</label> <br>
 												   <input type="checkbox"  name="mode" value="Team Viewer" {{ (request()->get('mode') == 'Team Viewer') ? 'checked' : ''}}>
-												   <label class="p-1">Team Viewer</label> 
+												   <label class="p-1">Team Viewer</label> <br>
 												   
 												   	<h6>Fees</h6>
 													<div id="time-range">
@@ -238,15 +238,15 @@
 													<img src="http://via.placeholder.com/50x50" alt="">
 													<div class="usy-name">
 														<h3>{{$data->users->name}}</h3>
-														<span><img src="{{asset('front/images/clock.png')}}" alt="">{{$data->created_at->diffForHumans()}}</span>
+														<span><i class="fa fa-clock-o text-primary"></i> {{$data->created_at->diffForHumans()}}</span>
 													</div>
 												</div>
 										
 											</div>
 											<div class="epi-sec">
 												<ul class="descp">
-													<li><img src="{{asset('front/images/icon8.png')}}" alt=""><span>{{$data->users->designation}}</span></li>
-													<li><img src="{{asset('front/images/icon9.png')}}" alt=""><span>India</span></li>
+													<li><span>{{$data->users->designation}}</span></li>
+													<li> <span> <i class="fa fa-map-marker text-primary"></i> India</span></li>
 												</ul>
 												<ul class="bk-links">
 													<li>
@@ -267,49 +267,65 @@
 											<div class="job_descp">
 											    <div class="row">
 											        <div class="col-md-2">
-											            <img src='{{asset("front/images/advisory_listing/$data->image")}}' alt="" width="120" height="120">
-											        </div>
+														@if($data->image)
+											            <img src='{{asset("front/images/advisory_listing/$data->image")}}' alt="" width="120" height="120" style="border-radius: 3px;box-shadow: 0 0 8px rgb(0 0 0 / 63%);">
+											        	@else
+											            <img src='{{asset("front/images/empty.png")}}' alt="" width="120" height="120" style="border-radius: 3px;box-shadow: 0 0 8px rgb(0 0 0 / 63%);">
+														@endif
+													</div>
 											        <div class="col-md-10">
 											            <!--<span class="badge badge-info float-right">{{$data->category}}</span>-->
-        												<h3><strong>{{$data->listing_name}}</strong></h3>
-        											    <!--	<ul class="job-dt">
-        													<li><span>$300 - $350</span></li>
-        												</ul>-->
-        												<h6><strong>Description :</strong></h6>
-        												<p>
-        												    {{$data->about_listing}}    
-        												</p>
+														<div class="row">
+															<div class="col-md-7">
+																<h3><strong>{{$data->listing_name}}</strong></h3>
+															
+																<h6><strong>Description :</strong></h6>
+																<p>
+																	{{$data->about_listing}}    
+																</p>
+																
+																<h6><strong>Proficiency :</strong></h6>
+																<p>
+																	{{$data->experience}}    
+																</p>
+															</div>
+															<div class="col-md-5">
+																<ul class="skills">
+																	
+																	<li><strong>Fees : </strong><span class="theme-color"><strong>₹ {{$data->fees}}</strong></span></li>
+																
+																</ul>
+																<ul class="skills">
+																	
+																	<li><strong>Task Completion Time : </strong><span >{{$data->duration_in_hours}} Hours {{$data->duration_in_minutes}} Minutes</span></li>
+																
+																</ul>
+																<ul class="skills">
+																	
+																	<li><strong>Experience : </strong><span >{{$data->exp_in_years}} Years {{$data->exp_in_months}} Months</span></li>
+																
+																</ul>
+															
+																<ul class="skill-tags">
+																	
+																	<li>
+																		<strong>Available On : </strong><br>
+																		@php    $mode = json_decode($data->mode) @endphp
+																		@foreach($mode as $m)
+																			
+																		<!-- <a href="#" title="">{{$m}}</a> -->
+																		@if($m == "Voice call")<img data-toggle="tooltip" title="Voice call" src='{{asset("front/images/voice-call.png")}}'height="30px" style="margin-top: 2px;margin-right: 3px;" alt="" >  @endif
+																		@if($m == "Video call")<img data-toggle="tooltip" title="Video call" src='{{asset("front/images/video-call.png")}}' height="35px" style="margin-right: 3px;" alt="">@endif
+																		@if($m == "Any Desk")<img data-toggle="tooltip" title="Any Desk" src='{{asset("front/images/any-desk.png")}}' height="31px" style="margin-top: 1px;margin-right: 3px;" alt="">@endif
+																		@if($m == "Team Viewer")<img data-toggle="tooltip" title="Team Viewer" src='{{asset("front/images/team-viewer.png")}}' height="32px" style="margin-top: 1px;" alt="">@endif
+																		@endforeach
+																	</li>
+																
+																</ul>
+															</div>
+														</div>
         												
-        												<h6><strong>Proficiency :</strong></h6>
-        												<p>
-        												    {{$data->experience}}    
-        												</p>
-        												<ul class="skills">
-        												   
-        													<li><strong>Fees : </strong><a href="#" title="">{{$data->fees}}</a></li>
         												
-        												</ul>
-        												<ul class="skills">
-        												   
-        													<li><strong>Task Completion Time : </strong><a href="#" title="">{{$data->duration_in_hours}} Hours , {{$data->duration_in_minutes}} Minutes</a></li>
-        												
-        												</ul>
-        												<ul class="skills">
-        												   
-        													<li><strong>Experience : </strong><a href="#" title="">{{$data->exp_in_years}} Years , {{$data->exp_in_months}} Months</a></li>
-        												
-        												</ul>
-        											
-        												<ul class="skill-tags">
-        												  
-        													<li><strong>Available On : </strong><br>
-        													 @php    $mode = json_decode($data->mode) @endphp
-        													  @foreach($mode as $m)
-        													    <a href="#" title="">{{$m}}</a>
-        													  @endforeach
-        													</li>
-        												
-        												</ul>
         											 </div>
         										</div>
 												
@@ -502,8 +518,13 @@
 <script>
 
     $(function(){
+
+
+		$(document).ready(function(){
+			$('[data-toggle="tooltip"]').tooltip();   
+		});
        
-      $('#request-form').validate({ 
+      	$('#request-form').validate({ 
            rules: {
                title: {
                 required: true,

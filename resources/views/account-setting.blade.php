@@ -65,7 +65,7 @@
 							  							<div class="pro-bx">
 							  								<img src="images/pro-icon1.png" alt="">
 							  								<div class="bx-info">
-							  									<h3>$5,145</h3>
+							  									<h3>₹ 5,145</h3>
 							  									<h5>Total Income</h5>
 							  								</div><!--bx-info end-->
 							  							</div><!--pro-bx end-->
@@ -77,7 +77,7 @@
 							  							<div class="pro-bx">
 							  								<img src="images/pro-icon2.png" alt="">
 							  								<div class="bx-info">
-							  									<h3>$4,745</h3>
+							  									<h3>₹ 4,745</h3>
 							  									<h5>Widthraw</h5>
 							  								</div><!--bx-info end-->
 							  							</div><!--pro-bx end-->
@@ -89,7 +89,7 @@
 							  							<div class="pro-bx">
 							  								<img src="images/pro-icon3.png" alt="">
 							  								<div class="bx-info">
-							  									<h3>$1,145</h3>
+							  									<h3>₹ 1,145</h3>
 							  									<h5>Sent</h5>
 							  								</div><!--bx-info end-->
 							  							</div><!--pro-bx end-->

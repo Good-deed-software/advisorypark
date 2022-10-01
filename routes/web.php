@@ -64,9 +64,12 @@ Route::get('account-setting',[App\Http\Controllers\HomeController::class,'accoun
 
 Route::get('messages',[App\Http\Controllers\HomeController::class,'messages'])->name('messages'); 
 
-Route::post('requirements',[App\Http\Controllers\HomeController::class,'requirements'])->name('requirements');
-
-/* POSTS  */
+Route::post('requirements-store',[App\Http\Controllers\HomeController::class,'requirementStore'])->name('requirements.store');
+// Route::get('requirements-details/{slug}',[App\Http\Controllers\HomeController::class,'requirementDetails'])->name('requirements');
+Route::get('requirements-edit/{id}',[App\Http\Controllers\HomeController::class,'requirementEdit'])->name('requirements.edit');
+Route::post('requirements-update',[App\Http\Controllers\HomeController::class,'requirementUpdate'])->name('requirements.update');
+Route::delete('requirements-delete/{id}',[App\Http\Controllers\HomeController::class,'requirementDelete'])->name('requirements.delete');
+/* POSTS  */ 
 Route::post('post-store',[App\Http\Controllers\HomeController::class,'posts'])->name('post.store');
 Route::get('post-details/{slug}',[App\Http\Controllers\HomeController::class,'postDetails'])->name('post_details');
 Route::get('post-edit/{id}',[App\Http\Controllers\HomeController::class,'postEdit'])->name('post.edit');

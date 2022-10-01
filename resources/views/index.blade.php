@@ -533,8 +533,8 @@
             /*----show more/show less-------*/
             var showChar = 200;  
             var ellipsestext = "...";
-            var moretext = "Show more";
-            var lesstext = "Show less";
+            var moretext = "Read more";
+            var lesstext = "Read less";
             
         
             $('.more').each(function() {

@@ -134,7 +134,7 @@
 			<div class="post-project">
 				<h3>Post a requirement</h3>
 				<div class="post-project-fields">
-					<form action="{{route('requirements')}}" method="post">
+					<form action="{{route('requirements.store')}}" method="post">
 					    @csrf
 						<div class="row">
 							<div class="col-lg-6">
