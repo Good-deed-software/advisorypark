@@ -20,7 +20,7 @@ class Skill extends Model
         
         if(!empty($arr)){
             foreach($arr as $v){
-                $insert = $_this->create(['name' => $v]);
+                $insert = $_this->create(['name' => strtoupper($v)]);
                 $skiils_id[] = $insert->id;
             }
     
