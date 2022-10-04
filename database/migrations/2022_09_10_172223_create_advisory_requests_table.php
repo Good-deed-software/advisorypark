@@ -15,8 +15,8 @@ class CreateAdvisoryRequestsTable extends Migration
     {
         Schema::create('advisory_requests', function (Blueprint $table) {
             $table->increments('id');
-            $table->int('user_id');
-            $table->int('listing_user_id');
+            $table->integer('user_id');
+            $table->integer('listing_user_id');
             $table->string('title')->nullable();
             $table->string('type')->nullable();
             $table->string('category')->nullable();
@@ -27,11 +27,11 @@ class CreateAdvisoryRequestsTable extends Migration
             $table->text('description')->nullable();
             $table->enum('status',['1', '2', '3','4','5','6'])->default('1')->comment("1=>'Pending',2=>'Accepted',3=>'Rejected',4=>'Payment Done',5=>'Satisfied',6=>'Dissatisfied'");
             $table->string('req_type')->nullable();
-            $table->tinyint('satisfied')->nullable();
+            $table->tinyInteger('satisfied')->nullable();
             $table->text('comment')->nullable();
             $table->float('comm')->nullable();
             $table->string('fees')->nullable();
-            $table->int('query_box')->nullable();
+            $table->integer('query_box')->nullable();
             $table->timestamps();
         });
     }

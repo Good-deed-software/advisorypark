@@ -76,6 +76,17 @@ class HomeController extends Controller
         if($request->ajax()){
             
             $data = $request->except(['_token']);
+
+            /* check if skill is new*/
+            if(isset($request->skill)){
+                $new_skill = addNewSkill($request->skill);
+                if(!empty($new_skill)){
+                    $request->skill = $new_skill;
+                }
+
+                $data['skill']      = implode(',',$request->skill);
+            }
+            /* check if tag is new */
             
             if($request->file('image')){
                   
