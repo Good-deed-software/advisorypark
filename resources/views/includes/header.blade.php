@@ -105,59 +105,69 @@
 									</div>
 								</div>
 							</li>-->
+							
 							<li>
 								<a href="#" title="" class="not-box-open">
-									<span><img src="{{asset('front/images/icon7.png')}}" alt=""></span>
-									Notification
+									<span>
+										<i class="fa fa-bell"></i>
+									</span>
+									Notification 
 								</a>
 								<div class="notification-box">
 									<div class="nt-title">
-										<h4>Setting</h4>
-										<a href="#" title="">Clear all</a>
+										<h4>Notifications</h4>
+										<a href="#" title="">Mark all as Read</a>
 									</div>
+									
 									<div class="nott-list">
+										
+									@auth
 										<div class="notfication-details">
 							  				<div class="noty-user-img">
 							  					<img src="#" alt="">
 							  				</div>
-							  				<div class="notification-info">
-							  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-							  					<span>2 min ago</span>
-							  				</div><!--notification-info -->
+											@php 
+												$notif = App\Models\Notification::where('entity_id','!=',Auth::user()->id)->where('seen_status',0)->orderby('id','desc')->get();
+											
+											@endphp
+											@foreach($notif as $n)
+												<div class="notification-info noti_btn" >
+													<span>{{getTimeAgo($n->created_at)}}</span>
+													
+													<h3 onclick="seen_notification({{$n->activity_id}},'{{url($n->link)}}');">
+														{{getNameById($n->entity_id)}} {{$n->notification}}
+													</h3>
+													<button class="btn btn-success btn-sm" onclick="seen_notification({{$n->activity_id}},'{{url($n->link)}}','{{$n->activity_type}}',1);"><i class="fa fa-thumbs-up"></i></button>
+													<button class="btn btn-danger btn-sm" onclick="seen_notification({{$n->activity_id}},'{{url($n->link)}}','{{$n->activity_type}}',2);"><i class="fa fa-thumbs-down"></i></button>
+													
+												</div>
+											@endforeach
 						  				</div>
-						  				<div class="notfication-details">
+						  				<!-- <div class="notfication-details">
 							  				<div class="noty-user-img">
 							  					<img src="#" alt="">
 							  				</div>
 							  				<div class="notification-info">
 							  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
 							  					<span>2 min ago</span>
-							  				</div><!--notification-info -->
-						  				</div>
-						  				<div class="notfication-details">
-							  				<div class="noty-user-img">
-							  					<img src="#" alt="">
 							  				</div>
-							  				<div class="notification-info">
-							  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-							  					<span>2 min ago</span>
-							  				</div><!--notification-info -->
-						  				</div>
-						  				<div class="notfication-details">
-							  				<div class="noty-user-img">
-							  					<img src="#" alt="">
-							  				</div>
-							  				<div class="notification-info">
-							  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-							  					<span>2 min ago</span>
-							  				</div><!--notification-info -->
-						  				</div>
-						  				<div class="view-all-nots">
+						  				</div> -->
+						  				
+						  				<!-- <div class="view-all-nots">
 						  					<a href="#" title="">View All Notification</a>
-						  				</div>
-									</div><!--nott-list end-->
+						  				</div> -->
+									@else
+									<div class="notfication-details">
+										<div class="notification-info">
+											<h3>No Notification Found.</h3>
+										</div>
+									</div>
+									@endauth
+									</div>
+									<!--nott-list end-->
 								</div><!--notification-box end-->
 							</li>
+							
 						</ul>
 					</nav><!--nav end-->
 					<div class="menu-btn">

@@ -36,7 +36,7 @@
                         <td>{{$data->description}}</td>
                         <td>{{$data->users->name}}</td>
                         <td>
-                            <!-- <button class="btn btn-info btn-sm editRequirement mr-1" data-toggle="tooltip" data-placement="top" title="Edit" data-id="{{$data->id}}"><i class="fa fa-edit"></i></button> -->
+                            <button class="btn btn-info btn-sm editRequirement mr-1" data-toggle="tooltip" data-placement="top" title="Edit" data-id="{{$data->id}}"><i class="fa fa-edit"></i></button>
                             <button class="btn btn-danger btn-sm deleteRequirement" data-toggle="tooltip" data-placement="top" title="delete" data-id="{{$data->id}}"><i class="fa fa-trash"></i></button>
                         </td>
                         

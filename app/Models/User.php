@@ -62,4 +62,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getSkilledUser($skill = null)
+    {
+        if(!$skill){
+            return [];
+        }
+        $s = explode(',',$skill);
+
+       
+        $query = Self::whereRaw('FIND_IN_SET(?, skills)', $s)->get(['id','type']);
+
+        return $query;
+    }
 }

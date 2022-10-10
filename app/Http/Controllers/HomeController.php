@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{User,Category,Skill,Tag,Requirement,Post,Like,Comment,Save,Following,Follower,AdvisoryListing,AdvisoryRequest,BusinessProfile};
+use App\Models\{User,Category,Skill,Tag,Requirement,Post,Like,Comment,Save,Following,Follower,AdvisoryListing,AdvisoryRequest,BusinessProfile,Notification,RequirementInterest,PostInterest};
 use Auth;
 use Validator;
 use Illuminate\Support\Str;
@@ -25,7 +25,7 @@ class HomeController extends Controller
             $posts      =   Post::with('users','comments')->orderby('id','desc')->get();
             $users      =   User::limit(5)->orderby('id','desc')->get();
         }
-		return view('index',compact('config','posts','users'/*,'likes'*/));
+		return view('index',compact('config','posts','users'));
        
     }
     
@@ -78,14 +78,15 @@ class HomeController extends Controller
             $data = $request->except(['_token']);
 
             /* check if skill is new*/
-            if(isset($request->skill)){
-                $new_skill = addNewSkill($request->skill);
-                if(!empty($new_skill)){
-                    $request->skill = $new_skill;
+            if(isset($request->skills)){
+                $new_skills = addNewSkill($request->skills);
+                if(!empty($new_skills)){
+                    $request->skills = $new_skills;
                 }
 
-                $data['skill']      = implode(',',$request->skill);
+                $data['skills']  = implode(',',$request->skills);
             }
+
             /* check if tag is new */
             
             if($request->file('image')){
@@ -134,7 +135,6 @@ class HomeController extends Controller
                 $advisory_listings = AdvisoryListing::where('listing_name', 'LIKE', '%'. $request->get('search'). '%')->where('added_by','!=',Auth::user()->id)->get();
             }else{
                 $advisory_listings = AdvisoryListing::where('listing_name', 'LIKE', '%'. $request->get('search'). '%')->get();
-
             }
         }
         elseif($request->mode){
@@ -142,7 +142,6 @@ class HomeController extends Controller
                 $advisory_listings = AdvisoryListing::where('mode', 'LIKE', '%'. $request->get('mode'). '%')->where('added_by','!=',Auth::user()->id)->get();
             }else{
                 $advisory_listings = AdvisoryListing::where('mode', 'LIKE', '%'. $request->get('mode'). '%')->get();
-
             }
         }
         elseif($request->from && $request->to){
@@ -150,17 +149,13 @@ class HomeController extends Controller
                 $advisory_listings = AdvisoryListing::whereBetween('fees', [(int)$request->from, (int)$request->to])->where('added_by','!=',Auth::user()->id)->get();
             }else{
                 $advisory_listings = AdvisoryListing::whereBetween('fees', [(int)$request->from, (int)$request->to])->get();
-
             }
         }
         else{
            
-            if(Auth::check()){           
-                
+            if(Auth::check()){              
                 $advisory_listings = AdvisoryListing::orderby('id','desc')->where('added_by','!=',Auth::user()->id)->get();
-                
-            }else{
-                        
+            }else{      
                 $advisory_listings = AdvisoryListing::orderby('id','desc')->get();
             }
         }
@@ -312,9 +307,24 @@ class HomeController extends Controller
             
             return redirect()->back()->withSuccess('New Requirement Updated!');
         }
-       
+              
+    }
+
+    public function requirementDetails($slug)
+    {   
+        $config['categories'] =   Category::where('status','1')->get();       
+        $config['skills']     =   Skill::where('status','1')->get();
+        $config['tags']       =   Tag::where('status','1')->get();
         
-       
+        $requirement = Requirement::with('users','comments')->where('slug',$slug)->first();
+
+        $interest = RequirementInterest::where('requirement_id',$requirement->id)->first();
+
+        // dd($interest);
+
+        // dd($requirement);
+        
+        return view('requirement-details',compact('requirement','interest','config'));
     }
 
     public function requirementEdit($id)
@@ -360,7 +370,7 @@ class HomeController extends Controller
         }else{
             if($request->file('image')){   
                 $imageName = time().'-'.$request->image->getClientOriginalName();
-                $request->image->move(public_path('front/images/posts'), $imageName);
+                $request->image->move(public_path('front/images/requirements'), $imageName);
                 $data['image'] = $imageName;
             }
             
@@ -715,7 +725,76 @@ class HomeController extends Controller
         $data = User::where('is_active','1')->pluck('id');
         return response()->json(['status'=>true,'data'=>$data]);
     }
-    
+
+    public function updateNotification(Request $request)
+    {   
+        $message="";
+        
+        if($request->status !== null && $request->type == 'post'){
+           
+            if(PostInterest::where('requirement_id',$request->id)->first()){
+                if($request->status == 1){
+                    PostInterest::where('requirement_id',$request->id)->update(['status'=>1]);
+                    Notification::where('activity_id',$request->id)->update(['seen_status'=>1]);
+                    $message = "Post Interested!";
+                }elseif($request->status == 2){
+                    PostInterest::where('requirement_id',$request->id)->update(['status'=>2]);
+                    Notification::where('activity_id',$request->id)->update(['seen_status'=>1]);
+                    $message = "Post Not Interested!";
+                }else{
+                    PostInterest::where('requirement_id',$request->id)->update(['status'=>0]);
+                    $message = "try again!";
+                }
+            }else{
+                PostInterest::create([
+                                'post_id'=>$request->id,
+                                'entity_id'=>Auth::user()->id, 
+                                'status'=>$request->status 
+                                ]);
+            }
+            return response()->json(['status'=>true,'message'=>$message]);
+        }
+        elseif($request->status !== null && $request->type == 'requirement'){
+            
+            if(RequirementInterest::where('requirement_id',$request->id)->first()){
+                
+                if($request->status == 1){
+                    RequirementInterest::where('requirement_id',$request->id)->update(['status'=>1]);
+                    Notification::where('activity_id',$request->id)->update(['seen_status'=>1]);
+                    $message = "Requirement Interested!";
+                }elseif($request->status == '2'){
+                    
+                    RequirementInterest::where('requirement_id',$request->id)->update(['status'=>2]);
+                    Notification::where('activity_id',$request->id)->update(['seen_status'=>1]);
+                    $message = "Requirement Not Interested!";
+                }else{
+                    
+                    RequirementInterest::where('requirement_id',$request->id)->update(['status'=>0]);
+                    $message = "try again!";
+                }
+            }else{
+                RequirementInterest::create([
+                                'requirement_id'=>$request->id,
+                                'entity_id'=>Auth::user()->id, 
+                                'status'=>$request->status 
+                                ]);
+            }
+            
+            return response()->json(['status'=>true,'message'=>$message]);
+
+        }elseif($request->status == null){
+            
+            Notification::where('activity_id',$request->id)->update(['seen_status'=>1]);
+            return response()->json(['status'=>true,'message'=>'Notification Seen!']);
+
+        }else{
+
+            return response()->json(['status'=>false,'message'=>'Something went wrong!']);
+
+        }
+
+        
+    }    
     
     public function advisoryListingCreate(Request $request)
     {   

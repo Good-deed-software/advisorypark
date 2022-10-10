@@ -107,10 +107,7 @@
 									<div class="paddy">
 										<div class="filter-dd">
 										    <form>
-    											<div class="filter-ttl">
-    												<button type="submit" class="btn btn-sm float-right" style="background:#008069;color:#fff" title="">Apply</button>
-    											</div>
-										
+    											
     												<h6>Provide In</h6>
 											       <input type="checkbox"  name="mode" value="Voice call"  {{ (request()->get('mode') == 'Voice call') ? 'checked' : '' }}>
 												   <label class="p-1">Voice call</label> <br>
@@ -131,6 +128,10 @@
 																<input type="hidden" name="to" id="sliderto" value="@if(request()->get('to')){{ request()->get('to') }}@endif">
 															</div>
 														</div>
+													</div>
+													<br>
+													<div class="filter-ttl">
+														<button type="submit" class="btn btn-sm float-right" style="background:#008069;color:#fff" title="">Apply</button>
 													</div>
 											</form>
 										</div>

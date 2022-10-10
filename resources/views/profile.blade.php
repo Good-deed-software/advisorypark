@@ -172,6 +172,6 @@
 @endsection
 @push('js')
 	<!-- PROFILE JS START -->
-	@include('profile-contents.profile-js')
+	@include('profile-contents.profile-js') 
 	<!-- PROFILE JS END ---->
 @endpush

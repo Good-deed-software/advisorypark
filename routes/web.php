@@ -64,10 +64,10 @@ Route::get('account-setting',[App\Http\Controllers\HomeController::class,'accoun
 
 Route::get('messages',[App\Http\Controllers\HomeController::class,'messages'])->name('messages'); 
 
-Route::post('requirements-store',[App\Http\Controllers\HomeController::class,'requirementStore'])->name('requirements.store');
-// Route::get('requirements-details/{slug}',[App\Http\Controllers\HomeController::class,'requirementDetails'])->name('requirements');
-Route::get('requirements-edit/{id}',[App\Http\Controllers\HomeController::class,'requirementEdit'])->name('requirements.edit');
-Route::post('requirements-update',[App\Http\Controllers\HomeController::class,'requirementUpdate'])->name('requirements.update');
+Route::post('requirement-store',[App\Http\Controllers\HomeController::class,'requirementStore'])->name('requirements.store');
+Route::get('requirement-details/{slug}',[App\Http\Controllers\HomeController::class,'requirementDetails'])->name('requirements_details');
+Route::get('requirement-edit/{id}',[App\Http\Controllers\HomeController::class,'requirementEdit'])->name('requirements.edit');
+Route::post('requirement-update',[App\Http\Controllers\HomeController::class,'requirementUpdate'])->name('requirements.update');
 Route::delete('requirements-delete/{id}',[App\Http\Controllers\HomeController::class,'requirementDelete'])->name('requirements.delete');
 /* POSTS  */ 
 Route::post('post-store',[App\Http\Controllers\HomeController::class,'posts'])->name('post.store');
@@ -112,6 +112,7 @@ Route::post('change-status',[App\Http\Controllers\HomeController::class,'changeS
 
 Route::get('autocomplete', [App\Http\Controllers\HomeController::class,'autocomplete'])->name('autocomplete');
 
+Route::post('update-notification', [App\Http\Controllers\HomeController::class,'updateNotification'])->name('update.notification');
 
 Route::get('switch-type',function (Request $request) {
         

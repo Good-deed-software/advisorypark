@@ -27,6 +27,8 @@
         <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+		
+		<script type="text/javascript" src="{{asset('front/js/jquery.min.js')}}"></script>
 		@stack('css')
     </head>
 
@@ -206,7 +208,7 @@
 		</div><!--post-project-popup end-->
     <!-- Post a requirement -->
     
-    <script type="text/javascript" src="{{asset('front/js/jquery.min.js')}}"></script>
+   
     <script type="text/javascript" src="{{asset('front/js/popper.js')}}"></script>
     <script type="text/javascript" src="{{asset('front/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('front/js/jquery.mCustomScrollbar.js')}}"></script>
@@ -248,6 +250,25 @@
                 tags: true
             });
 			/* SELECT2 multiple */
+
+			/* Notification Interested/Not Interested */
+			function seen_notification(id,link,type=null,status=null){
+				// alert(status);
+				$.ajax({
+					url : "{{route('update.notification')}}",
+					type:"post",
+					data:{id:id,status:status,type:type,_token:"{{csrf_token()}}"},
+					success:function(response){
+						if(response.status == true){
+							toastr.success("Success!", response.message);
+							window.location.href=link;
+						}else{
+							toastr.error("Error!", response.message);
+							location.reload();
+						}
+					}
+				})
+			}
     </script>
 
     
