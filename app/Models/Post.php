@@ -12,6 +12,15 @@ class Post extends Model
     protected $table = 'posts';
     
     protected $guarded = ['id'];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::created(function($model){
+            Artisan::call('notification:create_post', ['id' => $model->id]);
+        });
+    }
     
     public function users(){
         
@@ -32,12 +41,5 @@ class Post extends Model
         return $this->belongsTo(Category::class,'category');
     }
 
-    public static function boot()
-    {
-        parent::boot();
-
-        self::created(function($model){
-            Artisan::call('notification:create_post', ['id' => $model->id]);
-        });
-    }
+    
 }

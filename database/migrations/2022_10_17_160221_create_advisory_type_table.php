@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRequirementInterestTable extends Migration
+class CreateAdvisoryTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateRequirementInterestTable extends Migration
      */
     public function up()
     {
-        Schema::create('requirement_interest', function (Blueprint $table) {
+        Schema::create('advisory_type', function (Blueprint $table) {
             $table->id();
-            $table->string('notification_id');
-            $table->string('entity_id');
-            $table->boolean('status')->default(0)->comment("0 => 'pending', 1 => 'interested', 2 =>'not interested'");
+            $table->string('name');
+            $table->string('image')->nullable();
+            $table->enum('status', ['1', '0'])->default('1');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateRequirementInterestTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requirement_interest');
+        Schema::dropIfExists('advisory_type');
     }
 }

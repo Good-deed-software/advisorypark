@@ -110,13 +110,23 @@
 								<a href="#" title="" class="not-box-open">
 									<span>
 										<i class="fa fa-bell"></i>
+										@auth
+										@php
+										
+											$new_notif = App\Models\Notification::where('entity_id',Auth::user()->id)->where('seen_status',0)->count();
+											
+										@endphp
+										@if($new_notif > 0)
+										<span class="badge badge-danger new-notif" data-tooltip="{{$new_notif}} New Messages." data-tooltip-position="right">{{$new_notif}}</span>
+										@endif
+										@endauth
 									</span>
 									Notification 
 								</a>
 								<div class="notification-box">
 									<div class="nt-title">
 										<h4>Notifications</h4>
-										<a href="#" title="">Mark all as Read</a>
+										<!-- <a href="#" title="">Mark all as Read</a> -->
 									</div>
 									
 									<div class="nott-list">
@@ -127,19 +137,22 @@
 							  					<img src="#" alt="">
 							  				</div>
 											@php 
-												$notif = App\Models\Notification::where('entity_id','!=',Auth::user()->id)->where('seen_status',0)->orderby('id','desc')->get();
+												$notif = App\Models\Notification::where('entity_id',Auth::user()->id)->where('entity_type',Auth::user()->type)->where('seen_status',0)->orderby('id','desc')->get();
 											
 											@endphp
 											@foreach($notif as $n)
 												<div class="notification-info noti_btn" >
 													<span>{{getTimeAgo($n->created_at)}}</span>
 													
-													<h3 onclick="seen_notification({{$n->activity_id}},'{{url($n->link)}}');">
-														{{getNameById($n->entity_id)}} {{$n->notification}}
+													<h3 onclick="seen_notification({{$n->id}},'{{url($n->link)}}');">
+														{{$n->notification}}
 													</h3>
-													<button class="btn btn-success btn-sm" onclick="seen_notification({{$n->activity_id}},'{{url($n->link)}}','{{$n->activity_type}}',1);"><i class="fa fa-thumbs-up"></i></button>
-													<button class="btn btn-danger btn-sm" onclick="seen_notification({{$n->activity_id}},'{{url($n->link)}}','{{$n->activity_type}}',2);"><i class="fa fa-thumbs-down"></i></button>
-													
+													@if(\Session::get('type') == 'Advisor')
+													 @if(in_array($n->activity_type,[App\Models\Notification::activity_requirement,App\Models\Notification::activity_post]))
+													 <button class="btn btn-success btn-sm" onclick="seen_notification({{$n->id}},'{{url($n->link)}}','{{$n->activity_type}}',1);"><i class="fa fa-thumbs-up"></i></button>
+													 <button class="btn btn-danger btn-sm" onclick="seen_notification({{$n->id}},'{{url($n->link)}}','{{$n->activity_type}}',2);"><i class="fa fa-thumbs-down"></i></button>
+													 @endif
+													@endif
 												</div>
 											@endforeach
 						  				</div>
@@ -183,7 +196,7 @@
     							</a>
     						    <i class="la la-sort-down"></i>
     						 @else
-    							<a href="{{route('login')}}" title="">Signup / Login</a>
+    							<a href="#" title="">Signup / Login</a>
     						 @endauth
 							
 						</div>

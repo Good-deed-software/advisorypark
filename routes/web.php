@@ -114,6 +114,8 @@ Route::get('autocomplete', [App\Http\Controllers\HomeController::class,'autocomp
 
 Route::post('update-notification', [App\Http\Controllers\HomeController::class,'updateNotification'])->name('update.notification');
 
+Route::post('interested-or-not', [App\Http\Controllers\HomeController::class,'interestedOrNot'])->name('interested_or_not');
+
 Route::get('switch-type',function (Request $request) {
         
         $message = "";

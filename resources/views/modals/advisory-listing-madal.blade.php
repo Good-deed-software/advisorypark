@@ -17,16 +17,16 @@
                                     <label>Advisory Type<span class="text-danger">*</span></label>
                                     <select class="form-control" name="type" id="type" required>
                                         <option value="" selected>Select Advisory Type</option>
-                                        <option value="Product Advisory">Product Advisory</option>
-                                        <option value="Service Advisory">Service Advisory</option>
+                                        <option value="1">Product Advisory Type</option>
+                                        <option value="2">Service Advisory Type</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Category<span class="text-danger">*</span></label>
                                     <select class="form-control" name="category" id="category" required>
                                         <option value="" selected>Select Category</option>
-                                        <option value="Product Category">Product Category</option>
-                                        <option value="Service Category">Service Category</option>
+                                        <option value="1">Product Category</option>
+                                        <option value="2">Service Category</option>
                                     </select>
                                 </div>
                             </div>

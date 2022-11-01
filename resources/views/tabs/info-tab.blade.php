@@ -101,8 +101,9 @@
                     <label>Skill @if(\Session::get('type') == 'Advisor')<span class="text-danger">*</span>@endif</label>
                     <div class="inp-field">
                         <select name="skills[]" class="multiple" id="" multiple @if(\Session::get('type') == 'Advisor') required @endif>
+                            @php $k = explode(',',Auth::user()->skills); @endphp
                             @foreach($config['skills'] as $s)
-                            <option value="{{$s->id}}" data-val="{{$s->name}}">{{$s->name}}</option>
+                            <option value="{{$s->id}}" data-val="{{$s->name}}" {{in_array($s->id,$k) ? 'selected' : ''}}>{{$s->name}}</option>
                             @endforeach
                         </select>
                     </div>

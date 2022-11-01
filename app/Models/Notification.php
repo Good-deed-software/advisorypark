@@ -16,4 +16,6 @@ class Notification extends Model
     const activity_post = "post";
 
     const activity_requirement = "requirement";
+
+    const activity_general = "general";
 }

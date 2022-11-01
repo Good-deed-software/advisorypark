@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\{Post,Notification};
+use App\Models\{Post,Notification,User};
 use Auth;
 class SendPostNotification extends Command
 {
@@ -43,18 +43,24 @@ class SendPostNotification extends Command
             echo "Id is required";
             return 0;
         }
-        $post = Post::find($id);    
+        $post = Post::find($id);   
+        // dd($post);
 
-        $notification = new Notification;
-        $notification->notification = " Added a new requirement.";
-        $notification->link = "post-details/".$post->slug; 
-        $notification->entity_id = Auth::user()->id; 
-        $notification->entity_type = Auth::user()->type;
-        $notification->activity_id = $post->id; 
-        $notification->activity_type  = Notification::activity_post;  
-        $notification->save();
+        $user = User::getSkilledUser($post->skill);
 
+        if($user){
+            foreach($user as $u){
 
+                $notification = new Notification;
+                $notification->notification = Auth::user()->name." Added a new post."; 
+                $notification->link = "post-details/".$post->slug; 
+                $notification->entity_id = $u->id; 
+                $notification->entity_type = $u->type;
+                $notification->activity_id = $post->id; 
+                $notification->activity_type  = Notification::activity_post;  
+                $notification->save();
+            }
+        }
 
     }
 }

@@ -45,16 +45,18 @@ class sendRequirementNotification extends Command
         }
         $requirement = Requirement::find($id);
 
-
         $user = User::getSkilledUser($requirement->skill);
+
+        // dd($user);
 
         if($user){
             foreach($user as $u){
+
                 $notification = new Notification;
-                $notification->notification = " Added a new requirement."; 
+                $notification->notification = Auth::user()->name." Added a new requirement."; 
                 $notification->link = "requirement-details/".$requirement->slug; 
-                $notification->entity_id = Auth::user()->id; 
-                $notification->entity_type = Auth::user()->type;
+                $notification->entity_id = $u->id; 
+                $notification->entity_type = $u->type;
                 $notification->activity_id = $requirement->id; 
                 $notification->activity_type  = Notification::activity_requirement;  
                 $notification->save();

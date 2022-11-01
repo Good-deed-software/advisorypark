@@ -110,10 +110,10 @@
                     
                         if(data.status == true){
                         toastr.success("Success!", data.message);
-                        // location.reload();
+                        location.reload();
                         }else{
                         toastr.error("Opps!", data.message);
-                        // location.reload();
+                        location.reload();
                         }
                     }
                 });

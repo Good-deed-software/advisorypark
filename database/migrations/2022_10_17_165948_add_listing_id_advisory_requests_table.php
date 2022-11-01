@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddActivityStatusToNotificationsTable extends Migration
+class AddListingIdAdvisoryRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,9 @@ class AddActivityStatusToNotificationsTable extends Migration
      * @return void
      */
     public function up()
-    {
-        Schema::table('notifications', function (Blueprint $table) {
-            $table->boolean('activity_status')->default(0)->after('activity_type');
+    {   
+        Schema::table('advisory_requests', function (Blueprint $table) {
+            $table->string('listing_id')->nullable()->after('category');
         });
     }
 
@@ -24,9 +24,9 @@ class AddActivityStatusToNotificationsTable extends Migration
      * @return void
      */
     public function down()
-    {
-        Schema::table('notifications', function (Blueprint $table) {
-            $table->dropColumn('activity_status');
+    {   
+        Schema::table('advisory_requests', function (Blueprint $table) {
+            $table->dropColumn('listing_id');
         });
     }
 }
