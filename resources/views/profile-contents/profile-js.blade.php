@@ -124,6 +124,7 @@
         $('[data-toggle="tooltip"]').tooltip();
         
         $('#example').DataTable({
+            'dom': 'Rlfrtip',
             columnDefs: [ {
                 className: 'dtr-control',
                 orderable: false,

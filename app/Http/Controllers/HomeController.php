@@ -330,24 +330,25 @@ class HomeController extends Controller
 
     public function requirementDetails($slug)
     {   
-        
-        $config['categories'] =   Category::where('status','1')->get();       
-        $config['skills']     =   Skill::where('status','1')->get();
-        $config['tags']       =   Tag::where('status','1')->get();
-        
-        $requirement = Requirement::with('users','comments')->where('slug',$slug)->first();
-        $interest = null;
         if(Auth::check()){
-            $interest = RequirementInterest::where('requirement_id',$requirement->id)
-                    ->where('entity_id',Auth::user()->id)
-                    ->first();
+            $config['categories'] =   Category::where('status','1')->get();       
+            $config['skills']     =   Skill::where('status','1')->get();
+            $config['tags']       =   Tag::where('status','1')->get();
             
+            $requirement = Requirement::with('users','comments')->where('slug',$slug)->first();
+            $interest = null;
+            
+                $interest = RequirementInterest::where('requirement_id',$requirement->id)
+                        ->where('entity_id',Auth::user()->id)
+                        ->first();
+                        
+            $all_interested = RequirementInterest::with('requirements','users')->where('requirement_id',$requirement->id)->where('status',1)->get();
+            // dd($all_interested);
+        
+            return view('requirement-details',compact('requirement','interest','config','all_interested'));
+        }else{
+            return view('login')->with('error','Login first!');
         }
-                    
-        $all_interested = RequirementInterest::with('requirements','users')->where('requirement_id',$requirement->id)->where('status',1)->get();
-        // dd($all_interested);
-       
-        return view('requirement-details',compact('requirement','interest','config','all_interested'));
     }
 
     public function requirementEdit($id)

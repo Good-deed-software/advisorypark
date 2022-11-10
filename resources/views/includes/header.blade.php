@@ -144,7 +144,7 @@
 												<div class="notification-info noti_btn" >
 													<span>{{getTimeAgo($n->created_at)}}</span>
 													
-													<h3 onclick="seen_notification({{$n->id}},'{{url($n->link)}}');">
+													<h3 style="cursor:pointer;" onclick="seen_notification({{$n->id}},'{{url($n->link)}}');">
 														{{$n->notification}}
 													</h3>
 													@if(\Session::get('type') == 'Advisor')

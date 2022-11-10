@@ -153,21 +153,21 @@
 
 	<!-- add views/profile-contents/optional-content.blade.php if you want to make it functional currently it was not need -->
 
-	<!---------------------------Business Profile modal ------------------------>
+	<!---------------------------- Business Profile modal ------------------------------->
 	@include('modals.business-profile-madal') 
-	<!---------------------------Business Profile modal ------------------------>
+	<!---------------------------- Business Profile modal ------------------------------->
 
-	<!--------------------------- Advisory Listing modal ----------------------->
+	<!--------------------------- Advisory Listing modal ------------------------------>
 	@include('modals.advisory-listing-madal')
-	<!--------------------------- Advisory Listing modal ----------------------->
+	<!--------------------------- Advisory Listing modal ------------------------------>
 	
-	<!------------------ Reject Request Reason Modal --------------------------->
+	<!------------------------- Reject Request Reason Modal --------------------------->
 	@include('modals.reject-request-reason-madal')
-	<!------------------ Reject Request Reason Modal --------------------------->
+	<!------------------------- Reject Request Reason Modal --------------------------->
 	
-	<!------------------ Satisfy/Dissatisfy Feedback Modal --------------------->
+	<!----------------------- Satisfy/Dissatisfy Feedback Modal ----------------------->
 	@include('modals.satisfy-feedback-madal')
-	<!------------------ Satisfy/Dissatisfy Feedback Modal --------------------->
+	<!----------------------- Satisfy/Dissatisfy Feedback Modal ----------------------->
 		
 @endsection
 @push('js')

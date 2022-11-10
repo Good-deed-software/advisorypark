@@ -17,5 +17,13 @@ class AdvisoryListing extends Model
         
         return $this->belongsTo(User::class,'added_by');
     }
+    public function types(){
+        
+        return $this->belongsTo(Type::class,'type');
+    }
+    public function categories(){
+        
+        return $this->belongsTo(Category::class,'category');
+    }
     
 }
