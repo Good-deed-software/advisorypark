@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Artisan;
 class Post extends Model
 {
     use HasFactory;
@@ -12,6 +12,15 @@ class Post extends Model
     protected $table = 'posts';
     
     protected $guarded = ['id'];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::created(function($model){
+            Artisan::call('notification:create_post', ['id' => $model->id]);
+        });
+    }
     
     public function users(){
         
@@ -31,6 +40,6 @@ class Post extends Model
         
         return $this->belongsTo(Category::class,'category');
     }
-    
+
     
 }

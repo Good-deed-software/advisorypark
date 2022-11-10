@@ -13,7 +13,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Listing Name</th>
                         <th scope="col">Advisory Type</th>
-                        <th scope="col">Category</th>
+                        <th scope="col">Advisory Category</th>
                         <th scope="col">Duration</th>
                         <th scope="col">Fees</th>
                         <th scope="col">Available</th>
@@ -27,9 +27,9 @@
                         <tr >
                             <td>{{++$k}}</td>
                             <td>{{$data->listing_name}}</td>
-                            <td>{{$data->type}}</td>
-                            <td>{{$data->category}}</td>
-                            <td>{{$data->duration_in_hours}},{{$data->duration_in_minutes}}</td>
+                            <td>{{$data->types->name}}</td>
+                            <td>{{$data->categories->name}}</td>
+                            <td>{{$data->duration_in_hours}} Hrs,{{$data->duration_in_minutes}} Mins</td>
                             <td>{{$data->fees}}</td>
                             <td>
                                 @php $mode = json_decode($data->mode)@endphp 

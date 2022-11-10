@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use Auth;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -62,4 +62,26 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getSkilledUser($skill = null)
+    {   
+        \DB::enableQueryLog();
+
+        if(!$skill){
+            return [];
+        }
+        $s = explode(',',$skill);
+
+        $query = Self::where(function($q) use ($s){
+            foreach($s as $k){
+                $q->orWhereRaw("FIND_IN_SET($k, skills)");
+            }  
+        });  
+       return $query->where('id','!=',Auth::user()->id)->get(['id','type']); 
+        
+        // dd(\DB::getQueryLog()); 
+        // dd($query);
+
+        // return $query;
+    }
 }

@@ -107,10 +107,7 @@
 									<div class="paddy">
 										<div class="filter-dd">
 										    <form>
-    											<div class="filter-ttl">
-    												<button type="submit" class="btn btn-sm float-right" style="background:#008069;color:#fff" title="">Apply</button>
-    											</div>
-										
+    											
     												<h6>Provide In</h6>
 											       <input type="checkbox"  name="mode" value="Voice call"  {{ (request()->get('mode') == 'Voice call') ? 'checked' : '' }}>
 												   <label class="p-1">Voice call</label> <br>
@@ -131,6 +128,10 @@
 																<input type="hidden" name="to" id="sliderto" value="@if(request()->get('to')){{ request()->get('to') }}@endif">
 															</div>
 														</div>
+													</div>
+													<br>
+													<div class="filter-ttl">
+														<button type="submit" class="btn btn-sm float-right" style="background:#008069;color:#fff" title="">Apply</button>
 													</div>
 											</form>
 										</div>
@@ -238,15 +239,15 @@
 													<img src="http://via.placeholder.com/50x50" alt="">
 													<div class="usy-name">
 														<h3>{{$data->users->name}}</h3>
-														<span><i class="fa fa-clock-o text-primary"></i> {{$data->created_at->diffForHumans()}}</span>
+														<span><i class="fa fa-clock-o theme-color"></i> {{$data->created_at->diffForHumans()}}</span>
 													</div>
 												</div>
 										
 											</div>
 											<div class="epi-sec">
 												<ul class="descp">
-													<li><span>{{$data->users->designation}}</span></li>
-													<li> <span> <i class="fa fa-map-marker text-primary"></i> India</span></li>
+													<li><span> <i class="fa fa-globe theme-color"></i> {{$data->users->designation}}</span></li>
+													<li> <span> <i class="fa fa-map-marker theme-color"></i> India</span></li>
 												</ul>
 												<ul class="bk-links">
 													<li>
@@ -333,10 +334,12 @@
 											<div class="job-status-bar">
 											    <ul class="like-com">
 												@auth
-											        <li>
-												    <a class="active" href="javascript:void(0);" onclick="talkToAdvisor({{$data->fees}},{{Auth::user()->id}},{{$data->added_by}},'{{$data->listing_name}}','{{$data->type}}','{{$data->category}}');" data-toggle="modal" data-target="#talkToadvisorModal">
-												     <i class="las la-phone"></i> Talk to advisor</a>
-												 </li>
+												<li>
+														@if(\Session::get('type') == 'User')
+														<a class="active" href="javascript:void(0);" onclick="talkToAdvisor({{$data->fees}},{{Auth::user()->id}},{{$data->added_by}},'{{$data->listing_name}}','{{$data->type}}','{{$data->category}}');" data-toggle="modal" data-target="#talkToadvisorModal">
+														<i class="las la-phone"></i> Talk to advisor</a>
+														@endif
+													</li>
 												 {{--<li>
 												    <a href="{{route('like')}}?user_id={{Auth::user()->id}}&blog_type=requirement&blog_id={{$data->id}}" {!! App\Models\Like::where('user_id',Auth::user()->id)->where('blog_type','requirement')->where('blog_id',$data->id)->where('status',1)->exists() == true ? 'style="color:#008069"' : '' !!}>
 													   <i class="la la-heart" ></i> Like {{App\Models\Like::where('blog_type','requirement')->where('blog_id',$data->id)->where('status',1)->count()}} 
@@ -428,89 +431,14 @@
 									</div><!--posts-section end-->
 								</div><!--main-ws-sec end-->
 							</div>
-							<!--<div class="col-lg-3">
-								<div class="right-sidebar">
-									<div class="widget widget-jobs">
-										<div class="sd-title">
-											<h3>Most Viewed This Week</h3>
-											<i class="la la-ellipsis-v"></i>
-										</div>
-										<div class="jobs-list">
-											<div class="job-info">
-												<div class="job-details">
-													<h3>Senior Product Designer</h3>
-													<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-												</div>
-												<div class="hr-rate">
-													<span>$25/hr</span>
-												</div>
-											</div>
-											<div class="job-info">
-												<div class="job-details">
-													<h3>Senior UI / UX Designer</h3>
-													<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-												</div>
-												<div class="hr-rate">
-													<span>$25/hr</span>
-												</div>
-											</div>
-											<div class="job-info">
-												<div class="job-details">
-													<h3>Junior Seo Designer</h3>
-													<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-												</div>
-												<div class="hr-rate">
-													<span>$25/hr</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>-->
+							
 						</div>
 					</div><!-- main-section-data end-->
 				</div> 
 			</div>
 		</main>
 		
-		<!--Talk to advisor modal-->
-		<div class="modal fade" id="talkToadvisorModal" tabindex="-1" role="dialog" aria-labelledby="talkToAdvisorModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="talkToAdvisorModalLabel">Talk to Advisor</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form id="request-form" >
-                    @csrf
-                    <input type="hidden" value="" id="user_id" name="user_id">
-                    <input type="hidden" value="" id="listing_user_id" name="listing_user_id">
-                    <input type="hidden" value="" id="listing_name" name="listing_name">
-                    <input type="hidden" value="" id="type" name="type">
-                    <input type="hidden" value="" id="category" name="category">
-                    
-                  <div class="form-group">
-                    <label for="total-fees" class="col-form-label">Total fees:</label>
-                    <input type="text"  value="0" readonly class="form-control" id="total_fees" name="fees">
-                  </div>
-                  <div class="form-group">
-                    <label for="message-text" class="col-form-label">Write about your requirement</label>
-                    <textarea class="form-control" id="message-text" name="title" placeholder="Write about your requirement" required></textarea>
-                  </div>
-                
-              </div>
-              <div class="modal-footer">
-                <!--<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>-->
-                <button type="submit" class="btn btn-sm" style="background-color:#008069;color:#fff;">Send request</button>
-              </div>
-              </form>
-            </div>
-          </div>
-        </div>
-		<!--Talk to advisor modal-->
+		
 
 @endsection
 @push('js')

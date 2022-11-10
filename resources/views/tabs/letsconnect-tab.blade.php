@@ -23,13 +23,13 @@
                     @foreach($request_sent as $k => $data)
                     <tr>
                         <th scope="row">{{++$k}}</th>
-                        <td>{{$data->listing_user->name}}</td>
+                        <td>{{$data->users->name}}</td>
                         <td>{{date('M d,Y h:i A',strtotime($data->created_at))}}</td>
                         <td>{{$data->listing_name}}</td>
                         <td>{{$data->title}}</td>
                         <td>{{$data->type}}</td>
                         <td>
-                            @if($data->status == '4' || $data->status == '5' || $data->status == '6'){{$data->listing_user->contact}} @endif
+                            @if($data->status == '4' || $data->status == '5' || $data->status == '6'){{$data->users->contact}} @endif
                         </td>
                         <td>
                             <span class="badge @if($data->status == '1') badge-warning @elseif($data->status == '2') badge-success @elseif($data->status == '3') badge-danger @elseif($data->status == '4') badge-info @elseif($data->status == '5') badge-success @elseif($data->status == '6') badge-secondary @endif">

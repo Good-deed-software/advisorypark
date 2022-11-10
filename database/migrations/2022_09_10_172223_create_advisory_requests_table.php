@@ -15,11 +15,11 @@ class CreateAdvisoryRequestsTable extends Migration
     {
         Schema::create('advisory_requests', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('listing_user_id');
             $table->string('title')->nullable();
             $table->string('type')->nullable();
             $table->string('category')->nullable();
+            $table->integer('user_id');
+            $table->integer('advisor_id');
             $table->string('listing_name')->nullable();
             $table->string('state_name')->nullable();
             $table->string('city_name')->nullable();

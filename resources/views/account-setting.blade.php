@@ -170,7 +170,7 @@
 							  	<div class="tab-pane fade" id="nav-notification" role="tabpanel" aria-labelledby="nav-notification-tab">
 							  		<div class="acc-setting">
 							  			<h3>Notifications</h3>
-							  			<div class="notifications-list">
+							  			<!-- <div class="notifications-list">
 							  				<div class="notfication-details">
 								  				<div class="noty-user-img">
 								  					<img src="http://via.placeholder.com/35x35" alt="">
@@ -196,8 +196,8 @@
 								  				<div class="notification-info">
 								  					<h3><a href="#" title="">Tonney Dhman</a> Comment on your project.</h3>
 								  					<span>2 min ago</span>
-								  				</div><!--notification-info -->
-							  				</div><!--notfication-details end-->
+								  				</div>
+							  				</div>
 							  				<div class="notfication-details">
 								  				<div class="noty-user-img">
 								  					<img src="http://via.placeholder.com/35x35" alt="">
@@ -205,8 +205,8 @@
 								  				<div class="notification-info">
 								  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
 								  					<span>2 min ago</span>
-								  				</div><!--notification-info -->
-							  				</div><!--notfication-details end-->
+								  				</div>
+							  				</div>
 							  				<div class="notfication-details">
 								  				<div class="noty-user-img">
 								  					<img src="http://via.placeholder.com/35x35" alt="">
@@ -214,8 +214,8 @@
 								  				<div class="notification-info">
 								  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
 								  					<span>2 min ago</span>
-								  				</div><!--notification-info -->
-							  				</div><!--notfication-details end-->
+								  				</div>
+							  				</div>
 							  				<div class="notfication-details">
 								  				<div class="noty-user-img">
 								  					<img src="http://via.placeholder.com/35x35" alt="">
@@ -223,8 +223,8 @@
 								  				<div class="notification-info">
 								  					<h3><a href="#" title="">Poonam Verma </a> Bid on your Latest project.</h3>
 								  					<span>2 min ago</span>
-								  				</div><!--notification-info -->
-							  				</div><!--notfication-details end-->
+								  				</div>
+							  				</div>
 							  				<div class="notfication-details">
 								  				<div class="noty-user-img">
 								  					<img src="http://via.placeholder.com/35x35" alt="">
@@ -232,8 +232,8 @@
 								  				<div class="notification-info">
 								  					<h3><a href="#" title="">Tonney Dhman</a> Comment on your project</h3>
 								  					<span>2 min ago</span>
-								  				</div><!--notification-info -->
-							  				</div><!--notfication-details end-->
+								  				</div>
+							  				</div>
 							  				<div class="notfication-details">
 								  				<div class="noty-user-img">
 								  					<img src="http://via.placeholder.com/35x35" alt="">
@@ -241,10 +241,10 @@
 								  				<div class="notification-info">
 								  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
 								  					<span>2 min ago</span>
-								  				</div><!--notification-info -->
-							  				</div><!--notfication-details end-->
-							  			</div><!--notifications-list end-->
-							  		</div><!--acc-setting end-->
+								  				</div>
+							  				</div>
+							  			</div> -->
+							  		</div>
 							  	</div>
 							  	<div class="tab-pane fade" id="nav-requests" role="tabpanel" aria-labelledby="nav-requests-tab">
 							  		<div class="acc-setting">
@@ -302,51 +302,7 @@
 							  						</ul>
 							  					</div>
 							  				</div>
-							  				<div class="request-details">
-							  					<div class="noty-user-img">
-							  						<img src="http://via.placeholder.com/35x35" alt="">
-							  					</div>
-							  					<div class="request-info">
-							  						<h3>Bill Gates</h3>
-							  						<span>C & C++ Developer</span>
-							  					</div>
-							  					<div class="accept-feat">
-							  						<ul>
-							  							<li><button type="submit" class="accept-req">Accept</button></li>
-							  							<li><button type="submit" class="close-req"><i class="la la-close"></i></button></li>
-							  						</ul>
-							  					</div>
-							  				</div>
-							  				<div class="request-details">
-							  					<div class="noty-user-img">
-							  						<img src="http://via.placeholder.com/35x35" alt="">
-							  					</div>
-							  					<div class="request-info">
-							  						<h3>Jessica William</h3>
-							  						<span>Graphic Designer</span>
-							  					</div>
-							  					<div class="accept-feat">
-							  						<ul>
-							  							<li><button type="submit" class="accept-req">Accept</button></li>
-							  							<li><button type="submit" class="close-req"><i class="la la-close"></i></button></li>
-							  						</ul>
-							  					</div>
-							  				</div>
-							  				<div class="request-details">
-							  					<div class="noty-user-img">
-							  						<img src="http://via.placeholder.com/35x35" alt="">
-							  					</div>
-							  					<div class="request-info">
-							  						<h3>John Doe</h3>
-							  						<span>PHP Developer</span>
-							  					</div>
-							  					<div class="accept-feat">
-							  						<ul>
-							  							<li><button type="submit" class="accept-req">Accept</button></li>
-							  							<li><button type="submit" class="close-req"><i class="la la-close"></i></button></li>
-							  						</ul>
-							  					</div>
-							  				</div>-->
+							  				-->
 							  			</div>
 							  		</div>
 							  	</div>

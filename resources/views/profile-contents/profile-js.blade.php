@@ -9,9 +9,9 @@
     $(document).ready(function(){
         var url = window.location.href;
         var activeTab = url.substring(url.indexOf("#") + 1);
-        $(".tab-pane").removeClass("active in");
-        $("#" + activeTab).addClass("active in");
-        $('a[href="#'+ activeTab +'"]').tab('show')
+        // $(".tab-pane").removeClass("active in");
+        // $("#" + activeTab).addClass("active in");
+        // $('a[href="#'+ activeTab +'"]').tab('show')
 
         $(".share").on('click',function(){
             $(".social-media-icons").fadeToggle();
@@ -110,10 +110,10 @@
                     
                         if(data.status == true){
                         toastr.success("Success!", data.message);
-                        // location.reload();
+                        location.reload();
                         }else{
                         toastr.error("Opps!", data.message);
-                        // location.reload();
+                        location.reload();
                         }
                     }
                 });
@@ -124,6 +124,7 @@
         $('[data-toggle="tooltip"]').tooltip();
         
         $('#example').DataTable({
+            'dom': 'Rlfrtip',
             columnDefs: [ {
                 className: 'dtr-control',
                 orderable: false,

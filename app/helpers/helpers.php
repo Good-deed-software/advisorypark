@@ -95,4 +95,18 @@ function addNewTag($request_){
     return $result;
 }
 
+
+function getNameById($id)
+{
+   $name = User::whereId($id)->first(['name']);
+   return $name->name;
+
+}
+
+function getTimeAgo($date)
+{
+    return $date->diffForHumans();
+
+}
+
 ?>

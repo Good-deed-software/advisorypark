@@ -105,59 +105,82 @@
 									</div>
 								</div>
 							</li>-->
+							
 							<li>
 								<a href="#" title="" class="not-box-open">
-									<span><img src="{{asset('front/images/icon7.png')}}" alt=""></span>
-									Notification
+									<span>
+										<i class="fa fa-bell"></i>
+										@auth
+										@php
+										
+											$new_notif = App\Models\Notification::where('entity_id',Auth::user()->id)->where('seen_status',0)->count();
+											
+										@endphp
+										@if($new_notif > 0)
+										<span class="badge badge-danger new-notif" data-tooltip="{{$new_notif}} New Messages." data-tooltip-position="right">{{$new_notif}}</span>
+										@endif
+										@endauth
+									</span>
+									Notification 
 								</a>
 								<div class="notification-box">
 									<div class="nt-title">
-										<h4>Setting</h4>
-										<a href="#" title="">Clear all</a>
+										<h4>Notifications</h4>
+										<!-- <a href="#" title="">Mark all as Read</a> -->
 									</div>
+									
 									<div class="nott-list">
+										
+									@auth
 										<div class="notfication-details">
 							  				<div class="noty-user-img">
 							  					<img src="#" alt="">
 							  				</div>
-							  				<div class="notification-info">
-							  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-							  					<span>2 min ago</span>
-							  				</div><!--notification-info -->
+											@php 
+												$notif = App\Models\Notification::where('entity_id',Auth::user()->id)->where('entity_type',Auth::user()->type)->where('seen_status',0)->orderby('id','desc')->get();
+											
+											@endphp
+											@foreach($notif as $n)
+												<div class="notification-info noti_btn" >
+													<span>{{getTimeAgo($n->created_at)}}</span>
+													
+													<h3 style="cursor:pointer;" onclick="seen_notification({{$n->id}},'{{url($n->link)}}');">
+														{{$n->notification}}
+													</h3>
+													@if(\Session::get('type') == 'Advisor')
+													 @if(in_array($n->activity_type,[App\Models\Notification::activity_requirement,App\Models\Notification::activity_post]))
+													 <button class="btn btn-success btn-sm" onclick="seen_notification({{$n->id}},'{{url($n->link)}}','{{$n->activity_type}}',1);"><i class="fa fa-thumbs-up"></i></button>
+													 <button class="btn btn-danger btn-sm" onclick="seen_notification({{$n->id}},'{{url($n->link)}}','{{$n->activity_type}}',2);"><i class="fa fa-thumbs-down"></i></button>
+													 @endif
+													@endif
+												</div>
+											@endforeach
 						  				</div>
-						  				<div class="notfication-details">
+						  				<!-- <div class="notfication-details">
 							  				<div class="noty-user-img">
 							  					<img src="#" alt="">
 							  				</div>
 							  				<div class="notification-info">
 							  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
 							  					<span>2 min ago</span>
-							  				</div><!--notification-info -->
-						  				</div>
-						  				<div class="notfication-details">
-							  				<div class="noty-user-img">
-							  					<img src="#" alt="">
 							  				</div>
-							  				<div class="notification-info">
-							  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-							  					<span>2 min ago</span>
-							  				</div><!--notification-info -->
-						  				</div>
-						  				<div class="notfication-details">
-							  				<div class="noty-user-img">
-							  					<img src="#" alt="">
-							  				</div>
-							  				<div class="notification-info">
-							  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-							  					<span>2 min ago</span>
-							  				</div><!--notification-info -->
-						  				</div>
-						  				<div class="view-all-nots">
+						  				</div> -->
+						  				
+						  				<!-- <div class="view-all-nots">
 						  					<a href="#" title="">View All Notification</a>
-						  				</div>
-									</div><!--nott-list end-->
+						  				</div> -->
+									@else
+									<div class="notfication-details">
+										<div class="notification-info">
+											<h3>No Notification Found.</h3>
+										</div>
+									</div>
+									@endauth
+									</div>
+									<!--nott-list end-->
 								</div><!--notification-box end-->
 							</li>
+							
 						</ul>
 					</nav><!--nav end-->
 					<div class="menu-btn">
@@ -173,7 +196,7 @@
     							</a>
     						    <i class="la la-sort-down"></i>
     						 @else
-    							<a href="{{route('login')}}" title="">Signup / Login</a>
+    							<a href="#" title="">Signup / Login</a>
     						 @endauth
 							
 						</div>

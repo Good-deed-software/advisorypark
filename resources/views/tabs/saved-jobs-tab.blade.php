@@ -5,21 +5,21 @@
         <div class="post-bar">
             <div class="post_topbar">
                 <div class="usy-dt">
-                    <img src="#" alt="">
+                    <img src="http://via.placeholder.com/50x50" alt="">
                     <div class="usy-name">
                         @php 
                             $post_creator =	App\Models\User::whereId($data->posts->created_by)->first();
                         @endphp
                         <h3>{{$post_creator->name}}</h3>
-                        <span><img src="#" alt="">{{$data->posts->created_at->diffForHumans()}}</span>
+                        <span><img src="{{asset('front/images/clock.png')}}" alt="">{{$data->posts->created_at->diffForHumans()}}</span>
                     </div>
                 </div>
                 
             </div>
             <div class="epi-sec">
                 <ul class="descp">
-                    <li><img src="#" alt=""><span>{{$post_creator->designation}}</span></li>
-                    <li><img src="#" alt=""><span>{{$post_creator->address}}</span></li>
+                    <li><img src="{{asset('front/images/icon8.png')}}" alt=""><span>{{$post_creator->designation}}</span></li>
+                    <li><img src="{{asset('front/images/icon9.png')}}" alt=""><span>{{$post_creator->address}}</span></li>
                 </ul>
                 <ul class="bk-links">
                     <!--<li><a href="#" title=""><i class="la la-bookmark"></i></a></li>-->
@@ -57,78 +57,73 @@
                     @endforeach
                 </ul>
             </div>
-            {{--<div class="job-status-bar">
+            <div class="job-status-bar">
                 <ul class="like-com">
                     @auth
                     <li>
                         <a href="{{route('like')}}?user_id={{Auth::user()->id}}&blog_type=post&blog_id={{$data->id}}" {!! App\Models\Like::where('user_id',Auth::user()->id)->where('blog_type','post')->where('blog_id',$data->id)->where('status',1)->exists() == true ? 'style="color:#008069"' : '' !!}>
-                        <i class="la la-heart" ></i> Like {{App\Models\Like::where('blog_type','post')->where('blog_id',$data->id)->where('status',1)->count()}} 
+                            <i class="la la-heart" ></i> Like {{App\Models\Like::where('blog_type','post')->where('blog_id',$data->id)->where('status',1)->count()}} 
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)" onclick="openComment({{$data->id}})" class="comment p-0">
-                        <i class="la la-comment"></i> Comment {{ count($data->comments) }}</a>
+                        <a href="javascript:void(0)" onclick="openComment({{$data->id}})" class="comment p-0"> <i class="la la-comment"></i> Comment {{ count($data->comments) }}</a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)" class="share">
-                        <i class="la la-share"></i> Share </a>
+                        <a href="javascript:void(0)" class="share"> <i class="la la-share"></i> Share </a>
                     </li>
-                    
+
                     <li class="social-media-icons" style="display: none;">
-                        <a target="_blank" href="https://api.whatsapp.com/send?text={{url('post_details',$data->id)}}" data-action="share/whatsapp/share">
+                        <a target="_blank" href="https://api.whatsapp.com/send?text={{route('post_details',$data->posts->slug)}}" data-action="share/whatsapp/share">
                             <i class="la la-whatsapp"></i>
-                        </a> 
-                        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{route('post_details',$data->id)}}">
+                        </a>
+                        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{route('post_details',$data->posts->slug)}}">
                             <i class="la la-facebook"></i>
-                        </a> 
-                        <a target="_blank" href="https://www.linkedin.com/sharing/share-offsite/?url={{route('post_details',$data->id)}}">
+                        </a>
+                        <a target="_blank" href="https://www.linkedin.com/sharing/share-offsite/?url={{route('post_details',$data->posts->slug)}}">
                             <i class="la la-linkedin"></i>
                         </a>
-                        <a target="_blank" href="https://telegram.me/share/url?url={{route('post_details',$data->id)}}">
+                        <a target="_blank" href="https://telegram.me/share/url?url={{route('post_details',$data->posts->slug)}}">
                             <i class="la la-telegram"></i>
-                        </a> 
-                        <a target="_blank" href="https://twitter.com/intent/tweet?text={{route('post_details',$data->id)}}">
+                        </a>
+                        <a target="_blank" href="https://twitter.com/intent/tweet?text={{route('post_details',$data->posts->slug)}}">
                             <i class="la la-twitter"></i>
-                        </a> 
+                        </a>
                     </li>
-                    
+
                     @else
                     <li>
-                        <a href="{{route('login')}}">
-                        <i class="la la-heart-o"></i> Like {{App\Models\Like::where('blog_type','post')->where('blog_id',$data->id)->where('status',1)->count()}}</a>
+                        <a href="{{route('login')}}"> <i class="la la-heart-o"></i> Like {{App\Models\Like::where('blog_type','post')->where('blog_id',$data->id)->where('status',1)->count()}}</a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)" onclick="openComment({{$data->id}})" class="comment p-0">
-                        <i class="la la-comment"></i> Comment {{ count($data->comments) }}</a>
+                        <a href="javascript:void(0)" onclick="openComment({{$data->id}})" class="comment p-0"> <i class="la la-comment"></i> Comment {{ count($data->comments) }}</a>
                     </li>
                     <li>
-                        <a href="{{route('login')}}" class="share">
-                        <i class="la la-share"></i> Share</a>
+                        <a href="{{route('login')}}" class="share"> <i class="la la-share"></i> Share</a>
                     </li>
                     @endauth
                 </ul>
                 <a><i class="la la-eye"></i>Views</a>
             </div>
-            <div class="bg-light p-2 comment-box" id="comment-box-{{$data->id}}" style="display:none;">
+            <div class="bg-light p-2 comment-box" id="comment-box-{{$data->id}}" style="display: none;">
                 <form action="{{route('comment')}}" method="post">
                     @csrf
-                    <input type="hidden" name="user_id" value="@auth {{Auth::user()->id}} @endif">
-                    <input type="hidden" name="blog_type" value="post">
-                    <input type="hidden" name="blog_id" value="{{$data->id}}">
+                    <input type="hidden" name="user_id" value="@auth {{Auth::user()->id}} @endif" />
+                    <input type="hidden" name="blog_type" value="post" />
+                    <input type="hidden" name="blog_id" value="{{$data->id}}" />
                     <div class="">
                         <textarea class="form-control ml-1 shadow-none textarea" placeholder="write a comment..." name="comment"></textarea>
                     </div>
                     <div class="mt-2 text-right">
-                        <button class="btn btn-sm shadow-none theme-bg text-light" type="submit" >
+                        <button class="btn btn-sm shadow-none theme-bg text-light" type="submit">
                             Post comment
                         </button>
                     </div>
                 </form>
-                
+
                 @foreach($data->comments as $cm)
                 <div class="commented-section m-2">
                     <div class="d-flex flex-row align-items-center commented-user">
-                    <h5 class="mr-2"> {{$cm->user_name}}</h5>
+                        <h5 class="mr-2">{{$cm->user_name}}</h5>
                         <span class="dot mb-1"></span>
                         <span class="mb-1 ml-2">{{$cm->created_at->diffForHumans()}}</span>
                     </div>
@@ -136,8 +131,8 @@
                         <p>{{$cm->comment}}</p>
                     </div>
                 </div>
-                @endforeach 
-            </div>--}}
+                @endforeach
+            </div>
             <!--<div class="job-status-bar">
                 <ul class="like-com">
                     <li>

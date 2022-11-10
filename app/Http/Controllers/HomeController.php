@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{User,Category,Skill,Tag,Requirement,Post,Like,Comment,Save,Following,Follower,AdvisoryListing,AdvisoryRequest,BusinessProfile};
+use App\Models\{User,Category,Skill,Tag,Requirement,Post,Like,Comment,Save,Following,Follower,AdvisoryListing,AdvisoryRequest,BusinessProfile,Notification,RequirementInterest,PostInterest};
 use Auth;
 use Validator;
 use Illuminate\Support\Str;
@@ -13,7 +13,8 @@ class HomeController extends Controller
     
     
 	public function index() 
-    {
+    {   
+       
         $config['categories'] =   Category::where('status','1')->get();       
         $config['skills']     =   Skill::where('status','1')->get();
         $config['tags']       =   Tag::where('status','1')->get();
@@ -25,7 +26,7 @@ class HomeController extends Controller
             $posts      =   Post::with('users','comments')->orderby('id','desc')->get();
             $users      =   User::limit(5)->orderby('id','desc')->get();
         }
-		return view('index',compact('config','posts','users'/*,'likes'*/));
+		return view('index',compact('config','posts','users'));
        
     }
     
@@ -44,13 +45,13 @@ class HomeController extends Controller
             
             $business_profile     =   BusinessProfile::orderby('id','desc')->get();
             
-            $advisory_request     =   AdvisoryRequest::with('users')->where('listing_user_id',Auth::user()->id)->orderby('id','desc')->get();
+            $advisory_request     =   AdvisoryRequest::with('users')->where('user_id',Auth::user()->id)->orderby('id','desc')->get();
             
-            $request_sent         =   AdvisoryRequest::with('listing_user')->where('user_id',Auth::user()->id)->orderby('id','desc')->get();
+            $request_sent         =   AdvisoryRequest::with('advisors')->where('advisor_id',Auth::user()->id)->orderby('id','desc')->get();
             
             $saved_post           =   Save::with('posts','users')->where('blog_type','post')->where('user_id',Auth::user()->id)->where('status','1')->orderby('id','desc')->get();
             
-            $requirements         =   Requirement::with(['categories','skills','tags','users'])->orderby('id','desc')->get();
+            $requirements         =   Requirement::with(['categories','skills','tags','users'])->where('created_by',Auth::user()->id)->orderby('id','desc')->get();
             
             $config['categories'] =   Category::where('status','1')->get();       
             $config['skills']     =   Skill::where('status','1')->get();
@@ -78,14 +79,15 @@ class HomeController extends Controller
             $data = $request->except(['_token']);
 
             /* check if skill is new*/
-            if(isset($request->skill)){
-                $new_skill = addNewSkill($request->skill);
-                if(!empty($new_skill)){
-                    $request->skill = $new_skill;
+            if(isset($request->skills)){
+                $new_skills = addNewSkill($request->skills);
+                if(!empty($new_skills)){
+                    $request->skills = $new_skills;
                 }
 
-                $data['skill']      = implode(',',$request->skill);
+                $data['skills']  = implode(',',$request->skills);
             }
+
             /* check if tag is new */
             
             if($request->file('image')){
@@ -134,7 +136,6 @@ class HomeController extends Controller
                 $advisory_listings = AdvisoryListing::where('listing_name', 'LIKE', '%'. $request->get('search'). '%')->where('added_by','!=',Auth::user()->id)->get();
             }else{
                 $advisory_listings = AdvisoryListing::where('listing_name', 'LIKE', '%'. $request->get('search'). '%')->get();
-
             }
         }
         elseif($request->mode){
@@ -142,7 +143,6 @@ class HomeController extends Controller
                 $advisory_listings = AdvisoryListing::where('mode', 'LIKE', '%'. $request->get('mode'). '%')->where('added_by','!=',Auth::user()->id)->get();
             }else{
                 $advisory_listings = AdvisoryListing::where('mode', 'LIKE', '%'. $request->get('mode'). '%')->get();
-
             }
         }
         elseif($request->from && $request->to){
@@ -150,17 +150,13 @@ class HomeController extends Controller
                 $advisory_listings = AdvisoryListing::whereBetween('fees', [(int)$request->from, (int)$request->to])->where('added_by','!=',Auth::user()->id)->get();
             }else{
                 $advisory_listings = AdvisoryListing::whereBetween('fees', [(int)$request->from, (int)$request->to])->get();
-
             }
         }
         else{
            
-            if(Auth::check()){           
-                
+            if(Auth::check()){              
                 $advisory_listings = AdvisoryListing::orderby('id','desc')->where('added_by','!=',Auth::user()->id)->get();
-                
-            }else{
-                        
+            }else{      
                 $advisory_listings = AdvisoryListing::orderby('id','desc')->get();
             }
         }
@@ -175,12 +171,29 @@ class HomeController extends Controller
         
         // dd($data);
         
-        if($data){
-            AdvisoryRequest::create($data);
-        
-            return response()->json(['status'=>true,'message'=>'Request Sent Successfully!']);
-        }else{
-             return response()->json(['status'=>false,'message'=>'Something went wrong!']);
+        if($request->ajax()){
+            if($data){
+                AdvisoryRequest::create($data);
+            
+                return response()->json(['status'=>true,'message'=>'Request Sent Successfully!']);
+            }else{
+                return response()->json(['status'=>false,'message'=>'Something went wrong!']);
+            }
+        }
+        else{
+            if($data) {
+                if(AdvisoryRequest::where('user_id',$request->user_id)->where('advisor_id',$request->advisor_id)->where('listing_name',$request->listing_name)->where('listing_id',$request->listing_id)->first()){
+                    
+                    return redirect()->back()->with(['error'=>'Already requested!']);
+                }else{
+                    $data['status'] = 4;
+                    AdvisoryRequest::create($data);
+            
+                    return redirect()->back()->with(['success'=>'Payment Done Successfully!']);
+                }
+            }else{
+                return redirect()->back()->with(['error'=>'Something went wrong!']);
+            }
         }
         
     }
@@ -216,7 +229,7 @@ class HomeController extends Controller
     
     public function accountSetting()
     {   
-         $advisory_request     =   AdvisoryRequest::with('users')->where('listing_user_id',Auth::user()->id)->where('status','pending')->orderby('id','desc')->get();
+         $advisory_request     =   AdvisoryRequest::with('users')->where('user_id',Auth::user()->id)->where('status','pending')->orderby('id','desc')->get();
          $config['categories'] =   Category::where('status','1')->get();       
          $config['skills']     =   Skill::where('status','1')->get();
          $config['tags']       =   Tag::where('status','1')->get();
@@ -312,9 +325,30 @@ class HomeController extends Controller
             
             return redirect()->back()->withSuccess('New Requirement Updated!');
         }
-       
+              
+    }
+
+    public function requirementDetails($slug)
+    {   
+        if(Auth::check()){
+            $config['categories'] =   Category::where('status','1')->get();       
+            $config['skills']     =   Skill::where('status','1')->get();
+            $config['tags']       =   Tag::where('status','1')->get();
+            
+            $requirement = Requirement::with('users','comments')->where('slug',$slug)->first();
+            $interest = null;
+            
+                $interest = RequirementInterest::where('requirement_id',$requirement->id)
+                        ->where('entity_id',Auth::user()->id)
+                        ->first();
+                        
+            $all_interested = RequirementInterest::with('requirements','users')->where('requirement_id',$requirement->id)->where('status',1)->get();
+            // dd($all_interested);
         
-       
+            return view('requirement-details',compact('requirement','interest','config','all_interested'));
+        }else{
+            return view('login')->with('error','Login first!');
+        }
     }
 
     public function requirementEdit($id)
@@ -323,7 +357,6 @@ class HomeController extends Controller
         return response()->json($post);
     }
     
-
     public function requirementUpdate(Request $request)
     {   
         if(!$request->id){
@@ -360,7 +393,7 @@ class HomeController extends Controller
         }else{
             if($request->file('image')){   
                 $imageName = time().'-'.$request->image->getClientOriginalName();
-                $request->image->move(public_path('front/images/posts'), $imageName);
+                $request->image->move(public_path('front/images/requirements'), $imageName);
                 $data['image'] = $imageName;
             }
             
@@ -386,9 +419,96 @@ class HomeController extends Controller
             'message' => "Requirement deleted Successfully"
         ]);
     }
-    
+
+    public function updateNotification(Request $request)
+    {   
+        // dd($request);
+        if($notification = Notification::find($request->notification_id)){  
+            $notification->update(['seen_status'=>1]);
+        }
+
+        if(in_array($request->type, ['requirement', 'post'])){
+            
+            $data = [
+                'entity_id'=>Auth::user()->id, 
+                'status'=>$request->status 
+            ];
+            $entity_id ='';
+            $entity_type ='user';
+            if($request->status !== null && $request->type == 'requirement'){
+                $data['requirement_id'] = $notification->activity_id;
+                $entity_id = Requirement::select('created_by')->where('id', $notification->activity_id)->first()->created_by;
+                RequirementInterest::upsert($data, ['requirement_id', 'entity_id'], ['status']);
+            } else if($request->status !== null && $request->type == 'post'){
+                $entity_id = Post::select('created_by')->where('id', $notification->activity_id)->first()->created_by;
+                $data['post_id'] = $notification->activity_id;
+                PostInterest::upsert($data, ['post_id', 'entity_id'], ['status']);
+            }
+
+            if($request->status == 1){
+                $msg = Auth::user()->name." Interested in your ".$request->type.".";
+            }else{
+                $msg = Auth::user()->name." Not Interested in your ".$request->type.".";
+            }
+
+            // $msg = Auth::user()->name." ".$request->status == 1 ? 'Intrested':'Not Intrested'." in your ".$request->type.".";
+           
+            Notification::create([
+                'notification'=>$msg,
+                'link'=>$request->link,
+                'entity_id'=>$entity_id, 
+                'entity_type'=>$entity_type, 
+                'activity_id'=>$notification->activity_id,
+                'activity_type'=>Notification::activity_general,
+                ]);
+        }
+      
+        return response()->json(['status'=>true, "message"=>"Status Updated Succesful"]);        
+    } 
+    public function interestedOrNot(Request $request)
+    {   
+        // dd($request);
+        if(in_array($request->type, ['requirement', 'post'])){
+            
+            $data = [
+                'entity_id'=>Auth::user()->id, 
+                'status'=>$request->status 
+            ];
+            $entity_id ='';
+            $entity_type ='user';
+            if($request->status !== null && $request->type == 'requirement'){
+                $data['requirement_id'] = $request->activity_id;
+                $entity_id = Requirement::select('created_by')->where('id', $request->activity_id)->first()->created_by;
+                RequirementInterest::upsert($data, ['requirement_id', 'entity_id'], ['status']);
+            } else if($request->status !== null && $request->type == 'post'){
+                $entity_id = Post::select('created_by')->where('id', $request->activity_id)->first()->created_by;
+                $data['post_id'] = $request->activity_id;
+                PostInterest::upsert($data, ['post_id', 'entity_id'], ['status']);
+            }
+
+            if($request->status == 1){
+                $msg = Auth::user()->name." Interested in your ".$request->type.".";
+            }else{
+                $msg = Auth::user()->name." Not Interested in your ".$request->type.".";
+            }
+
+            // $msg = Auth::user()->name." ".$request->status == 1 ? 'Intrested':'Not Intrested'." in your ".$request->type.".";
+           
+            Notification::create([
+                'notification'=>$msg,
+                'link'=>$request->link,
+                'entity_id'=>$entity_id, 
+                'entity_type'=>$entity_type, 
+                'activity_id'=>$request->activity_id,
+                'activity_type'=>Notification::activity_general,
+                ]);
+        }
+      
+        return response()->json(['status'=>true, "message"=>"Status Updated Succesful"]);        
+    }    
     public function posts(Request $request)
     {   
+       
 		$data = $request->except(['_token','id']); 
 	    
         $validator = Validator::make($request->all(), [
@@ -397,7 +517,7 @@ class HomeController extends Controller
             'skill'     => 'required', 
             'tag'       => 'required', 
         ]);
-
+      
         /* check if category is new*/
         $new_cat = addNewCategory($request->category);
         if(!empty($new_cat)){
@@ -414,9 +534,11 @@ class HomeController extends Controller
             $request->tag = $new_tag;
         }
         
+        
         if ($validator->fails()){
             return back()->withInput()->withErrors($validator);
         }else{
+            
             if($request->file('image')){   
                 $imageName = time().'-'.$request->image->getClientOriginalName();
                 $request->image->move(public_path('front/images/posts'), $imageName);
@@ -428,10 +550,12 @@ class HomeController extends Controller
             $data['tag']        = implode(',',$request->tag); 
             $data['slug']       = Str::slug($request->title);
             $data['created_by'] = Auth::user()->id;
+
+            // dd($data);
             
             Post::create($data);
             
-            return redirect()->back()->withSuccess('New Post Updated!');
+            return redirect()->route('index')->withSuccess('New Post Updated!');
         }
        
     }
@@ -449,8 +573,14 @@ class HomeController extends Controller
         $config['tags']       =   Tag::where('status','1')->get();
         
         $post = Post::with('users','comments')->where('slug',$slug)->first();
+        $interest = null;
+        if(Auth::check()){
+            $interest = PostInterest::where('post_id',$post->id)->where('entity_id',Auth::user()->id)->first();
+        }    
+        $all_interested = PostInterest::with('posts','users')->where('post_id',$post->id)->where('status',1)->get();
+        // dd($all_interested);
         
-        return view('post-details',compact('post','config'));
+        return view('post-details',compact('post','config','interest','all_interested'));
     }
 
     public function postUpdate(Request $request)
@@ -715,8 +845,8 @@ class HomeController extends Controller
         $data = User::where('is_active','1')->pluck('id');
         return response()->json(['status'=>true,'data'=>$data]);
     }
-    
-    
+
+   
     public function advisoryListingCreate(Request $request)
     {   
        

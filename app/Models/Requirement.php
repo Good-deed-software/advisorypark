@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Artisan;
 class Requirement extends Model
 {
     use HasFactory;
@@ -12,6 +12,15 @@ class Requirement extends Model
     protected $table = 'requirements';
     
     protected $guarded = ['id'];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::created(function($model){
+            Artisan::call('notification:create_requirement', ['id' => $model->id]);
+        });
+    }
     
     public function users(){
         
@@ -40,4 +49,6 @@ class Requirement extends Model
         
         return $this->belongsTo(Tag::class,'tag');
     }
+
+    
 }

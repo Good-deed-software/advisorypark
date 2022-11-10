@@ -13,14 +13,14 @@ class AdvisoryRequest extends Model
     
     protected $guarded = ['id'];
     
+    public function advisors(){
+        
+        return $this->belongsTo(User::class,'advisor_id');
+    }
+
     public function users(){
         
         return $this->belongsTo(User::class,'user_id');
-    }
-
-    public function listing_user(){
-        
-        return $this->belongsTo(User::class,'listing_user_id');
     }
     
 }
